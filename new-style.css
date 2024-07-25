@@ -1,0 +1,192 @@
+html, body {
+    font-family: "Manrope", sans-serif;
+    font-weight: 100;
+    background-color: rgb(200, 199, 199);
+    color: rgb(119, 119, 119); 
+    margin: 0;
+}
+
+/* Существующий код */
+header {
+    padding: 0%;
+    overflow: hidden; 
+    position: fixed;
+    top: 0; 
+    width: 100%;
+    background-color: rgb(200, 199, 199);
+    z-index: 2; 
+    transition: all 2s ease-in-out;
+    height: 100%;
+}
+
+header.move {
+    height: 8%;
+}
+
+header.reverse {
+    height: 100%;
+}
+
+
+
+/* Начальный стиль для .logo */
+.logo {
+    padding: 0;
+    margin: 0;
+    font-size: 3vw;
+    font-weight: 100;
+    text-align: center;
+    text-decoration: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0; /* Вы по-прежнему можете анимировать это отдельно при необходимости */
+    transition: all 3s ease-in-out;
+}
+
+/* Стиль для состояния .move */
+.logo.move {
+    left: 1.1%;
+    top: 0;
+    transform: translate(0, 0);
+}
+
+/* Стиль для состояния .reverse */
+.logo.reverse {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.navbar {
+    width: 30px;
+    height: 20px;
+    padding: 0;
+    cursor: pointer;
+    z-index: 3;
+    position: absolute;
+    left: 95%;
+    top: 35%;
+    border: none;
+    background: transparent;
+    opacity: 0;
+    transition: all 2s ease;
+}
+
+.navbar.activete {
+    opacity: 1;
+}
+
+.navbar.reverse {
+    opacity: 0;
+}
+
+
+/* разобраться с состояниями классов/блоков/объектов */
+
+.navbar::before,
+.navbar::after,
+.navbar-middle {
+    /* нах тут контент??? */
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 3px;
+    border-radius: 10px;
+    background: rgb(119, 119, 119);
+}
+/* я понимаю что это анимации на какого члена они имеют такие же названия как и выше */
+.navbar::before {
+    top: 0;
+    transition: box-shadow .3s .15s, top .3s .15s, transform .3s;
+}
+
+.navbar::after {
+    bottom: 0;
+    transition: bottom .3s .15s, transform .3s;
+}
+
+.navbar-middle {
+    top: 50%;
+    transform: translateY(-50%); /* Центрировать среднюю линию */
+    transition: opacity .3s; /* Добавляем плавный переход для исчезновения */
+}
+/* и тут анимации?! */
+.burger.active::before {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0);
+    transition: box-shadow .15s, top .3s, transform .3s .15s;
+}
+
+.burger.active::after {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+    transition: bottom .3s, transform .3s .15s;
+}
+
+.burger.active .navbar-middle {
+    opacity: 0; /* Исчезновение средней полоски */
+    transition: opacity .3s; /* Плавный переход исчезновения */
+}
+
+/* Оверлей */
+.overlay {
+    height: 0;
+    width: 100%;
+    position: fixed; /* Фиксированное положение */
+    z-index: 1; /* Расположить поверх других элементов */
+    left: 0;
+    top: 0;
+    background-color: rgb(200, 199, 199); /* Цвет фона с прозрачностью */
+    overflow-y: hidden; /* Отключить вертикальную прокрутку */
+    transition: height 1s ease-in-out; /* Анимация изменения высоты */
+}
+
+/* Расположение контента внутри оверлея  ваще магия*/
+.overlay-content {
+    position: relative;
+    top: 25%; /* 25% от верха */
+    width: 100%; /* Ширина 100% */
+    text-align: left; /* Центрирование текста и ссылок */
+    margin-top: 30px; /* Отступ сверху для избегания конфликта с кнопкой закрытия на маленьких экранах */
+    margin-left: 2.3em;
+}
+
+/* Ссылки навигации внутри оверлея */
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block; /* Блочный элемент */
+    transition: color 0.3s; /* Переход цвета при наведении */
+}
+
+/* При наведении на ссылки внутри оверлея */
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+/* Изменение размера шрифта ссылок при низкой высоте экрана */
+@media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+}
+
+.visual-content {
+    width: 100%;
+    height: 100vh; /* Занимает всю высоту окна */
+    overflow: hidden; /* Обрезает лишнее содержимое */
+    position: relative;
+}
+
+.visual-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Масштабирует изображение и обрезает лишнее */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
