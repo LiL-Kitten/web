@@ -1,8 +1,13 @@
-html, body {
-    font-family: "Manrope", sans-serif;
-    font-weight: 100;
+* {
     background-color: rgb(200, 199, 199);
     color: rgb(119, 119, 119); 
+    font-family: "Manrope", sans-serif;
+    font-weight: 100;
+    display: block;
+    transition: all 1s ease-in-out; 
+} 
+
+html, body {
     margin: 0;
 }
 
@@ -15,7 +20,7 @@ header {
     width: 100%;
     background-color: rgb(200, 199, 199);
     z-index: 2; 
-    transition: all 2s ease-in-out;
+    transition: all 1s ease-in-out; /* увеличить время до 3s */
     height: 100%;
 }
 
@@ -26,8 +31,6 @@ header.move {
 header.reverse {
     height: 100%;
 }
-
-
 
 /* Начальный стиль для .logo */
 .logo {
@@ -42,7 +45,11 @@ header.reverse {
     top: 50%;
     transform: translate(-50%, -50%);
     opacity: 0; /* Вы по-прежнему можете анимировать это отдельно при необходимости */
-    transition: all 3s ease-in-out;
+    transition: left 1s ease-in-out, 
+    top 1s ease-in-out,
+    transform 1s ease-in-out, 
+    opacity 1s ease-in-out; /* увеличить время до 3s */
+    transition: all 1s ease-in-out; 
 }
 
 /* Стиль для состояния .move */
@@ -50,6 +57,7 @@ header.reverse {
     left: 1.1%;
     top: 0;
     transform: translate(0, 0);
+    opacity: 1; /* Если вы хотите анимировать opacity, оно должно быть частью изменения состояния */
 }
 
 /* Стиль для состояния .reverse */
@@ -57,6 +65,7 @@ header.reverse {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    opacity: 1; /* Если вы хотите анимировать opacity, оно должно быть частью изменения состояния */
 }
 
 .navbar {
@@ -71,7 +80,8 @@ header.reverse {
     border: none;
     background: transparent;
     opacity: 0;
-    transition: all 2s ease;
+    /* transition: all 2s ease; */
+    transition: all 1s ease-in-out; 
 }
 
 .navbar.activete {
@@ -134,6 +144,8 @@ header.reverse {
 
 /* Оверлей */
 .overlay {
+    display: block;
+    justify-content: left;
     height: 0;
     width: 100%;
     position: fixed; /* Фиксированное положение */
@@ -142,7 +154,9 @@ header.reverse {
     top: 0;
     background-color: rgb(200, 199, 199); /* Цвет фона с прозрачностью */
     overflow-y: hidden; /* Отключить вертикальную прокрутку */
-    transition: height 1s ease-in-out; /* Анимация изменения высоты */
+    /* transition: height 1s ease-in-out;  */
+    /* Анимация изменения высоты */
+    transition: all 1s ease-in-out; 
 }
 
 /* Расположение контента внутри оверлея  ваще магия*/
@@ -153,6 +167,7 @@ header.reverse {
     text-align: left; /* Центрирование текста и ссылок */
     margin-top: 30px; /* Отступ сверху для избегания конфликта с кнопкой закрытия на маленьких экранах */
     margin-left: 2.3em;
+    transition: all 1s ease-in-out; 
 }
 
 /* Ссылки навигации внутри оверлея */
@@ -162,7 +177,9 @@ header.reverse {
     font-size: 36px;
     color: #818181;
     display: block; /* Блочный элемент */
-    transition: color 0.3s; /* Переход цвета при наведении */
+    /* transition: color 0.3s;  */
+    /* Переход цвета при наведении */
+    transition: all 1s ease-in-out; 
 }
 
 /* При наведении на ссылки внутри оверлея */
@@ -175,7 +192,75 @@ header.reverse {
     .overlay a {font-size: 20px}
 }
 
-.visual-content {
+/* свитчер для смены темы */
+.switch {
+    display: inline-flex;
+    align-items: center;
+    position: fixed;
+    top: 90%;
+    left: 95%;
+
+    width: 60px;
+    height: 34px;
+  }
+
+  .moon-icon {
+    position: relative;
+    right: 90%;
+}
+
+  /* Hide default HTML checkbox */
+  .switch input {display:none;}
+
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(119, 119, 119); 
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: rgb(200, 199, 199); /* Начальный цвет белый */
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: rgb(200, 199, 199);
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px rgb(119, 119, 119); 
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    background-color: rgb(119, 119, 119); /* Цвет после включения */
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  .visual-content {
     width: 100%;
     height: 100vh; /* Занимает всю высоту окна */
     overflow: hidden; /* Обрезает лишнее содержимое */

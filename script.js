@@ -1,5 +1,8 @@
 const burger = document.querySelector('.burger');
 const overlay = document.getElementById('myNav');
+const header = document.querySelector('header');
+const logo = document.querySelector('.logo');
+const localLogo = localStorage.getItem('logo');
 
 burger.addEventListener('click', () => {
     burger.classList.toggle('active');
@@ -11,16 +14,11 @@ burger.addEventListener('click', () => {
 });
 
 document.addEventListener("DOMContentLoaded", ()=> {
-    const header = document.querySelector('header');
-    const logo = document.querySelector('.logo');
-    
-    const localLogo = localStorage.getItem('logo');
 
     if (localLogo === 'move') {
         logo.classList.add('move');
         logo.style.opacity = 1; // логотип уже видим
     }
-
 
     header.classList.add('start');
 
@@ -30,16 +28,16 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     setTimeout(()=> {
         logo.classList.add('move');
-    }, 4000);
+    }, 2000);
     
     setTimeout(()=>{
         burger.classList.add('activete');
-    }, 8000 );
+    }, 4000 );
 
 
     setTimeout(()=> {
     header.classList.add('move');
-    }, 6000);
+    }, 3000);
 
     logo.addEventListener('click', () => {
         if (burger.classList.contains('activete')) {
@@ -63,3 +61,51 @@ document.addEventListener("DOMContentLoaded", ()=> {
         }, 6000);
     });
 }) ;
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const switcher = document.querySelector('.theme-switcher');
+  
+    switcher.addEventListener('click', function () {
+        applyTheme();
+    });
+
+    function applyTheme() {
+        let themURL;
+        if(switcher.checked){
+            themURL = 'css/dark-theme.css';
+            document.querySelector('[title="theme"]').setAttribute("href", themURL);
+        } else {
+             themURL = 'css/light-theme.css'
+             document.querySelector('[title="theme"]').setAttribute("href", themURL);
+        }   
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const switcher = document.querySelector('.theme-switcher');
+    const themeLink = document.querySelector('[title="theme"]');
+  
+    // Функция для применения темы
+    function applyTheme(themeName) {
+        if (themeName === 'dark') {
+            themeLink.setAttribute('href', 'css/dark-theme.css');
+            switcher.checked = true;
+        } else {
+            themeLink.setAttribute('href', 'css/light-theme.css');
+            switcher.checked = false;
+        }
+        localStorage.setItem('theme', themeName);
+    }
+
+    // Проверка сохраненной темы при загрузке страницы
+    const savedTheme = localStorage.getItem('theme');
+    applyTheme(savedTheme || 'light'); // По умолчанию светлая тема
+  
+    // Обработчик переключения темы
+    switcher.addEventListener('click', function () {
+        const theme = switcher.checked ? 'dark' : 'light';
+        applyTheme(theme);
+    });
+});

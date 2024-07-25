@@ -1,0 +1,33 @@
+* {
+    background-color: rgb(200, 199, 199);
+    color: rgb(119, 119, 119); 
+} 
+
+header {
+    background-color: rgb(200, 199, 199);
+}
+
+.navbar::before,
+.navbar::after,
+.navbar-middle {
+    background: rgb(119, 119, 119);
+}
+/* и тут анимации?! */
+.burger.active::before {
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0);
+}
+
+/* Оверлей */
+.overlay {
+    background-color: rgb(200, 199, 199); /* Цвет фона с прозрачностью */
+}
+
+/* Ссылки навигации внутри оверлея */
+.overlay a {
+    color: #818181;
+}
+
+/* При наведении на ссылки внутри оверлея */
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}

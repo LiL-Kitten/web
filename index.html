@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>meren.</title>
-    <link rel="stylesheet" href="new-style.css">
+    <link rel="stylesheet" href="css/new-style.css">
+    <link rel="stylesheet" title="theme" href="css/light-theme.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100;200;400&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-            <h1 class="logo">meren.</h1>
-            <button class="navbar burger">
-                <div class="navbar-middle"></div>
-            </button>
+        <h1 class="logo">meren.</h1>
+        <button class="navbar burger">
+            <div class="navbar-middle"></div>
+        </button>
     </header>
-
+<!-- сделать прерывание анимацийсв  -->
     <!-- Оверлейное меню -->
     <div id="myNav" class="overlay">
         <!-- Контент оверлейного меню -->
@@ -25,20 +26,20 @@
             <a href="#">Услуги</a>
             <a href="#">Работы</a>
             <a href="#">Команда</a>
-
-            <label class="chng-lang"> 
-
-            </label>
-            <label calss="chng-them"></label>
         </div>
+        <!-- Кнопка для переключения темы -->
+        <label class="switch">
+            <img src="pictures/moon.svg" class="moon-icon" alt="Moon with rounded corners" width="60" height="60">
+            <input type="checkbox" class="theme-switcher">
+            <span class="slider round"></span>
+        </label>
+
     </div>
 
     <div class="visual-content">
         <img src="pictures/pic1.jpg" alt="popa">
     </div>
     
-    <main>ебать ты лох ринашка</main>
-
     <script src="script.js"></script>
 </body>
 </html>
