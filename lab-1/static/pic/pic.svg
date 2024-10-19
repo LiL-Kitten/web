@@ -1,0 +1,34 @@
+<svg id="mySvg" width="1200" height="1200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="1200" fill="white" />
+  
+  <line x1="600" y1="0" x2="600" y2="1200" stroke="black" stroke-width="6" /> <!-- Ось Y -->
+  <line x1="0" y1="600" x2="1200" y2="600" stroke="black" stroke-width="6" /> <!-- Ось X -->
+
+  <line x1="150" y1="570" x2="150" y2="630" stroke="black" stroke-width="6" /> 
+  <line x1="450" y1="570" x2="450" y2="630" stroke="black" stroke-width="6" /> 
+  <line x1="750" y1="570" x2="750" y2="630" stroke="black" stroke-width="6" /> 
+  <line x1="1050" y1="570" x2="1050" y2="630" stroke="black" stroke-width="6" /> 
+
+  <line x1="570" y1="150" x2="630" y2="150" stroke="black" stroke-width="6" /> 
+  <line x1="570" y1="450" x2="630" y2="450" stroke="black" stroke-width="6" /> 
+  <line x1="570" y1="750" x2="630" y2="750" stroke="black" stroke-width="6" /> 
+  <line x1="570" y1="1050" x2="630" y2="1050" stroke="black" stroke-width="6" /> 
+
+  
+  <path d="
+    M 150,600 
+    L 150,750     
+    L 600,750 
+    L 600,1050
+    L 750,600
+    L 600,600 
+    L 600,450 
+    A 150,150 0 0,1 750,600 
+    L 600,600 
+    L 150,600 
+    Z" 
+    fill="lightblue" />
+
+  <polygon points="585,15 615,15 600,0" fill="black" /> <!-- Стрелка на оси Y вверх -->
+  <polygon points="1195,595 1195,605 1200,600" fill="black" /> <!-- Стрелка на оси X вправо -->
+</svg>

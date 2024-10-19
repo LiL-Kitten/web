@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lab-1</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="fio">Иевлев Ринат Андреевич номер группы: P3230 <br>Вариант лабораторной: 377912</header>
+    
+    <main>
+        <form id="values" action="http://localhost:8080/fcgi-bin/lab-1.jar" method="post">
+            <div class="first">
+                <label for="value-x">Выбери координату X</label>
+                <br> 
+                <div>
+                    <button type="button" class="value-x" value="-4">-4</button>
+                    <button type="button" class="value-x" value="-3">-3</button>
+                    <button type="button" class="value-x" value="-2">-2</button>
+                    <button type="button" class="value-x" value="-1">-1</button>
+                    <button type="button" class="value-x" value="0">0</button>
+                    <button type="button" class="value-x" value="1">1</button>
+                    <button type="button" class="value-x" value="2">2</button>
+                    <button type="button" class="value-x" value="3">3</button>
+                    <button type="button" class="value-x" value="4">4</button>
+                </div>
+            </div>
+            <br>
+            <div class="second">
+                <label for="value-y">Выбери координату Y</label>
+                <br>
+                <input type="text" class="value-y" placeholder="от -3 до 3" name="y" maxlength="7">
+            </div>
+            <br>
+            <div class="third">
+                <label for="value-r">Выбери координату R</label>
+                <div>
+                    <input type="radio" name="value-r" value="1"> 1
+                    <input type="radio" name="value-r" value="1.5"> 1,5
+                    <input type="radio" name="value-r" value="2"> 2
+                    <input type="radio" name="value-r" value="2.5"> 2,5
+                    <input type="radio" name="value-r" value="3"> 3
+                </div>
+            </div>
+            <button type="submit" class="result">получить</button>
+
+            <div class="error"></div>
+
+        </form>
+        <div class="picture">
+            <svg id="mySvg" width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+                <rect width="400" height="400" fill="white" />
+                <line x1="200" y1="0" x2="200" y2="400" stroke="black" stroke-width="2" /> 
+                <line x1="0" y1="200" x2="400" y2="200" stroke="black" stroke-width="2" /> 
+                <path d="
+                M 50,200 
+                L 50,275     
+                L 200,275 
+                L 200,350
+                L 275,200
+                Q 275 125 200 125
+                L 200,200
+                Z" 
+                  fill="lightblue" 
+                  stroke="blue"/>
+                <polygon points="195,5 205,5 200,0" fill="black" /> 
+                <text x="208" y="8" font-family="Arial" font-size="12" fill="black">
+                    y
+                </text>
+                <polygon points="400,200 395,205 395,195" fill="black" />
+                <text x="393" y="190" font-family="Arial" font-size="12" fill="black">
+                    x
+                </text>
+
+
+                <line x1="50" y1="195" x2="50" y2="205" stroke="black" stroke-width="2" /> 
+                <text x="43" y="190" font-family="Arial" font-size="12" fill="black">
+                    -R
+                </text>
+                <line x1="125" y1="195" x2="125" y2="205" stroke="black" stroke-width="2" /> 
+                <text x="112" y="190" font-family="Arial" font-size="12" fill="black">
+                    -R/2
+                </text>
+                <line x1="275" y1="195" x2="275" y2="205" stroke="black" stroke-width="2" /> 
+                <text x="266" y="190" font-family="Arial" font-size="12" fill="black">
+                    R/2
+                </text>
+                <line x1="350" y1="195" x2="350" y2="205" stroke="black" stroke-width="2" /> 
+                <text x="346" y="190" font-family="Arial" font-size="12" fill="black">
+                    R
+                </text>
+
+                <line x1="195" y1="50" x2="205" y2="50" stroke="black" stroke-width="2" /> 
+                <text x="207" y="53" font-family="Arial" font-size="12" fill="black">
+                    R
+                </text>
+                <line x1="195" y1="125" x2="205" y2="125" stroke="black" stroke-width="2" /> 
+                <text x="207" y="128" font-family="Arial" font-size="12" fill="black">
+                    R/2
+                </text>
+                <line x1="195" y1="275" x2="205" y2="275" stroke="black" stroke-width="2" /> 
+                <text x="207" y="278" font-family="Arial" font-size="12" fill="black">
+                    -R
+                </text>
+                <line x1="195" y1="350" x2="205" y2="350" stroke="black" stroke-width="2" /> 
+                <text x="207" y="353" font-family="Arial" font-size="12" fill="black">
+                    -R/2
+                </text>
+
+
+            </svg>
+        </div>
+        <!-- A 75,75 0 0,1 275,200  -->
+    </main>
+    <div class="history">
+        <table>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+                <th>R</th>
+                <th>время выполнения</th>
+                <th>дата</th>
+                <th>результат</th>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+
