@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Sender implements DataSender {
 
-    private Logger log;
+    private final Logger log;
 
     public Sender(Logger log){
         this.log = log;

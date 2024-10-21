@@ -2,14 +2,12 @@ package server;
 
 import com.fastcgi.FCGIInterface;
 
-import java.io.IOException;
-
 public class Main {
 
-    private static FCGIInterface fcgiInterface = new FCGIInterface();
-    private static Logger logger = new Logger("server.log");
-    private static DataReceiver receiver = new Receiver(logger);
-    private static DataSender sender = new Sender(logger);
+    private static final FCGIInterface fcgiInterface = new FCGIInterface();
+    private static final Logger logger = new Logger("server.log");
+    private static final DataReceiver receiver = new Receiver(logger);
+    private static final DataSender sender = new Sender(logger);
 
     public static void main(String[] args) {
         logger.log("prog start");
@@ -24,7 +22,7 @@ public class Main {
                     sender.sendData(data);
                     logger.log("prog finished, all OK");
                 } catch (Exception e) {
-                    logger.logError("wtf?");
+                    logger.logError("we have terrible problem....");
                 }
             }
         }

@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Receiver implements DataReceiver {
 
-    private Logger log;
+    private final Logger log;
 
     public Receiver(Logger log) {
         this.log = log;
@@ -39,11 +39,9 @@ public class Receiver implements DataReceiver {
             );
 
         } catch (IOException e) {
-            log.logError("I hate this shit " + e.getMessage());
+            log.logError("I/O  " + e.getMessage());
         } catch (NumberFormatException e) {
             log.logError("maybe i invalid... \n" + e.getMessage());
-        } catch (ArrayIndexOutOfBoundsException e) {
-            log.logError("you peace of shit >.< \n " + e.getMessage());
         } catch (Exception e) {
             log.logError("Houston  we have problem \n " + e.getMessage());
         }

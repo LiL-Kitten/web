@@ -6,18 +6,15 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class Data implements Validate {
-    private float x;
-    private float y;
-    private float r;
+    private final float x;
+    private final float y;
+    private final float r;
 
-    private boolean condition;
+    private final boolean condition;
 
-    private String date;
+    private final String date;
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-    private LocalDateTime now = LocalDateTime.now();
-    private long time;
+    private final long time;
 
     Data(float x, float y, float r) {
         this.x = x;
@@ -30,6 +27,8 @@ public class Data implements Validate {
 
         this.time = ChronoUnit.NANOS.between(start, end);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
         this.date = now.format(formatter);
 
 

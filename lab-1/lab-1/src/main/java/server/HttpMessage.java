@@ -18,10 +18,7 @@ public enum HttpMessage {
                 "result": %b
             }
             """);
-//    ERROR("""
-//            Sorry you have some problems
-//            =(
-//            """);
+
 
 
     private final String template;
