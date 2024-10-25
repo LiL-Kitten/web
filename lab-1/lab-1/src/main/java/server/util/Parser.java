@@ -16,7 +16,6 @@ public class Parser {
     public Data parseData(String data) {
             logger.log("start parsing");
         try {
-            Data txt = mapper.readValue(data, Data.class);
             logger.log("nice parsing man!");
             return  mapper.readValue(data, Data.class);
         } catch (JsonProcessingException e) {

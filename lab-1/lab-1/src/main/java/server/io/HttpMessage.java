@@ -5,9 +5,9 @@ public enum HttpMessage {
             HTTP/1.1 200 OK
             Content-Type: application/json
             Content-Length: %d
-                        
+                       \s
             %s
-            """),
+           \s"""),
     RESULT_JSON("""
             {
                 "x": "%s",
