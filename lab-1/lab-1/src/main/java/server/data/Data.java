@@ -1,37 +1,34 @@
-package server;
+package server.data;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-public class Data implements Validate {
+public final class Data implements Validate {
+
     private final float x;
     private final float y;
     private final float r;
 
-    private final boolean condition;
+    private boolean condition;
 
-    private final String date;
+    private String date;
 
-    private final long time;
+    private long time;
 
-    Data(float x, float y, float r) {
+    @JsonCreator
+    public Data(@JsonProperty("x") float x,
+                @JsonProperty("y") float y,
+                @JsonProperty("r") float r) {
         this.x = x;
         this.y = y;
         this.r = r;
 
-        var start = Instant.now();
-        this.condition = validate();
-        var end = Instant.now();
-
-        this.time = ChronoUnit.NANOS.between(start, end);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        this.date = now.format(formatter);
-
-
+        createData();
     }
 
     public float getR() {
@@ -58,11 +55,28 @@ public class Data implements Validate {
         return time;
     }
 
+    public void setDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        this.date = now.format(formatter);
+    }
+
+    public void createData() {
+        var start = Instant.now();
+        this.condition = validate();
+        var end = Instant.now();
+
+        this.time = ChronoUnit.NANOS.between(start, end);
+
+        setDate();
+    }
+
     @Override
     public boolean validate() {
         return ((y <= r) && (y >= 0) && (x >= -r) && (x <= 0)) ||
                 ((x >= 0) && (y >= 0) && (y <= (-0.5 * x + (double) r / 2))) ||
                 ((Math.pow(x, 2) + Math.pow(y, 2) <= Math.pow(r, 2)) && (x <= 0) && (y <= 0));
+
     }
 
     @Override
