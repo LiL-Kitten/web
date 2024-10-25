@@ -7,12 +7,6 @@ import java.io.IOException;
 
 public class Logger {
 
-    private String filePath;
-
-    public Logger(String filePath) {
-        this.filePath = filePath;
-    }
-
     public void log(String message) {
         log("|INFO| ", message);
     }

@@ -9,7 +9,7 @@ import server.util.Parser;
 public class Main {
 
     private static final FCGIInterface fcgiInterface = new FCGIInterface();
-    private static final Logger logger = new Logger("server.log");
+    private static final Logger logger = new Logger();
     private static final IReceiver receiver = new Receiver(logger);
     private static final ISender sender = new Sender(logger);
     private static final Parser parse = new Parser(logger);
@@ -36,6 +36,7 @@ public class Main {
                 maker.someResponse(HttpMessage.STRANGE_REQUEST.getTemplate());
                 String response = maker.getResponse();
                 sender.sendData(response);
+                logger.logError("we have some strange HTTP method which my server not supported");
             }
         }
     }
