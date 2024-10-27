@@ -11,7 +11,7 @@ body {
 }
 
 .fio {
-  font-size: 3.3vw; /* Убедитесь, что это именно то, что вам нужно */
+  font-size: 3.3vw; 
   color: #ffffff;
   padding: 2%;
   margin: 0;
@@ -32,15 +32,9 @@ main {
 }
 
 #values {
-  flex: 1; /* Позволяем блоку занимать оставшееся пространство */
+  flex: 1; 
 }
 
-.picture {
-  flex: 0 0 auto; 
-  width: 400px;
-  height: 400px;
-  border-radius: 10px;
-}
  
 #mySvg {
   width: 400px; 
@@ -50,7 +44,7 @@ main {
 
 button {
   width: 15%;  
-  min-width: 100px; /* Добавлено для минимальной ширины кнопок */
+  min-width: 100px;
   background-color: white;  
   color: black;  
   border: none;  
@@ -103,7 +97,7 @@ table {
   border-collapse: collapse;
   padding: 5%;
   border-radius: 10px; 
-  border: 2px solid #ffffff; /* Указан цвет границы */
+  border: 2px solid #ffffff;
   overflow: hidden; 
 }
 
