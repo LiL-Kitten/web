@@ -4,49 +4,69 @@
     <meta charset="UTF-8">
     <title>lab-1</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="script.js" defer></script>
+    <!-- <script src="scripts/script.js" defer></script> -->
+    <script src="scripts/validate.js" async></script>
+    <script src="scripts/index.js" async></script>
+    <script src="scripts/sender.js" async></script>
+
 </head>
 <body>
     <header class="fio">Иевлев Ринат Андреевич номер группы: P3230 <br>Вариант лабораторной: 377912</header>
     
-    <main>
-        <form id="values" action="http://localhost:8080/fcgi-bin/lab-1.jar" method="post">
-            <div class="first">
-                <label for="value-x">Выбери координату X</label>
-                <br> 
-                <div>
-                    <button type="button" class="value-x" value="-4">-4</button>
-                    <button type="button" class="value-x" value="-3">-3</button>
-                    <button type="button" class="value-x" value="-2">-2</button>
-                    <button type="button" class="value-x" value="-1">-1</button>
-                    <button type="button" class="value-x" value="0">0</button>
-                    <button type="button" class="value-x" value="1">1</button>
-                    <button type="button" class="value-x" value="2">2</button>
-                    <button type="button" class="value-x" value="3">3</button>
-                    <button type="button" class="value-x" value="4">4</button>
-                </div>
-            </div>
-            <br>
-            <div class="second">
-                <label for="value-y">Выбери координату Y</label>
-                <br>
-                <input type="text" class="value-y" placeholder="от -3 до 3" name="y" maxlength="7">
-            </div>
-            <br>
-            <div class="third">
-                <label for="value-r">Выбери координату R</label>
-                <div>
-                    <input type="radio" name="value-r" value="1"> 1
-                    <input type="radio" name="value-r" value="1.5"> 1,5
-                    <input type="radio" name="value-r" value="2"> 2
-                    <input type="radio" name="value-r" value="2.5"> 2,5
-                    <input type="radio" name="value-r" value="3"> 3
-                </div>
-            </div>
-            <button type="submit" class="result">получить</button>
+    <div class="error" id="error">
+        <div class="error-content">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <h3 id="errorHeader"></h3>
+            <p id="errorMessage"></p>
+        </div>
+    </div>
 
-            <div class="error"></div>
+    <main>
+        <form id="values">
+            <p>Выбери координату X</p>
+            <div class="value-x">
+                    <button type="button" value="-4">-4</button>
+                    <button type="button" value="-3">-3</button>
+                    <button type="button" value="-2">-2</button>
+                    <button type="button" value="-1">-1</button>
+                    <button type="button" value="0">0</button>
+                    <button type="button" value="1">1</button>
+                    <button type="button" value="2">2</button>
+                    <button type="button" value="3">3</button>
+                    <button type="button" value="4">4</button>
+            </div>
+
+            <p>Выбери координату Y</p>
+            <div class="value-y">
+                <input type="text" placeholder="от -3 до 3" name="y" maxlength="7">
+            </div>
+            
+            <p>Выбери координату R</p>
+            <div class="value-r">
+                <label>
+                    <input type="radio" name="value" value="1">
+                    <span class="label-radio">1</span>
+                </label>
+                <label>
+                    <input type="radio" name="value" value="1.5">
+                    <span class="label-radio">1,5</span>
+                </label>
+                <label>
+                    <input type="radio" name="value" value="2">
+                    <span class="label-radio">2</span>
+                </label>
+                <label>
+                    <input type="radio" name="value" value="2.5">
+                    <span class="label-radio">2,5</span>
+                </label>
+                <label>
+                    <input type="radio" name="value" value="3">
+                    <span class="label-radio">3</span>
+                </label>
+            </div>
+            
+            
+            <button class="result">получить</button>
 
         </form>
         <div class="picture">
@@ -114,18 +134,18 @@
         </div>
         <!-- A 75,75 0 0,1 275,200  -->
     </main>
-    <div class="history">
-        <table>
-            <tr>
-                <th>X</th>
-                <th>Y</th>
-                <th>R</th>
-                <th>время выполнения</th>
-                <th>дата</th>
-                <th>результат</th>
-            </tr>
-        </table>
-    </div>
+
+    <table class="history">
+        <tr>
+            <th>X</th>
+            <th>Y</th>
+            <th>R</th>
+            <th>время выполнения</th>
+            <th>дата</th>
+            <th>результат</th>
+        </tr>
+    </table>
+
 </body>
 </html>
 
