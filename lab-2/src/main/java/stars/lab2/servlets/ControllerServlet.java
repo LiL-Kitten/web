@@ -1,5 +1,6 @@
 package stars.lab2.servlets;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,19 +11,21 @@ import java.io.IOException;
 public class ControllerServlet extends HttpServlet {
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        String values = request.getQueryString();
         try {
-            String values = request.getQueryString();
-
             if (values != null && !values.isEmpty()) {
                 request.setAttribute("values", values);
+                request.setAttribute("fromController", "true");
 
-                request.getRequestDispatcher("/checker").forward(request, response);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/checker");
+                dispatcher.forward(request, response);
             } else {
-                response.sendRedirect( "/index.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+                dispatcher.forward(request, response);
             }
         } catch (ServletException | IOException e) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setStatus(500);
         }
     }
 }

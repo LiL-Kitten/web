@@ -1,17 +1,12 @@
 package stars.lab2.bean;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 
-public final class Data implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+public final class Data {
 
     public Data(float x, float y, float r) {
         this.x = x;
@@ -21,9 +16,9 @@ public final class Data implements Serializable {
         createData();
     }
 
-    private float x;
-    private float y;
-    private float r;
+    private final float x;
+    private final float y;
+    private final float r;
 
     private boolean condition;
 
@@ -73,9 +68,14 @@ public final class Data implements Serializable {
     }
 
     public boolean validate() {
-        return ((y <= r) && (y >= 0) && (x >= -r) && (x <= 0)) ||
-                ((x >= 0) && (y >= 0) && (y <= (-0.5 * x + (double) r / 2))) ||
-                ((Math.pow(x, 2) + Math.pow(y, 2) <= Math.pow(r, 2)) && (x <= 0) && (y <= 0));
+        double scaledX = x ;
+        double scaledY = y ;
+
+        boolean inRectangle = (scaledX >= 0 && scaledX <= r && scaledY >= -r && scaledY <= 0);
+        boolean inTriangle = (scaledX >= 0 && scaledX <= r && scaledY >= 0 && scaledY <= r / 2 && scaledY <= (-0.5 * scaledX + r / 2));
+        boolean inCircle = (scaledX < 0 && scaledY < 0 && (Math.pow(scaledX, 2) + Math.pow(scaledY, 2) <= Math.pow(r / 2, 2)));
+
+        return inRectangle || inTriangle || inCircle;
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Named("data")
+@Named
 @SessionScoped
 public class DataList implements Serializable {
     private final List<Data> list = new ArrayList<>();

@@ -10,7 +10,7 @@ body {
   margin: 0; 
 }
 
-.fio {
+header {
   font-size: 3.3vw; 
   color: #ffffff;
   padding: 2%;
@@ -40,7 +40,7 @@ body {
 .close-btn {
   cursor: pointer;
   float: right;
-  font-size: 20px;
+  font-size: 30px;
   color: #fff;
 }
 
@@ -146,13 +146,10 @@ input[type="radio"]:checked + .label-radio {
   color: white;  
 }
 
-
-
 .history {
-  margin-top: 20px; 
+  margin-top: 20px;
   background-color: #860bbb;
   border-radius: 10px;
-  margin: 2%;
   border: 2px solid #ffffff;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }

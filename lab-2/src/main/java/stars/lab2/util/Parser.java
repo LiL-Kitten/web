@@ -11,12 +11,13 @@ import java.util.regex.Pattern;
 
 public final class Parser {
 
-    private static final String REGEX = "([^&=]+)=?([^&]*)";
-    private static final Pattern pattern = Pattern.compile(REGEX);
+    private static final String REG_RDRCT = "redirect=([^&]*)";
+    private static final String REGEX = "(x|y|r)=([^&]*)";
     private static final ObjectMapper json = new ObjectMapper();
 
     public Data parse(String txt) throws ParsingException {
         Map<String, Float> map = new HashMap<>();
+        Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(txt);
 
         try {
@@ -41,6 +42,17 @@ public final class Parser {
             throw new ParsingException("ошибка во время парсинга строки");
         } catch (Exception e) {
             throw new ParsingException("неизвестная ошибка", e);
+        }
+    }
+
+    public boolean checkRedirect(String txt) {
+        Pattern pattern = Pattern.compile(REG_RDRCT);
+        Matcher matcher = pattern.matcher(txt);
+
+        if (matcher.find()) {
+            return "true".equals(matcher.group(1));
+        } else {
+            return false;
         }
     }
 

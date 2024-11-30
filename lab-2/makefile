@@ -1,5 +1,7 @@
 .PHONY: run kill check connect build
 
+all: kill build run
+
 run: 
 		docker run -d -p 8080:8080 lab
 		@$(MAKE) check

@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>lab-1</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-    <script src="${pageContext.request.contextPath}/js/validate.js" async></script>
-    <script src="${pageContext.request.contextPath}/js/index.js" async></script>
-    <script src="${pageContext.request.contextPath}/js/sender.js" async></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/index.js" defer></script>
+    <script src="js/validate.js" defer></script>
+    <script src="js/sender.js" defer></script>
+    <script src="js/svgClickHandler.js" defer></script>
 
 </head>
 <body>
@@ -16,36 +17,20 @@
 <div class="error" id="error">
     <div class="error-content">
         <span class="close-btn" id="closeBtn">&times;</span>
-        <h3 id="errorHeader"></h3>
+        <p id="errorHeader"></p>
         <p id="errorMessage"></p>
     </div>
 </div>
 
 <main>
     <form id="values">
-        <p>Выбери координату X</p>
         <div class="value-x">
-            <hr>
-            <button type="button" value="-4">-4</button>
-            <button type="button" value="-3">-3</button>
-            <button type="button" value="-2">-2</button>
-            <button type="button" value="-1">-1</button>
-            <button type="button" value="0">0</button>
-            <button type="button" value="1">1</button>
-            <button type="button" value="2">2</button>
-            <button type="button" value="3">3</button>
-            <button type="button" value="4">4</button>
+            <label for="coordinate-x">Выбери координату X</label>
+            <input type="text" id="coordinate-x" placeholder="от -3 до 3" name="x" maxlength="7">
         </div>
 
         <p>Выбери координату Y</p>
         <div class="value-y">
-            <label>
-                <input type="text" placeholder="от -3 до 3" name="y" maxlength="7">
-            </label>
-        </div>
-
-        <p>Выбери координату R</p>
-        <div class="value-r">
             <label>
                 <input type="radio" name="value" value="1">
                 <span class="label-radio">1</span>
@@ -66,25 +51,33 @@
                 <input type="radio" name="value" value="3">
                 <span class="label-radio">3</span>
             </label>
+
         </div>
 
+        <br>
+        <div class="value-r">
+            <label for="coordinate-r">Выбери координату X</label>
+            <input type="text" id="coordinate-r" placeholder="от 2 до 5" name="r" maxlength="7">
+        </div>
 
         <button class="result">получить</button>
 
     </form>
+
     <div class="picture">
         <svg id="mySvg" width="400" height="400" xmlns="http://www.w3.org/2000/svg">
             <rect width="400" height="400" fill="white"></rect>
             <line x1="200" y1="0" x2="200" y2="400" stroke="black" stroke-width="2"></line>
             <line x1="0" y1="200" x2="400" y2="200" stroke="black" stroke-width="2"></line>
             <path d="
-                M 50,200
-                L 50,275
-                L 200,275
+                M 200,125
+                L 350,200
+                L 350,350
                 L 200,350
-                L 275,200
-                Q 275 125 200 125
+                L 200,275
+                Q 125,275 125,200
                 L 200,200
+                L 200,125
                 Z"
                   fill="lightblue"
                   stroke="blue"></path>
@@ -106,10 +99,7 @@
             <text x="112" y="190" font-family="Arial" font-size="12" fill="black">
                 -R/2
             </text>
-            <line x1="275" y1="195" x2="275" y2="205" stroke="black" stroke-width="2"></line>
-            <text x="266" y="190" font-family="Arial" font-size="12" fill="black">
-                R/2
-            </text>
+
             <line x1="350" y1="195" x2="350" y2="205" stroke="black" stroke-width="2"></line>
             <text x="346" y="190" font-family="Arial" font-size="12" fill="black">
                 R
@@ -134,22 +124,13 @@
 
 
         </svg>
-        <div class="eSheep">
-            <button type="button"> добавить овечку </button>
-        </div>
     </div>
+
+
 </main>
 <hr>
-<table class="history">
-    <tr>
-        <th>X</th>
-        <th>Y</th>
-        <th>R</th>
-        <th>время выполнения</th>
-        <th>дата</th>
-        <th>результат</th>
-    </tr>
-</table>
+
+<jsp:include page="table.jsp"/>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 package stars.lab2.servlets;
 
-import jakarta.ejb.EJB;
+import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,34 +13,30 @@ import java.io.IOException;
 
 public class AreaCheckServlet extends HttpServlet {
 
-    @EJB
+    @Inject
     private DataList list;
 
     private static final Parser PARSER = new Parser();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String values = req.getParameter("values");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        String values = (String) req.getAttribute("values");
 
-        if (values != null && !values.isEmpty()) {
-            try {
-                Data data = PARSER.parse(values);
-
-                list.addData(data);
-                req.getSession().setAttribute("list", list);
-
-                resp.sendRedirect(req.getContextPath() + "/result.jsp");
-
-            } catch (ParsingException e) {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                return;
-            }
+        if (values == null || values.isEmpty()) {
+            resp.setStatus(400);
+            return;
         }
 
-        resp.sendRedirect("index.jsp");
+        try {
+            Data data = PARSER.parse(values);
+            list.addData(data);
+
+            resp.sendRedirect("/app/result.jsp");
+        } catch (ParsingException e) {
+                resp.setStatus(400);
+        } catch (IOException e) {
+                resp.setStatus(500);
+                getServletContext().log("Error parsing data", e);
+        }
     }
-
-
 }
-
-
