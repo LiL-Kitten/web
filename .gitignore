@@ -6,4 +6,10 @@ web-pres.pdf
 .DS_Store
 .gitignore
 
+
+**/target
+**/mvnw/
+**/mvnw.cmd
+**/.mvn/
+
 test-lab
