@@ -1,12 +1,16 @@
 package stars.lab2.bean;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+public final class Data implements Serializable {
 
-public final class Data {
+    @Serial
+    private static final long serialVersionUID = 2524062387050598152L;
 
     public Data(float x, float y, float r) {
         this.x = x;

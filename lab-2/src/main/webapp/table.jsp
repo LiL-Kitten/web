@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="stars.lab2.bean.Data" %>
-<%@ page import="java.util.List" %>
-<%@ page import="stars.lab2.bean.DataList" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <table class="history">
   <tr>
@@ -13,29 +12,29 @@
     <th>результат</th>
   </tr>
 
-  <%
-    DataList dataItems = (DataList) request.getAttribute("list");
-    List<Data> dataList = dataItems != null ? dataItems.getList() : null;
-
-    if (dataList != null && !dataList.isEmpty()) {
-      for (Data data : dataList) {
-  %>
-  <tr>
-    <td><%= data.getX() %></td>
-    <td><%= data.getY() %></td>
-    <td><%= data.getR() %></td>
-    <td><%= data.getTime() %></td>
-    <td><%= data.getDate() %></td>
-    <td><%= data.isCondition() ? "Попал" : "Промазал" %></td>
-  </tr>
-  <%
-    }
-  } else {
-  %>
-  <tr>
-    <td colspan="6">Нет данных для отображения</td>
-  </tr>
-  <%
-    }
-  %>
+  <c:set var="dataItems" value="#{list}" />
+  <c:choose>
+    <c:when test="${not empty dataItems.list}">
+      <c:forEach var="data" items="${dataItems.list}">
+        <tr>
+          <td>${data.x}</td>
+          <td>${data.y}</td>
+          <td>${data.r}</td>
+          <td>${data.time}</td>
+          <td>${data.date}</td>
+          <td>
+            <c:choose>
+              <c:when test="${data.condition}">Попал</c:when>
+              <c:otherwise>Промазал</c:otherwise>
+            </c:choose>
+          </td>
+        </tr>
+      </c:forEach>
+    </c:when>
+    <c:otherwise>
+      <tr>
+        <td colspan="6">Нет данных для отображения</td>
+      </tr>
+    </c:otherwise>
+  </c:choose>
 </table>

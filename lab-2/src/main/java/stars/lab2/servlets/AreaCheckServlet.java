@@ -13,10 +13,14 @@ import java.io.IOException;
 
 public class AreaCheckServlet extends HttpServlet {
 
-    @Inject
-    private DataList list;
-
+    private final DataList list;
     private static final Parser PARSER = new Parser();
+
+    // Конструктор с инъекцией зависимостей
+    @Inject
+    public AreaCheckServlet(DataList list) {
+        this.list = list;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
@@ -33,10 +37,10 @@ public class AreaCheckServlet extends HttpServlet {
 
             resp.sendRedirect("/app/result.jsp");
         } catch (ParsingException e) {
-                resp.setStatus(400);
+            resp.setStatus(400);
         } catch (IOException e) {
-                resp.setStatus(500);
-                getServletContext().log("Error parsing data", e);
+            resp.setStatus(500);
+            getServletContext().log("Error parsing data", e);
         }
     }
 }
