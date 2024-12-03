@@ -56,7 +56,7 @@
 
         <br>
         <div class="value-r">
-            <label for="coordinate-r">Выбери координату X</label>
+            <label for="coordinate-r">Выбери координату R</label>
             <input type="text" id="coordinate-r" placeholder="от 2 до 5" name="r" maxlength="7">
         </div>
 

@@ -3,12 +3,16 @@ package stars.lab2.servlets;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.ValidatorFactory;
 import stars.lab2.bean.Data;
 import stars.lab2.bean.DataList;
 import stars.lab2.util.Parser;
 import stars.lab2.util.ParsingException;
 
 import java.io.IOException;
+import java.util.Set;
 
 public class AreaCheckServlet extends HttpServlet {
 
@@ -26,8 +30,18 @@ public class AreaCheckServlet extends HttpServlet {
         try {
             Data data = PARSER.parse(values);
 
+            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+            jakarta.validation.Validator validator = factory.getValidator();
+
+            Set<ConstraintViolation<Data>> violations = validator.validate(data);
+
+            if (!violations.isEmpty()) {
+                resp.setStatus(400);
+                return;
+            }
+
             DataList list = (DataList) req.getSession().getAttribute("list");
-            if(list == null) {
+            if (list == null) {
                 list = new DataList();
             }
 

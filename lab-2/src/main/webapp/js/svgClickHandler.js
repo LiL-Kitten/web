@@ -13,7 +13,7 @@ document.getElementById('mySvg').addEventListener('click', function(event) {
     let data = new Data(valueX, valueY, r)
 
     try {
-        data.checkR()
+        data.checker()
     } catch (err) {
         viewTrouble(err)
         return;
