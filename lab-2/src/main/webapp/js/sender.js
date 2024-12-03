@@ -10,7 +10,7 @@ async function send(obj) {
     })
 
     try {
-        const response = await fetch(`http://localhost:8080/app/controller?${params.toString()}`, {
+        const response = await fetch(`/app/controller?${params.toString()}`, {
             method: 'GET'
         })
 

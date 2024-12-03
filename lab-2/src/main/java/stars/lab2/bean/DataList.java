@@ -1,15 +1,10 @@
 package stars.lab2.bean;
 
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Named;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Named(value = "list")
-@SessionScoped
 public class DataList implements Serializable {
 
     @Serial

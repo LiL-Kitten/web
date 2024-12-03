@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>lab-1</title>
+    <title>lab-2</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/index.js" defer></script>
     <script src="js/validate.js" defer></script>
@@ -12,7 +12,7 @@
 
 </head>
 <body>
-<header class="fio">Иевлев Ринат Андреевич номер группы: P3230 <br>Вариант лабораторной: 377912</header>
+<header class="fio">Иевлев Ринат Андреевич номер группы: P3230 <br>Вариант лабораторной: 377954</header>
 
 <div class="error" id="error">
     <div class="error-content">

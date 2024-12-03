@@ -1,6 +1,5 @@
 package stars.lab2.servlets;
 
-import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,14 +12,7 @@ import java.io.IOException;
 
 public class AreaCheckServlet extends HttpServlet {
 
-    private final DataList list;
     private static final Parser PARSER = new Parser();
-
-    // Конструктор с инъекцией зависимостей
-    @Inject
-    public AreaCheckServlet(DataList list) {
-        this.list = list;
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
@@ -33,7 +25,14 @@ public class AreaCheckServlet extends HttpServlet {
 
         try {
             Data data = PARSER.parse(values);
+
+            DataList list = (DataList) req.getSession().getAttribute("list");
+            if(list == null) {
+                list = new DataList();
+            }
+
             list.addData(data);
+            req.getSession().setAttribute("list", list);
 
             resp.sendRedirect("/app/result.jsp");
         } catch (ParsingException e) {
