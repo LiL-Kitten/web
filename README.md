@@ -17,9 +17,13 @@
 
 ### Ответы 
 [JavaScript](https://learn.javascript.ru) 
+
 [FAST-CGI](https://fastcgi-archives.github.io/fcgi2/doc/fcgi-java.htm)
+
 [HTTP](https://ru.wikipedia.org/wiki/HTTP)
+
 [CSS](https://developer.mozilla.org/ru/docs/Learn/Getting_started_with_the_web/CSS_basics)
+
 [CSS GRID/FLEX](https://habr.com/ru/articles/528672/)
 
 
