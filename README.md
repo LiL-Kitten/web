@@ -16,16 +16,21 @@
 ![картинка картинки которую я должен был сделать и сделал потому что надо было](pictures/pic-lab.png)
 
 ### Ответы 
-[JavaScript](https://learn.javascript.ru) 
+[HTTP](https://ru.wikipedia.org/wiki/HTTP)
+
+[HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
 
 [FAST-CGI](https://fastcgi-archives.github.io/fcgi2/doc/fcgi-java.htm)
 
-[HTTP](https://ru.wikipedia.org/wiki/HTTP)
+[JavaScript](https://learn.javascript.ru) 
 
 [CSS](https://developer.mozilla.org/ru/docs/Learn/Getting_started_with_the_web/CSS_basics)
 
 [CSS GRID/FLEX](https://habr.com/ru/articles/528672/)
 
+[Dockerfile](https://habr.com/ru/companies/ruvds/articles/439980/)
+
+[Docker-compose](https://habr.com/ru/companies/ruvds/articles/450312/)
 
 ## Лаба-2
 
