@@ -13,12 +13,11 @@ public class AccessFilter extends HttpFilter {
         if (request.getRequestURI().equals(request.getContextPath() + "/checker")) {
             if (request.getParameter("fromController") != null) {
                 chain.doFilter(request, response);
-            } else {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN);
             }
-        } else {
-            chain.doFilter(request, response);
+
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
+        chain.doFilter(request, response);
     }
 }
 

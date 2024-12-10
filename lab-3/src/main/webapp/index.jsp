@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>lab-2</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/index.js" defer></script>
-    <script src="js/validate.js" defer></script>
-    <script src="js/sender.js" defer></script>
-    <script src="js/svgClickHandler.js" defer></script>
+    <link rel="stylesheet" href="resources/css/style.css">
+    <script src="resources/js/validate.js" defer></script>
+    <script src="resources/js/sender.js" defer></script>
+    <script src="resources/js/svgClickHandler.js" defer></script>
 
 </head>
 <body>

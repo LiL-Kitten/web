@@ -24,6 +24,8 @@
 
 [JavaScript](https://learn.javascript.ru) 
 
+[Style guide airnbnb](https://github.com/leonidlebedev/javascript-airbnb)
+
 [CSS](https://developer.mozilla.org/ru/docs/Learn/Getting_started_with_the_web/CSS_basics)
 
 [CSS GRID/FLEX](https://habr.com/ru/articles/528672/)
@@ -107,4 +109,4 @@
 
 ### Ответы/Подсказки
 
-нет ответов =(
+

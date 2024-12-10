@@ -2,7 +2,7 @@ body {
   font-size: 16pt;
   color: #ffffff;
   font-family: monospace;
-  background-image: url(../img/pic3.jpg);
+  background-image: url(img/pic3.jpg.xhtml);
   background-size: cover;
   background-attachment: fixed;
   display: flex;
@@ -10,12 +10,12 @@ body {
   margin: 0; 
 }
 
-header {
-  font-size: 3.3vw; 
+.fio {
+  font-size: 3.3vw;
   color: #ffffff;
   padding: 2%;
   margin: 0;
-  text-align: center; 
+  text-align: center;
 }
 
 .error {
@@ -120,7 +120,7 @@ input[type="radio"] {
   display: none; 
 }
 
-.label-radio {
+.label-checkbox {
   display: inline-block;
   width: 15%;  
   min-width: 100px; 
@@ -135,13 +135,13 @@ input[type="radio"] {
   padding: 10px;
 }
 
-input[type="radio"]:checked + .label-radio {
+input[type="checkbox"]:checked + .label-checkbox {
   background-color: black;  
   color: white;  
   border-color: black; 
 }
 
-.label-radio:hover {
+.label-checkbox:hover {
   background-color: black;  
   color: white;  
 }

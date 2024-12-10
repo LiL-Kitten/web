@@ -1,6 +1,7 @@
 const ELEM_X = document.querySelectorAll('input[type="text"][name="x"]'),
-    ELEM_Y = document.querySelectorAll('input[type="radio"]'),
-    ELEM_R = document.querySelectorAll('input[type="text"][name="r"]');
+      ELEM_Y = document.querySelectorAll('input[type="checkbox"]'),
+      // ELEM_Y = document.querySelectorAll('.label-checkbox'),
+      ELEM_R = document.querySelectorAll('input[type="text"][name="r"]');
 
 let x = null,
     y = null,
@@ -22,6 +23,7 @@ ELEM_R.forEach(input => {
 
 ELEM_Y.forEach(element => {
     element.addEventListener('change', () => {
+
         y = getValue(element);
         console.log(`Y value: ${y}`);
     });

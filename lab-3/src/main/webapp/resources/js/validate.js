@@ -1,5 +1,3 @@
-'use strict'
-
 class NotChooseValueError extends Error {
     constructor(value, message) {
         super(message)

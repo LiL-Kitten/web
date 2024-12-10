@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <title>lab-1</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
     </head>
     <body>
         <header class="fio">Иевлев Ринат Андреевич номер группы: P3230 <br>Вариант лабораторной: 377912</header>

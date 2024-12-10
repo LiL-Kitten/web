@@ -12,17 +12,6 @@
         <th>результат</th>
     </tr>
 
-    <%--  <jsp:useBean id="list" scope="session" class="stars.lab2.bean.DataList">--%>
-    <%--    <c:forEach var="data" items="${list.list}">--%>
-    <%--     <tr>--%>
-    <%--        <td>${data.x}</td>--%>
-    <%--        <td>${data.y}</td>--%>
-    <%--        <td>${data.r}</td>--%>
-    <%--        <td>${data.time}</td>--%>
-    <%--        <td>${data.date}</td>--%>
-    <%--       <td></td>--%>
-    <%--    </c:forEach>--%>
-    <%--  </jsp:useBean>--%>
 
 
     <c:set var="dataItems" value="#{list}" />
