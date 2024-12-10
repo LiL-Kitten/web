@@ -1,5 +1,5 @@
 
-document.getElementById('mySvg').addEventListener('click', function(event) {
+document.querySelector('.myImg').addEventListener('click', function(event) {
     let svg = event.currentTarget,
         svgRect = svg.getBoundingClientRect(),
         svgX = event.clientX - svgRect.left,
@@ -45,7 +45,7 @@ function readTableData() {
 }
 
 function drawPoints(dataObjects) {
-    let svg = document.getElementById('mySvg'),
+    let svg = document.querySelector('.myImg'),
         points = svg.querySelectorAll('.point')
 
     points.forEach(point => point.remove())
