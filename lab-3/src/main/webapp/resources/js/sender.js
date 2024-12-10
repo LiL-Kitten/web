@@ -23,22 +23,29 @@ async function send(obj) {
     }
 }
 
-async function checkAndSend(obj) {
-    try {
-        obj.checker()
-        await send(obj)
-    } catch (err) {
-        if (err.name === 'NotChooseValueError') viewTrouble(err)
-        console.error('Ошибка в checkAndSend:', err)
+async function checkAndSend(dataArray) {
+    for (const obj of dataArray) {
+        try {
+            obj.checker(); // Проверяем валидность каждого объекта
+            await send(obj); // Отправляем каждый объект
+        } catch (err) {
+            if (err.name === 'NotChooseValueError') viewTrouble(err);
+            console.error('Ошибка в checkAndSend:', err);
+        }
     }
 }
 
 BTN_SUBMIT.addEventListener('click', (event) => {
-    event.preventDefault()
-    let data = createData()
-    checkAndSend(data).then( () => {
-        console.log( "все оке!" )
-    } ).catch( () => {
-        console.error( "какой то трабл во время отправки" )
-    } )
-})
+    event.preventDefault();
+
+    let dataArray = createData(); // Получаем массив валидных объектов Data
+
+    // Проверяем, есть ли валидные данные для отправки
+    // Отправляем данные
+    checkAndSend(dataArray).then(() => {
+        console.log("все оке!");
+    }).catch(() => {
+        console.error("какой то трабл во время отправки");
+    });
+});
+

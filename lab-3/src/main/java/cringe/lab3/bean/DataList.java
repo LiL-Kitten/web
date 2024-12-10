@@ -1,10 +1,15 @@
 package cringe.lab3.bean;
 
+import jakarta.annotation.ManagedBean;
+import jakarta.enterprise.context.SessionScoped;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@SessionScoped
+@ManagedBean
 public class DataList implements Serializable {
 
     @Serial

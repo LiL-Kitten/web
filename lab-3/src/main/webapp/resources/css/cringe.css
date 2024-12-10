@@ -1,0 +1,51 @@
+.label-checkbox {
+    display: inline-block;
+    width: 15%;
+    min-width: 100px;
+    background-color: white;
+    color: black;
+    border-radius: 15px;
+    font-size: 16pt;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin: 5px;
+    text-align: center;
+    padding: 10px;
+}
+
+.label-checkbox:hover {
+    background-color: black;
+    color: white;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked + .label-checkbox {
+    background-color: black;
+    color: white;
+    border-color: black;
+}
+
+input[type="text"] {
+    padding: 5px;
+    border-radius: 15px;
+    border: none;
+    width: 30%;
+    font-family: monospace;
+    font-size: 30px;
+    text-align: center;
+}
+
+img {
+    width: 400px;
+    height: auto;
+    border-radius: 15px;
+}
+
+.mini-title {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-size: 30px;
+}

@@ -1,0 +1,29 @@
+.error {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 10px;
+    top: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    padding: 10px;
+    width: 250px;
+    color: white;
+    transition: all 0.5s ;
+}
+
+.error-content {
+    position: relative;
+    padding: 10px;
+}
+
+.close-btn {
+    cursor: pointer;
+    float: right;
+    font-size: 30px;
+    color: #fff;
+}
+
+.close-btn:hover {
+    color: #ffcccc;
+}

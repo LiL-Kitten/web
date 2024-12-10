@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE>-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="ru">
+
+<h:head>
+    <link rel="icon" href="resources/img/favicon.ico" type="image/x-icon"/>
+   <h:outputStylesheet library="css" name="cringe.css"/>
+   <h:outputStylesheet library="css" name="main.css"/>
+   <h:outputStylesheet library="css" name="btns.css"/>
+   <h:outputStylesheet library="css" name="error.css"/>
+   <h:outputStylesheet library="css" name="history.css"/>
+    <title> cringe </title>
+</h:head>
+
+<h:body>
+
+   <div class="error" id="error">
+      <div class="error-content">
+         <span class="close-btn" id="closeBtn">x</span>
+         <p id="errorHeader"></p>
+         <p id="errorMessage"></p>
+      </div>
+   </div>
+
+
+   <f:view>
+      <h:panelGroup styleClass="main">
+
+         <h:form id="formId">
+
+            <h:outputLabel styleClass="mini-title" value="Значение X"/>
+            <div class="block-x">
+               <h:outputLabel styleClass="label-checkbox">
+                  <h:selectBooleanCheckbox onchange="changeStyle(this)" />
+                  -4
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox">
+                  <h:selectBooleanCheckbox onchange="changeStyle(this)" />
+                  -3
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox">
+                  <h:selectBooleanCheckbox onchange="changeStyle(this)"/>
+                  -2
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox">
+                  <h:selectBooleanCheckbox onchange="changeStyle(this)"/>
+                  -1
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox">
+                  <h:selectBooleanCheckbox onchange="changeStyle(this)"/>
+                  0
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox">
+                  <h:selectBooleanCheckbox onchange="changeStyle(this)"/>
+                  1
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox">
+                  <h:selectBooleanCheckbox onchange="changeStyle(this)"/>
+                  2
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox">
+                  <h:selectBooleanCheckbox onchange="changeStyle(this)"/>
+                  3
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox">
+                  <h:selectBooleanCheckbox onchange="changeStyle(this)"/>
+                  4
+               </h:outputLabel>
+            </div>
+
+
+
+            <div class="block-y">
+               <h:outputLabel styleClass="mini-title" value="Значение Y"/>
+               <br/>
+               <h:inputText id="valueY" styleClass="value-y" maxlength="7" label="от -3 до 3" onkeyup="setY(this)"/>
+            </div>
+
+            <div class="block-r">
+               <h:outputLabel styleClass="mini-title" value="Значение R">
+                  <h:inputText styleClass="value-r" id="valueR" readonly="true"  style="
+                     background: transparent;
+                     height: auto;
+                     font-size: 30px"/>
+               </h:outputLabel>
+               <br/>
+               <p:slider id="slider" minValue="2" maxValue="5" step="0.25" for="valueR"
+                         onSlideEnd="setR(document.getElementById('formId:valueR'));" />
+            </div>
+
+            <button class="result"/>
+         </h:form>
+
+         <p:graphicImage name="img/graph.svg"/>
+
+         <div class="tools">
+            <button class="clear-btn" name="clear form"/>
+            <button class="delete-btn" name="del table"/>
+            <button class="random-btn" name="random form"/>
+         </div>
+
+      </h:panelGroup>
+
+      <h:outputLabel value="fuck you!"/>
+
+      <table class="history">
+         <tr>
+            <th>X</th>
+            <th>Y</th>
+            <th>R</th>
+            <th>время выполнения</th>
+            <th>дата</th>
+            <th>результат</th>
+         </tr>
+
+          <ui:repeat value="#{dataList.list}" var="data">
+              <tr>
+                  <td>#{data.x}</td>
+                  <td>#{data.y}</td>
+                  <td>#{data.r}</td>
+                  <td>#{data.time} nanoseconds</td>
+                  <td>#{data.date}</td>
+                  <td>#{data.condition ? 'Успешно' : 'Неуспешно'}</td>
+              </tr>
+          </ui:repeat>
+      </table>
+
+
+
+   </f:view>
+   <script src="resources/js/index.js"></script>
+   <script src="resources/js/validate.js"></script>
+   <script src="resources/js/sender.js"></script>
+</h:body>
+
+</html>

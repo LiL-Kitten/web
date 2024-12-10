@@ -2,7 +2,7 @@ body {
   font-size: 16pt;
   color: #ffffff;
   font-family: monospace;
-  background-image: url(img/pic3.jpg.xhtml);
+  background-image: url(../img/pic3.jpg);
   background-size: cover;
   background-attachment: fixed;
   display: flex;
