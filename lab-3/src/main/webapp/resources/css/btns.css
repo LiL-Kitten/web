@@ -1,0 +1,58 @@
+.tools {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="button"] {
+    display: inline-block;
+    width: 15%;
+    min-width: 50px;
+    height: 50px;
+    background-color: white;
+    color: black;
+    border-radius: 15px;
+    border: none;
+    font-size: 16pt;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, filter 0.3s;
+    margin: 5px;
+    text-align: center;
+    position: relative;
+    background-size: cover;
+}
+
+.random-btn {
+    background-image: url(img/btns/random.ico.xhtml);
+}
+
+.clear-btn {
+    background-image: url(img/btns/clear.svg.xhtml);
+}
+
+.delete-btn {
+    background-image: url(img/btns/delete.svg.xhtml);
+}
+
+input[type="button"]:hover::after {
+    opacity: 1;
+}
+
+input[type="button"]::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: black;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+input[type="button"]:hover::after {
+    opacity: 1;
+}
+
+input[type="button"]:hover {
+    filter: invert(1);
+}

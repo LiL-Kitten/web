@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+   <h:outputStylesheet library="css" name="cringe.css"/>
+   <h:outputStylesheet library="css" name="main.css"/>
+   <h:outputStylesheet library="css" name="btns.css"/>
+   <script type="application/javascript" src="resources/js/index.js"></script>
+   <script type="application/javascript" src="resources/js/validate.js"></script>
+</h:head>
+
+<h:body>
+
+   <div class="error" id="error">
+      <div class="error-content">
+         <span class="close-btn" id="closeBtn">x</span>
+         <p id="errorHeader"></p>
+         <p id="errorMessage"></p>
+      </div>
+   </div>
+
+
+   <f:view>
+      <h:panelGroup styleClass="main">
+
+         <h:form>
+
+            <h:outputLabel value="Значение X"/>
+            <div class="block-x">
+               <h:outputLabel styleClass="label-checkbox" for="checkboxX1">
+                  <h:selectBooleanCheckbox id="checkboxX1" value="#{bean.valueX1}" />
+                  -4
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox" for="checkboxX2">
+                  <h:selectBooleanCheckbox id="checkboxX2" value="#{bean.valueX2}" />
+                  -3
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox" for="checkboxX3">
+                  <h:selectBooleanCheckbox id="checkboxX3" value="#{bean.valueX3}" />
+                  -2
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox" for="checkboxX4">
+                  <h:selectBooleanCheckbox id="checkboxX4" value="#{bean.valueX4}" />
+                  -1
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox" for="checkboxX5">
+                  <h:selectBooleanCheckbox id="checkboxX5" value="#{bean.valueX5}" />
+                  0
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox" for="checkboxX6">
+                  <h:selectBooleanCheckbox id="checkboxX6" value="#{bean.valueX6}" />
+                  1
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox" for="checkboxX7">
+                  <h:selectBooleanCheckbox id="checkboxX7" value="#{bean.valueX7}" />
+                  2
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox" for="checkboxX8">
+                  <h:selectBooleanCheckbox id="checkboxX8" value="#{bean.valueX8}" />
+                  3
+               </h:outputLabel>
+
+               <h:outputLabel styleClass="label-checkbox" for="checkboxX9">
+                  <h:selectBooleanCheckbox id="checkboxX9" value="#{bean.valueX9}" />
+                  4
+               </h:outputLabel>
+            </div>
+
+
+
+            <div class="block-y">
+               <h:outputLabel styleClass="value-y" value="Значение Y"/>
+               <h:inputText id="valueY" styleClass="value-y" value="#{bean.valueY}"/>
+            </div>
+
+            <div class="block-r">
+               <h:outputLabel value="Значение R"/>
+               <h:inputText id="valueR" value="#{bean.valueR}"/>
+               <p:slider id="slider" minValue="2" maxValue="5" step="0.25" for="valueR" value="#{bean.valueR}"/>
+            </div>
+         </h:form>
+
+         <p:graphicImage name="img/graph.svg"/>
+
+         <div class="tools">
+            <h:button styleClass="random-btn" title="ну тут чистый рандом"/>
+            <h:button styleClass="clear-btn" title="почистить форму"/>
+            <h:button styleClass="delete-btn" title="сбросить таблицу"/>
+         </div>
+
+
+
+
+      </h:panelGroup>
+
+
+      <h:outputLabel value="fuck you!"/>
+   </f:view>
+</h:body>
+</html>
