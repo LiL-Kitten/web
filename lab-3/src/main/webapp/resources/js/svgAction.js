@@ -1,12 +1,10 @@
-
-document.querySelector('.myImg').addEventListener('click', function(event) {
+document.querySelector('.mySvg').addEventListener('click', function(event) {
     let svg = event.currentTarget,
         svgRect = svg.getBoundingClientRect(),
         svgX = event.clientX - svgRect.left,
         svgY = event.clientY - svgRect.top,
         valueX = ((svgX - 200) / 75 * r) / 2,
         valueY = ((200 - svgY) / 75 * r) / 2
-
 
     console.log(`Координаты: X = ${valueX}, Y = ${valueY}`)
 
@@ -16,15 +14,15 @@ document.querySelector('.myImg').addEventListener('click', function(event) {
         data.checker()
     } catch (err) {
         viewTrouble(err)
-        return;
+        return
     }
 
-    send(data).then( () => {
+    send(data).then(() => {
         console.log("все оке!")
-    } ).catch( () => {
+    }).catch(() => {
         console.error("все бэд")
-    } )
-} )
+    })
+})
 
 function readTableData() {
     let dataObjects = [],
@@ -39,13 +37,13 @@ function readTableData() {
         let newData = new Data(tableX, tableY, tableR)
         dataObjects.push(newData)
 
-        console.log(`Координаты из таблицы: X = ${tableX}, Y = ${tableY}, R = ${tableR}`);
+        console.log(`Координаты из таблицы: X = ${tableX}, Y = ${tableY}, R = ${tableR}`)
     }
-    return dataObjects;
+    return dataObjects
 }
 
 function drawPoints(dataObjects) {
-    let svg = document.querySelector('.myImg'),
+    let svg = document.querySelector('.mySvg'),
         points = svg.querySelectorAll('.point')
 
     points.forEach(point => point.remove())
@@ -59,12 +57,24 @@ function drawPoints(dataObjects) {
         let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle")
         circle.setAttribute("cx", pixelX.toString())
         circle.setAttribute("cy", pixelY.toString())
-        circle.setAttribute("r", "4" )
-        circle.setAttribute("fill", "red")
+        circle.setAttribute("r", "4")
 
-        svg.appendChild(circle);
-        console.log(`Rectangle added at: x = ${pixelX - 2}, y = ${pixelY - 2}`);
-    });
+        if (data.getCondition()) {
+            circle.setAttribute("fill", "green")
+        } else {
+            circle.setAttribute("fill", "red")
+        }
+
+        svg.appendChild(circle)
+        console.log(`Rectangle added at: x = ${pixelX - 2}, y = ${pixelY - 2}`)
+    })
 }
 
-drawPoints(readTableData());
+function clearPoints() {
+    let svg = document.querySelector('.mySvg'),
+        points = svg.querySelectorAll('circle')
+
+    points.forEach(point => point.remove())
+}
+
+drawPoints(readTableData())
