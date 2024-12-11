@@ -101,17 +101,22 @@
                          onSlideEnd="setR(document.getElementById('formId:valueR'));" />
             </div>
 
-            <button class="result"/>
+
          </h:form>
 
-         <svg class="myImg" width="400" height="400">
-            <image href="resources/img/graph.svg" width="400px" height="auto"/>
-         </svg>
+
+         <div class="myImg">
+            <svg class="mySvg" width="400" height="400" style=" border-radius: 15px;">
+               <image href="resources/img/graph.svg" width="400" height="400"/>
+            </svg>
+         </div>
+
 
          <div class="tools">
             <button class="clear-btn" name="clear form"/>
             <button class="delete-btn" name="del table"/>
             <button class="random-btn" name="random form"/>
+            <button class="result" name="send result"/>
          </div>
 
       </h:panelGroup>
@@ -143,8 +148,8 @@
    </f:view>
    <script src="resources/js/index.js"></script>
    <script src="resources/js/validate.js"></script>
-   <script src="resources/js/sender.js"></script>
-   <script src="resources/js/svgClickHandler.js"></script>
+<!--   <script src="resources/js/sender.js"></script>-->
+   <script src="resources/js/svgAction.js"></script>
 </h:body>
 
 </html>

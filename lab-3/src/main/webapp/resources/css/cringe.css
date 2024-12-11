@@ -38,11 +38,11 @@ input[type="text"] {
     text-align: center;
 }
 
-/*.myImg {*/
-/*    width: 400px;*/
-/*    height: auto;*/
-/*    border-radius: 15px;*/
-/*}*/
+.myImg {
+    width: 400px;
+    height: auto;
+    border-radius: 15px;
+}
 
 .mini-title {
     margin-top: 5%;

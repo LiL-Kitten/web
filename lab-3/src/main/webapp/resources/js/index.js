@@ -1,130 +1,122 @@
 const CLEAR_BTN = document.querySelector('.clear-btn'),
-      RNDM_BTN = document.querySelector('.random-btn')
+      RNDM_BTN = document.querySelector('.random-btn'),
+      BTN = document.querySelector('.result'),
+      DELETE_BTN = document.querySelector('.delete-btn')
 
-let xValues = []; // Массив для хранения значений чекбоксов
-let y = null;
-let r = null;
+let xValues = []
+let y = null
+let r = null
 
 function changeStyle(obj) {
-    let label = obj.parentElement;
-
+    let label = obj.parentElement
     if (obj.checked) {
-        console.log('choose ' + label.innerText);
-        label.style.background = 'black';
-        label.style.color = 'white';
-        xValues.push(Number.parseInt(label.innerText)); // Добавляем значение в массив
+        console.log('choose ' + label.innerText)
+        label.style.background = 'black'
+        label.style.color = 'white'
+        xValues.push(Number.parseInt(label.innerText))
     } else {
-        console.log('no choose');
-        label.style.background = 'white';
-        label.style.color = 'black';
-        xValues = xValues.filter(value => value !== label.innerText);
+        console.log('no choose')
+        label.style.background = 'white'
+        label.style.color = 'black'
+        xValues = xValues.filter(value => value !== label.innerText)
     }
 }
 
-CLEAR_BTN.addEventListener('click', () => {
-    clear();
-});
+CLEAR_BTN.addEventListener('click', clear)
 
 function clear() {
-    let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]'),
+        textInputs = document.querySelectorAll('input[type="text"]'),
+        slider = document.getElementById('slider')
 
-    checkboxes.forEach(function (checkbox) {
-        checkbox.checked = false;
-        changeStyle(checkbox);
-    });
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false
+        changeStyle(checkbox)
+    })
 
-    let textInputs = document.querySelectorAll('input[type="text"]');
+    textInputs.forEach(text => text.value = '')
 
-    textInputs.forEach(function (text) {
-        text.value = '';
-    });
+    xValues = []
+    y = null
+    r = null
 
-    xValues = []; // Очищаем массив xValues
-    y = null;
-    r = null;
-
-    let slider = document.getElementById('slider');
     if (slider) {
-        slider.value = slider.min;
-        setR(slider);
+        slider.value = slider.min
+        setR(slider)
     }
 
-    console.log('all good');
+    console.log('all good')
 }
 
 function setY(obj) {
-    y = getValue(obj);
-    console.log('ты ввел ' + y);
+    y = getValue(obj)
+    console.log('ты ввел ' + y)
 }
 
 function setR(obj) {
-    r = getValue(obj);
-    console.log('ты ввел ' + r);
+    r = getValue(obj)
+    console.log('ты ввел ' + r)
 }
 
 function getValue(obj) {
-    return validate(obj.value);
+    return validate(obj.value)
 }
 
 function validate(str) {
-    str = str.replace(',', '.');
-    return parseFloat(str);
+    str = str.replace(',', '.')
+    return parseFloat(str)
 }
 
 function createData() {
-    const dataArray = []; // Массив для хранения валидных объектов Data
-
+    let dataArray = []
     for (const x of xValues) {
-        const data = new Data(x, y, r); // Создаем объект Data
-
+        let data = new Data(x, y, r)
         try {
-            data.checker(); // Проверяем валидность данных
-            dataArray.push(data); // Если все валидно, добавляем в массив
+            data.checker()
+            dataArray.push(data)
         } catch (error) {
-            console.error(error.message); // Обрабатываем ошибку, выводим сообщение
+            console.error(error.message)
             viewTrouble(error)
             break
         }
     }
-
     return dataArray
 }
 
-RNDM_BTN.addEventListener('click', () => {
-    random()
-})
+DELETE_BTN.addEventListener('click', () => {clearPoints()})
+
+RNDM_BTN.addEventListener('click', random)
 
 function random() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    const randomCount = Math.floor(Math.random() * (checkboxes.length + 1));
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]'),
+        randomCount = Math.floor(Math.random() * (checkboxes.length + 1))
 
-    // Сначала снимаем все отметки
     clear()
 
-    // Случайно выбираем чекбоксы для отметки
-    const selectedCheckboxes = new Set();
+    let selectedCheckboxes = new Set()
     while (selectedCheckboxes.size < randomCount) {
-        const randomIndex = Math.floor(Math.random() * checkboxes.length);
-        selectedCheckboxes.add(randomIndex);
+        let randomIndex = Math.floor(Math.random() * checkboxes.length)
+        selectedCheckboxes.add(randomIndex)
     }
 
     selectedCheckboxes.forEach(index => {
-        checkboxes[index].checked = true;
-        changeStyle(checkboxes[index]);
-    });
+        checkboxes[index].checked = true
+        changeStyle(checkboxes[index])
+    })
 
-    // Генерируем случайное значение для valueY от -3 до 3
-    const randomY = (Math.random() * 6 - 3).toFixed(2); // Генерируем значение от -3 до 3
-    document.querySelector('.value-y').value = randomY;
+    let randomY = (Math.random() * 6 - 3).toFixed(2)
+    document.querySelector('.value-y').value = randomY
     y = randomY
 
-    // Генерируем случайное значение для valueR от 2 до 5
-    const minR = 2;
-    const maxR = 5;
-    const step = 0.25;
-    const range = (maxR - minR) / step; // Количество возможных значений
-    const randomIndexR = Math.floor(Math.random() * (range + 1)); // Случайный индекс
-    const randomR = (minR + randomIndexR * step).toFixed(2); // Генерируем значение с шагом 0.25
-    document.querySelector('.value-r').value = randomR;
+    let minR = 2,
+        maxR = 5,
+        step = 0.25,
+        range = (maxR - minR) / step,
+        randomIndexR = Math.floor(Math.random() * (range + 1)),
+        randomR = (minR + randomIndexR * step).toFixed(2)
+
+    document.querySelector('.value-r').value = randomR
     r = randomR
 }
+
+BTN.addEventListener('click', () => drawPoints(createData()))

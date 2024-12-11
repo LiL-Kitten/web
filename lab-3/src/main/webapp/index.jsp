@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="resources/css/style.css">
     <script src="resources/js/validate.js" defer></script>
     <script src="resources/js/sender.js" defer></script>
-    <script src="resources/js/svgClickHandler.js" defer></script>
+    <script src="resources/js/svgAction.js" defer></script>
 
 </head>
 <body>

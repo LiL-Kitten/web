@@ -33,6 +33,9 @@ button {
     background-image: url(img/btns/delete.svg.xhtml);
 }
 
+.result {
+    background-image: url(img/btns/send.svg.xhtml);
+}
 button:hover::after {
     opacity: 1;
 }
