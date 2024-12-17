@@ -1,19 +1,5 @@
-<svg id="mySvg" width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+      <svg id="mySvg" width="400" height="400" xmlns="http://www.w3.org/2000/svg">
     <rect width="400" height="400" fill="white"></rect>
-
-    <path d="
-                M 200,167
-                L 266,200
-                L 266,266
-                L 200,266
-                L 200,275
-                Q 125,275 125,200
-                L 200,200
-                L 200,125
-                Z"
-          fill="lightblue"
-          stroke="blue"></path>
-
 
     <line x1="200" y1="0" x2="200" y2="400" stroke="black" stroke-width="2"></line>
     <line x1="0" y1="200" x2="400" y2="200" stroke="black" stroke-width="2"></line>

@@ -1,13 +1,13 @@
 .tools {
+    padding-top: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
-button {
+button , input[type="submit"], input[type="button"]{
     display: inline-block;
-    width: 15%;
-    min-width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     background-color: white;
     color: black;
     border-radius: 15px;
@@ -40,7 +40,7 @@ button:hover::after {
     opacity: 1;
 }
 
-button::after {
+button::after, input[type="submit"]::after, input[type="button"]::after{
     content: attr(title);
     position: absolute;
     bottom: -20px;
@@ -52,10 +52,10 @@ button::after {
     transition: opacity 0.3s;
 }
 
-button:hover::after {
+button:hover::after, input[type="submit"]:hover::after, input[type="button"]:hover::after {
     opacity: 1;
 }
 
-button:hover {
+button:hover, input[type="submit"]:hover, input[type="button"]:hover {
     filter: invert(1);
 }

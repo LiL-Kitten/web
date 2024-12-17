@@ -1,11 +1,7 @@
-const CLEAR_BTN = document.querySelector('.clear-btn'),
-      RNDM_BTN = document.querySelector('.random-btn'),
-      BTN = document.querySelector('.result'),
-      DELETE_BTN = document.querySelector('.delete-btn')
-
-let xValues = []
-let y = null
-let r = null
+const CLEAR_BTN = document.querySelector('.clear-btn')
+const RNDM_BTN = document.querySelector('.random-btn')
+const BTN = document.querySelector('.result')
+const DELETE_BTN = document.querySelector('.delete-btn')
 
 function changeStyle(obj) {
     let label = obj.parentElement
@@ -22,12 +18,10 @@ function changeStyle(obj) {
     }
 }
 
-CLEAR_BTN.addEventListener('click', clear)
-
 function clear() {
-    let checkboxes = document.querySelectorAll('input[type="checkbox"]'),
-        textInputs = document.querySelectorAll('input[type="text"]'),
-        slider = document.getElementById('slider')
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]')
+    let textInputs = document.querySelectorAll('input[type="text"]')
+    let slider = document.getElementById('slider')
 
     checkboxes.forEach(checkbox => {
         checkbox.checked = false
@@ -48,31 +42,12 @@ function clear() {
     console.log('all good')
 }
 
-function setY(obj) {
-    y = getValue(obj)
-    console.log('ты ввел ' + y)
-}
-
-function setR(obj) {
-    r = getValue(obj)
-    console.log('ты ввел ' + r)
-}
-
-function getValue(obj) {
-    return validate(obj.value)
-}
-
-function validate(str) {
-    str = str.replace(',', '.')
-    return parseFloat(str)
-}
 
 function createData() {
     let dataArray = []
     for (const x of xValues) {
         let data = new Data(x, y, r)
         try {
-            data.checker()
             dataArray.push(data)
         } catch (error) {
             console.error(error.message)
@@ -83,13 +58,9 @@ function createData() {
     return dataArray
 }
 
-DELETE_BTN.addEventListener('click', () => {clearPoints()})
-
-RNDM_BTN.addEventListener('click', random)
-
 function random() {
-    let checkboxes = document.querySelectorAll('input[type="checkbox"]'),
-        randomCount = Math.floor(Math.random() * (checkboxes.length + 1))
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]')
+    let randomCount = Math.floor(Math.random() * (checkboxes.length + 1))
 
     clear()
 
@@ -108,15 +79,41 @@ function random() {
     document.querySelector('.value-y').value = randomY
     y = randomY
 
-    let minR = 2,
-        maxR = 5,
-        step = 0.25,
-        range = (maxR - minR) / step,
-        randomIndexR = Math.floor(Math.random() * (range + 1)),
-        randomR = (minR + randomIndexR * step).toFixed(2)
+    let minR = 2
+    let maxR = 5
+    let step = 0.25
+    let range = (maxR - minR) / step
+    let randomIndexR = Math.floor(Math.random() * (range + 1))
+    let randomR = (minR + randomIndexR * step).toFixed(2)
 
-    document.querySelector('.value-r').value = randomR
+    document.querySelector('.slider').value = randomR
+    document.getElementById('formId:valueR').value = randomR
+    console.log(randomR)
+    setR(randomR)
     r = randomR
+    drawOverlay(randomR)
 }
 
-BTN.addEventListener('click', () => drawPoints(createData()))
+function handleSubmit() {
+    try {
+        checker(xValues, y, r)
+        return true
+    } catch (err) {
+        viewTrouble(err)
+        return false
+    }
+}
+
+CLEAR_BTN.addEventListener('click', clear)
+DELETE_BTN.addEventListener('click', () => {
+    clearPoints()
+})
+RNDM_BTN.addEventListener('click', random)
+BTN.addEventListener('click', () => {
+    try {
+        checker(xValues, y, r)
+    } catch (err) {
+        viewTrouble(err)
+    }
+    drawPoints(createData())
+})

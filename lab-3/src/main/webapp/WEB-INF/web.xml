@@ -14,30 +14,6 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>AreaChecker</servlet-name>
-        <servlet-class>cringe.lab3.servlets.AreaCheckServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>AreaChecker</servlet-name>
-        <url-pattern>/checker</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>cringe.lab3.servlets.ControllerServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
-        <url-pattern>/controller</url-pattern>
-    </servlet-mapping>
 
     <welcome-file-list>
         <welcome-file>main.xhtml</welcome-file>

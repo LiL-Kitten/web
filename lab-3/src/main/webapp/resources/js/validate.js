@@ -31,35 +31,45 @@ class Data {
         this.x = x
         this.y = y
         this.r = r
-        this.condition = this.setCondition()
+    }
+}
+
+
+let xValues = []
+let y = null
+let r = null
+
+function setY(obj) {
+    y = getValue(obj)
+    console.log('ты ввел ' + y)
+}
+
+function setR(obj) {
+    r = obj.value
+    drawOverlay(r)
+    console.log('ты ввел ' + r)
+}
+
+function getValue(obj) {
+    return validate(obj.value)
+}
+
+function validate(str) {
+    str = str.replace(',', '.')
+    return parseFloat(str)
+}
+
+function checker(valuesX, valueY, valueR) {
+    if (!Array.isArray(valuesX)) {
+        valuesX = [valuesX];
     }
 
-    checker() {
-        if (typeof this.x !== 'number') throw new NotChooseValueError('x', 'Выберите Х')
-        if (this.y === null || this.y === undefined || isNaN(this.y)) {
-            throw new NotChooseValueError('y', 'Поле ввода Y пустое, пожалуйста, введите значение в диапазоне от -3 до 3')
-        }
-        if (this.y < -3 || this.y > 3) throw new NotChooseValueError('y', 'Y должен быть в диапозоне от -3 до 3(((')
-        if (!this.r) throw new NotChooseValueError('r', 'Выберите R')
+    if (valuesX.length === 0) throw new NotChooseValueError('x', 'Выберите Х');
+    if (valueY === null || valueY === undefined || isNaN(valueY)) {
+        throw new NotChooseValueError('y', 'Поле ввода Y пустое, пожалуйста, введите значение в диапазоне от -3 до 3');
     }
+    if (valueY <= -3 || valueY >= 3) throw new NotChooseValueError('y', 'Y должен быть в диапазоне от -3 до 3(((');
+    if (!valueR) throw new NotChooseValueError('r', 'Выберите R');
 
-    setCondition() {
-        let rHalf = this.r / 2
-
-        let inRectangle = (this.x >= 0 && this.x <= this.r &&
-            this.y >= -this.r && this.y <= 0)
-
-        let inTriangle = (this.x >= 0 && this.x <= this.r &&
-            this.y >= 0 && this.y <= rHalf &&
-            this.y <= rHalf - (this.x * 0.5))
-
-        let inCircle = (this.x < 0 && this.y < 0 &&
-            (this.x * this.x + this.y * this.y <= rHalf * rHalf))
-
-        return inRectangle || inTriangle || inCircle
-    }
-
-    getCondition() {
-        return this.condition
-    }
+    return true;
 }

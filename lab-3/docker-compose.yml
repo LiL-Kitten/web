@@ -6,8 +6,18 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - JAVA_OPTS=-Djboss.bind.address=0.0.0.0
+      - JAVA_OPTS=-Djboss.bind.address=0.0.0.0 -Dorg.wildfly.ee.namespace.interop=true
     volumes:
       - ./target/lab-2-1.war:/opt/jboss/wildfly/standalone/deployments/app.war
     extra_hosts:
       - "lil-star:192.168.31.233"
+
+#  postgres:
+#    image: postgres:latest
+#    restart: always
+#    shm_size: 128mb
+#    environment:
+#      POSTGRES_USER: lab3_user
+#      POSTGRES_PASSWORD: lab3_user_password
+#    ports:
+#      - "5432:5432"
