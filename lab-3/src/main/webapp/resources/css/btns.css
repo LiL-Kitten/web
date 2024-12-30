@@ -4,7 +4,7 @@
     flex-direction: row;
 }
 
-button , input[type="submit"], input[type="button"]{
+.home, button , input[type="submit"], input[type="button"]{
     display: inline-block;
     width: 100px;
     height: 100px;
@@ -15,7 +15,9 @@ button , input[type="submit"], input[type="button"]{
     font-size: 16pt;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s, filter 0.3s;
-    margin: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 0;
     text-align: center;
     position: relative;
     background-size: cover;
@@ -36,6 +38,16 @@ button , input[type="submit"], input[type="button"]{
 .result {
     background-image: url(img/btns/send.svg.xhtml);
 }
+
+.home {
+    background-image: url(img/btns/home.svg.xhtml);
+}
+
+.get-home {
+    padding: 0;
+    margin: 0;
+}
+
 button:hover::after {
     opacity: 1;
 }
@@ -56,6 +68,6 @@ button:hover::after, input[type="submit"]:hover::after, input[type="button"]:hov
     opacity: 1;
 }
 
-button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+.home:hover, button:hover, input[type="submit"]:hover, input[type="button"]:hover {
     filter: invert(1);
 }

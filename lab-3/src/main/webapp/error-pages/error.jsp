@@ -29,7 +29,7 @@
 <main>
     <p><%= message %></p>
     <p>
-        <a href="${pageContext.request.contextPath}/index.jsp">нажми на меня и я верну тебя домой =)</a>
+        <a href="${pageContext.request.contextPath}">нажми на меня и я верну тебя домой =)</a>
     </p>
 </main>
 </body>

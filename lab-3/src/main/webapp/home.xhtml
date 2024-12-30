@@ -1,10 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
@@ -19,10 +15,15 @@
 
         <h:panelGroup styleClass="main">
 
-            <h:link id="link-to-cringe" value="кринж" outcome="cringe.xhtml" style="color: white">
-                <f:attribute name="none" value="null"/>
-            </h:link>
+            <h:outputText styleClass="time"/>
+
+            <h:form>
+                <h:commandLink action="#{navigate.goToCringe}" value="cringe"/>
+            </h:form>
+
         </h:panelGroup>
     </h:body>
 </f:view>
+
+<script src="resources/js/time.js"></script>
 </html>

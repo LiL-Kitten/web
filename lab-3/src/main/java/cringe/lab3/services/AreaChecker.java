@@ -1,6 +1,8 @@
 package cringe.lab3.services;
 
-public class AreaChecker {
+import java.io.Serializable;
+
+public class AreaChecker implements Serializable {
 
     public boolean check(float x, float y, float r) {
         boolean inRectangle = (x <= 0 && x >= -r && y >= -r/2 && y <= 0);

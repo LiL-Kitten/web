@@ -2,21 +2,17 @@ package cringe.lab3.controller;
 
 import cringe.lab3.bean.Point;
 import cringe.lab3.services.AreaChecker;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ApplicationScoped
+@SessionScoped
 @Named
 public class ControllerPoints implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1351351341461314151L;
 
     private final List<Point> list = new ArrayList<>();
     private final List<Float> checkboxValues = List.of(-4.0f, -3.0f, -2.0f, -1.0f, 0.0f, 1.0f, 2.0f, 3.0f, 4.0f);

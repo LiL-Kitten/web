@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -79,12 +80,7 @@
                                      onclick="return handleSubmit();" type="submit">
                         <f:ajax execute="@form" render=":history"/>
                     </h:commandButton>
-
                 </div>
-
-<!--                <h:inputHidden id="r" value="#{controllerPoints.point.r}"/>-->
-<!--                <h:inputHidden id="x" value="#{controllerPoints.point.x}"/>-->
-<!--                <h:inputHidden id="y" value="#{controllerPoints.point.y}"/>-->
 
             </h:form>
 
@@ -95,6 +91,10 @@
                         <image href="resources/img/graph.svg" width="400" height="400"/>
                     </svg>
                 </div>
+
+            <h:form styleClass="get-home">
+                <h:commandLink action="#{navigate.goToHome}" styleClass="home"/>
+            </h:form>
 
         </h:panelGroup>
         <!-- Таблица данных -->
