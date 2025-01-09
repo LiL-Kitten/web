@@ -38,10 +38,10 @@
                 <!-- Значение X -->
                 <h:outputLabel styleClass="mini-title" value="Значение X"/>
                 <div class="block-x">
-                    <ui:repeat value="#{controllerPoints.checkboxValues}" var="value" varStatus="status">
+                    <ui:repeat value="#{checkbox.values}" var="value" varStatus="status">
                         <h:outputLabel styleClass="label-checkbox">
-                            <h:selectBooleanCheckbox value="#{controllerPoints.point.checkboxStates[status.index]}"
-                                                     onchange="changeStyle(this)"/>
+                            <h:selectBooleanCheckbox value="#{checkbox.checkBoxes[value]}"
+                                                     onchange="changeStyle(this)" onclick="#{checkbox.selectCheckBox(value)}"/>
                             #{value}
                         </h:outputLabel>
                     </ui:repeat>
@@ -52,14 +52,14 @@
                     <h:outputLabel styleClass="mini-title" value="Значение Y"/>
                     <br/>
                     <h:inputText id="valueY" styleClass="value-y" maxlength="7" label="от -3 до 3"
-                                 value="#{controllerPoints.point.y}" onkeyup="setY(this);"/>
+                                 value="#{coordinateHandler.y}" onkeyup="setY(this);"/>
                 </div>
 
                 <!-- Значение R -->
                 <div class="block-r">
                     <h:outputLabel styleClass="mini-title" value="Значение R"/>
                     <br/>
-                    <h:inputHidden id="valueR" value="#{controllerPoints.point.r}"/>
+                    <h:inputHidden id="valueR" value="#{coordinateHandler.r}"/>
                     <p:slider styleClass="slider" minValue="2" maxValue="5" step="0.25" for="valueR"
                               onSlideEnd="setR(document.getElementById('formId:valueR'));">
                     </p:slider>
@@ -71,12 +71,12 @@
                     <button class="clear-btn" type="button" name="clear form"/>
 
                     <h:commandButton styleClass="delete-btn" type="button">
-                        <f:ajax execute="@form" render=":history" listener="#{controllerPoints.clearList()}"/>
+                        <f:ajax execute="@form" render=":history" listener="#{controller.delete()}"/>
                     </h:commandButton>
 
                     <button class="random-btn" type="button" name="random form"/>
 
-                    <h:commandButton styleClass="result" action="#{controllerPoints.createData}"
+                    <h:commandButton styleClass="result" action="#{controller.save()}"
                                      onclick="return handleSubmit();" type="submit">
                         <f:ajax execute="@form" render=":history"/>
                     </h:commandButton>
@@ -98,9 +98,9 @@
 
         </h:panelGroup>
         <!-- Таблица данных -->
-        <h:panelGroup id="history">
+        <h:panelGroup id="history" styleClass="block-history">
             <div class="gui-element" id="data-block">
-                <h:dataTable styleClass="history" id="historyTable" value="#{controllerPoints.list}" var="point">
+                <h:dataTable styleClass="history" id="historyTable" value="#{controller.points}" var="point">
                     <h:column>
                         <f:facet name="header">X</f:facet>
                         #{point.x}

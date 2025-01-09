@@ -1,8 +1,5 @@
-
 header {
     font-size: 3.3vw;
-    color: #ffffff;
-    padding: 2%;
     margin: 0;
     text-align: center;
 }
@@ -13,7 +10,6 @@ header {
     z-index: 1000;
     left: 10px;
     top: 10px;
-    background-color: rgba(0, 0, 0, 0.8);
     border-radius: 5px;
     padding: 10px;
     width: 250px;

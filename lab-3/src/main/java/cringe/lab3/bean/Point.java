@@ -1,17 +1,10 @@
 package cringe.lab3.bean;
 
-import jakarta.persistence.*;
-
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
-@Entity
-public class Point implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Point {
+
     private float x;
     private float y;
     private float r;
@@ -19,20 +12,10 @@ public class Point implements Serializable {
     private String date;
     private long time;
 
-    @Transient
-    private boolean[] checkboxStates;
-
-    public Point() {
-        checkboxStates = new boolean[9];
-        Arrays.fill(checkboxStates, false);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Point(float x, float y, float r) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
     }
 
     public float getX() {
@@ -83,12 +66,8 @@ public class Point implements Serializable {
         this.time = time;
     }
 
-    public boolean[] getCheckboxStates() {
-        return checkboxStates;
-    }
-
     public void setDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         this.date = now.format(formatter);
     }

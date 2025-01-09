@@ -34,10 +34,14 @@ class Data {
     }
 }
 
-
+let condition = null
 let xValues = []
 let y = null
 let r = null
+
+function setCondition(bool) {
+    this.condition = bool
+}
 
 function setY(obj) {
     y = getValue(obj)
