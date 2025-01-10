@@ -1,9 +1,19 @@
-package cringe.lab3.bean;
+package cringe.lab3.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Entity
 public class Point {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private float x;
     private float y;
@@ -16,6 +26,9 @@ public class Point {
         this.x = x;
         this.y = y;
         this.r = r;
+    }
+
+    public Point() {
     }
 
     public float getX() {
@@ -72,4 +85,11 @@ public class Point {
         this.date = now.format(formatter);
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

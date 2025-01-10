@@ -1,4 +1,4 @@
-package cringe.lab3.bean.coordinate;
+package cringe.lab3.bean;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
@@ -15,9 +15,6 @@ import java.util.stream.Stream;
 public class CheckBoxChecker implements Serializable {
 
     private final Map<Float, Boolean> checkBoxes = new HashMap<>();
-
-    public CheckBoxChecker() {
-    }
 
     public Map<Float, Boolean> getCheckBoxes() {
         return checkBoxes;

@@ -12,12 +12,12 @@ services:
     extra_hosts:
       - "lil-star:192.168.31.233"
 
-#  postgres:
-#    image: postgres:latest
-#    restart: always
-#    shm_size: 128mb
-#    environment:
-#      POSTGRES_USER: lab3_user
-#      POSTGRES_PASSWORD: lab3_user_password
-#    ports:
-#      - "5432:5432"
+  postgres:
+    image: postgres:latest
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: lab3_user
+      POSTGRES_PASSWORD: lab3_user_password
+    ports:
+      - "5432:5432"

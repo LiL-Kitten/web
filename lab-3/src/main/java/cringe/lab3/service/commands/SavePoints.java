@@ -1,6 +1,6 @@
 package cringe.lab3.service.commands;
 
-import cringe.lab3.bean.Point;
+import cringe.lab3.entity.Point;
 import cringe.lab3.service.Service;
 import cringe.lab3.service.ServicesName;
 

@@ -1,7 +1,7 @@
 package cringe.lab3.service;
 
-import cringe.lab3.bean.Point;
-import cringe.lab3.storage.Observer;
+import cringe.lab3.entity.Point;
+import cringe.lab3.db.Observer;
 
 import java.util.List;
 

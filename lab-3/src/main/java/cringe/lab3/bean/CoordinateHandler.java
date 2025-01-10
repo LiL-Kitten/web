@@ -1,6 +1,6 @@
-package cringe.lab3.bean.coordinate;
+package cringe.lab3.bean;
 
-import cringe.lab3.bean.Point;
+import cringe.lab3.entity.Point;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 

@@ -1,15 +1,12 @@
-package cringe.lab3.controller;
+package cringe.lab3.bean;
 
-import cringe.lab3.storage.CollectionBean;
-import cringe.lab3.bean.Point;
-import cringe.lab3.bean.coordinate.CheckBoxChecker;
-import cringe.lab3.bean.coordinate.CoordinateHandler;
-
-import cringe.lab3.storage.dto.DBManager;
+import cringe.lab3.db.DBManager;
+import cringe.lab3.entity.Point;
 
 import cringe.lab3.service.ServiceManager;
 import cringe.lab3.service.ServicesName;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
@@ -28,18 +25,18 @@ public class PointController implements Serializable {
     @Inject
     private CheckBoxChecker checkBoxChecker;
 
-    private final CollectionBean collectionBean;
-    private final ServiceManager serviceManager;
-    private final DBManager dbManager;
+    private transient ServiceManager serviceManager;
+    private DBManager dbManager;
 
     @Inject
-    public PointController() {
-        this.collectionBean = new CollectionBean();
-        this.dbManager = new DBManager();
-        this.serviceManager = new ServiceManager();
-        serviceManager.registerObserver(dbManager, collectionBean);
-    }
+    public PointController() {}
 
+    @PostConstruct
+    public void init() {
+        this.serviceManager = new ServiceManager();
+        this.dbManager = new DBManager();
+        serviceManager.registerObserver(dbManager);
+    }
     public void save() {
         Float[] selectedCheckBoxes = checkBoxChecker.getSelectedCheckBoxes();
         List<Point> points = coordinateHandler.createPoints(selectedCheckBoxes);
@@ -49,15 +46,15 @@ public class PointController implements Serializable {
     }
 
     public void delete() {
-        serviceManager.execute(ServicesName.DELETE, collectionBean.getPoints());
+        serviceManager.execute(ServicesName.DELETE, dbManager.getPoints());
     }
 
     public List<Point> getPoints() {
-        return collectionBean.getPoints();
+        return dbManager.getPoints();
     }
 
     @PreDestroy
     public void destroy() {
-        serviceManager.unregisterObserver(dbManager, collectionBean);
+        serviceManager.unregisterObserver(dbManager);
     }
 }
