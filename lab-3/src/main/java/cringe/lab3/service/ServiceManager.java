@@ -1,10 +1,10 @@
 package cringe.lab3.service;
 
-import cringe.lab3.bean.CollectionBean;
 import cringe.lab3.bean.Point;
 import cringe.lab3.service.commands.AreaChecker;
 import cringe.lab3.service.commands.DeletePoints;
 import cringe.lab3.service.commands.SavePoints;
+import cringe.lab3.storage.Observer;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -12,22 +12,31 @@ import java.util.List;
 public class ServiceManager {
     private final EnumMap<ServicesName, Service> services = new EnumMap<>(ServicesName.class);
 
-    public ServiceManager(CollectionBean collection) {
+    public ServiceManager() {
         addService(new AreaChecker());
-        addService(new DeletePoints(collection));
-        addService(new SavePoints(collection));
+        addService(new DeletePoints());
+        addService(new SavePoints());
     }
 
     public void addService(Service service) {
         services.put(service.getServiceName(), service);
     }
 
-    public void execute(ServicesName serviceName, List<Point> points) {
-        Service service = services.get(serviceName);
-        if (service != null) {
-            service.action(points);
-        } else {
-            throw new IllegalArgumentException("Service not found: " + serviceName);
+    public void registerObserver(Observer... observer) {
+        for (Service service : services.values()) {
+            service.attach(observer);
         }
     }
+
+    public void unregisterObserver(Observer... observer) {
+        for (Service service : services.values()) {
+            service.detach(observer);
+        }
+    }
+
+    public void execute(ServicesName serviceName, List<Point> points) {
+        Service service = services.get(serviceName);
+        service.action(points);
+    }
+
 }

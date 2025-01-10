@@ -1,13 +1,12 @@
-package cringe.lab3.dto;
+package cringe.lab3.storage.dto;
 
 import cringe.lab3.bean.Point;
-import jakarta.enterprise.context.ApplicationScoped;
+import cringe.lab3.storage.Observer;
 
 import java.io.Serializable;
 import java.util.List;
 
-@ApplicationScoped
-public class DBManager implements Serializable, Observer{
+public class DBManager implements Serializable, Observer {
 
     @Override
     public void save(List<Point> points) {

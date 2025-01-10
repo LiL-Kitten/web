@@ -1,11 +1,11 @@
 package cringe.lab3.controller;
 
-import cringe.lab3.bean.CollectionBean;
+import cringe.lab3.storage.CollectionBean;
 import cringe.lab3.bean.Point;
 import cringe.lab3.bean.coordinate.CheckBoxChecker;
 import cringe.lab3.bean.coordinate.CoordinateHandler;
 
-import cringe.lab3.dto.DBManager;
+import cringe.lab3.storage.dto.DBManager;
 
 import cringe.lab3.service.ServiceManager;
 import cringe.lab3.service.ServicesName;
@@ -36,13 +36,11 @@ public class PointController implements Serializable {
     public PointController() {
         this.collectionBean = new CollectionBean();
         this.dbManager = new DBManager();
-        this.serviceManager = new ServiceManager(collectionBean);
-        collectionBean.attach(dbManager);
+        this.serviceManager = new ServiceManager();
+        serviceManager.registerObserver(dbManager, collectionBean);
     }
 
     public void save() {
-
-
         Float[] selectedCheckBoxes = checkBoxChecker.getSelectedCheckBoxes();
         List<Point> points = coordinateHandler.createPoints(selectedCheckBoxes);
 
@@ -60,6 +58,6 @@ public class PointController implements Serializable {
 
     @PreDestroy
     public void destroy() {
-        collectionBean.detach(dbManager);
+        serviceManager.unregisterObserver(dbManager, collectionBean);
     }
 }

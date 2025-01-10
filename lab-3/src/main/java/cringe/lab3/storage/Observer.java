@@ -1,4 +1,4 @@
-package cringe.lab3.dto;
+package cringe.lab3.storage;
 
 import cringe.lab3.bean.Point;
 
