@@ -56,5 +56,6 @@ public class PointController implements Serializable {
     @PreDestroy
     public void destroy() {
         serviceManager.unregisterObserver(dbManager);
+        dbManager.close();
     }
 }

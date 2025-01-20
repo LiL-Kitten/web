@@ -19,12 +19,12 @@
 
 <h:body>
 
-    <!-- Ошибка -->
+    <!-- Ошибки -->
     <div class="error" id="error">
         <div class="error-content">
             <span class="close-btn" id="closeBtn">x</span>
-            <p id="errorHeader"></p>
-            <p id="errorMessage"></p>
+            <p id="errorHeader">м</p>
+            <p id="errorMessage">м</p>
         </div>
     </div>
 
@@ -45,40 +45,42 @@
                             #{value}
                         </h:outputLabel>
                     </ui:repeat>
+                    <h:inputHidden id="hiddenX" value="#{coordinateHandler.x}"/>
                 </div>
 
                 <!-- Значение Y -->
                 <div class="block-y">
                     <h:outputLabel styleClass="mini-title" value="Значение Y"/>
                     <br/>
+                    <h:inputHidden id="hiddenY" value="#{coordinateHandler.y}"/>
                     <h:inputText id="valueY" styleClass="value-y" maxlength="7" label="от -3 до 3"
-                                 value="#{coordinateHandler.y}" onkeyup="setY(this);"/>
+                                 for="hiddenY" onkeyup="setY(this.value);"/>
                 </div>
 
                 <!-- Значение R -->
                 <div class="block-r">
                     <h:outputLabel styleClass="mini-title" value="Значение R"/>
                     <br/>
-                    <h:inputHidden id="valueR" value="#{coordinateHandler.r}"/>
-                    <p:slider styleClass="slider" minValue="2" maxValue="5" step="0.25" for="valueR"
-                              onSlideEnd="setR(document.getElementById('formId:valueR'));">
+                    <h:inputHidden id="hiddenR" value="#{coordinateHandler.r}"/>
+                    <p:slider styleClass="slider" minValue="2" maxValue="5" step="0.25" for="hiddenR"
+                              onSlideEnd="setR(document.getElementById('formId:hiddenR').value);">
                     </p:slider>
                 </div>
 
 
                 <!-- Кнопки -->
                 <div class="tools">
-                    <button class="clear-btn" type="button" name="clear form"/>
+                    <button class="random-btn" type="button" name="random form" onclick="random()"/>
+                    <button class="clear-btn" type="button" name="clear form" onclick="clearForm()"/>
 
-                    <h:commandButton styleClass="delete-btn" type="button">
+                    <h:commandButton styleClass="delete-btn" type="button" onclick="clearPoints()">
                         <f:ajax execute="@form" render=":history" listener="#{controller.delete()}"/>
                     </h:commandButton>
 
-                    <button class="random-btn" type="button" name="random form"/>
-
                     <h:commandButton styleClass="result" action="#{controller.save()}"
-                                     onclick="return handleSubmit();" type="submit">
-                        <f:ajax execute="@form" render=":history"/>
+                                      onclick="return handleSubmit()" type="submit">
+                        <f:ajax execute="@form" render=":history"
+                                onevent="handleAjaxEvent" />
                     </h:commandButton>
                 </div>
 
@@ -87,7 +89,8 @@
 
             <!-- График -->
                 <div class="myImg">
-                    <svg class="mySvg" width="400" height="400" style="border-radius: 15px;">
+                    <!--добавить функцию для отправки-->
+                    <svg class="mySvg"  width="400" height="400" style="border-radius: 15px;">
                         <image href="resources/img/graph.svg" width="400" height="400"/>
                     </svg>
                 </div>
@@ -100,7 +103,8 @@
         <!-- Таблица данных -->
         <h:panelGroup id="history" styleClass="block-history">
             <div class="gui-element" id="data-block">
-                <h:dataTable styleClass="history" id="historyTable" value="#{controller.points}" var="point" rendered="#{not empty controller.points}">
+                <h:dataTable styleClass="history" id="historyTable" value="#{controller.points}" var="point"
+                             rendered="#{not empty controller.points}">
                     <h:column>
                         <f:facet name="header">X</f:facet>
                         #{point.x}
@@ -123,7 +127,7 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">Результат</f:facet>
-                        #{point.condition ? 'popal!' : 'cringe'}
+                        #{point.condition}
                     </h:column>
                 </h:dataTable>
 
@@ -136,9 +140,20 @@
     </f:view>
 
     <!-- Скрипты -->
-    <script src="resources/js/index.js"></script>
-    <script src="resources/js/validate.js"></script>
-    <script src="resources/js/svgAction.js"></script>
+    <script src="resources/js/components/ErrorHandler.js"></script>
+    <script src="resources/js/util/btnFunctions.js"></script>
+    <script src="resources/js/util/checker.js"></script>
+    <script src="resources/js/app.js"></script>
+    <script src="resources/js/util/svgAction.js"></script>
+    <script>
+        function handleAjaxEvent(data) {
+            if (data.status === 'success') {
+                drawPoints(readTableData());
+            } else if (data.status === 'error') {
+                console.error('AJAX request failed:', data);
+            }
+        }
+    </script>
 </h:body>
 
 </html>

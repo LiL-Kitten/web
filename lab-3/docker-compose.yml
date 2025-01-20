@@ -17,7 +17,7 @@ services:
     restart: always
     shm_size: 128mb
     environment:
-      POSTGRES_USER: lab3_user
-      POSTGRES_PASSWORD: lab3_user_password
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pswrd
     ports:
       - "5432:5432"

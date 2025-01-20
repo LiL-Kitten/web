@@ -12,8 +12,17 @@ import java.util.List;
 @Named
 public class CoordinateHandler implements Serializable {
 
+    private Float x;
     private float y;
     private float r;
+
+    public Float getX() {
+        return x;
+    }
+
+    public void setX(Float x) {
+        this.x = x;
+    }
 
     public float getY() {
         return y;
@@ -38,6 +47,8 @@ public class CoordinateHandler implements Serializable {
             Point point = new Point(xValue, y, r);
             points.add(point);
         }
+
+        if (x != null) points.add(new Point(x, y, r));
 
         return points;
     }
