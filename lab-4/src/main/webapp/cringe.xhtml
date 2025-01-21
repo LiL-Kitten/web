@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="ru">
+
+<h:head>
+    <link rel="icon" href="resources/img/favicon.ico" type="image/x-icon"/>
+    <h:outputStylesheet library="css" name="cringe.css"/>
+    <h:outputStylesheet library="css" name="main.css"/>
+    <h:outputStylesheet library="css" name="btns.css"/>
+    <h:outputStylesheet library="css" name="error.css"/>
+    <h:outputStylesheet library="css" name="history.css"/>
+    <title> cringe </title>
+</h:head>
+
+<h:body>
+
+    <!-- Ошибки -->
+    <div class="error" id="error">
+        <div class="error-content">
+            <span class="close-btn" id="closeBtn">x</span>
+            <p id="errorHeader">м</p>
+            <p id="errorMessage">м</p>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <f:view>
+        <h:panelGroup styleClass="main">
+
+            <!-- Форма -->
+            <h:form id="formId">
+
+                <!-- Значение X -->
+                <h:outputLabel styleClass="mini-title" value="Значение X"/>
+                <div class="block-x">
+                    <ui:repeat value="#{checkbox.values}" var="value" varStatus="status">
+                        <h:outputLabel styleClass="label-checkbox">
+                            <h:selectBooleanCheckbox value="#{checkbox.checkBoxes[value]}"
+                                                     onchange="changeStyle(this)" onclick="#{checkbox.selectCheckBox(value)}"/>
+                            #{value}
+                        </h:outputLabel>
+                    </ui:repeat>
+                    <h:inputHidden id="hiddenX" value="#{coordinateHandler.x}"/>
+                </div>
+
+                <!-- Значение Y -->
+                <div class="block-y">
+                    <h:outputLabel styleClass="mini-title" value="Значение Y"/>
+                    <br/>
+                    <h:inputHidden id="hiddenY" value="#{coordinateHandler.y}"/>
+                    <h:inputText id="valueY" styleClass="value-y" maxlength="7" label="от -3 до 3"
+                                 for="hiddenY" onkeyup="setY(this.value);"/>
+                </div>
+
+                <!-- Значение R -->
+                <div class="block-r">
+                    <h:outputLabel styleClass="mini-title" value="Значение R"/>
+                    <br/>
+                    <h:inputHidden id="hiddenR" value="#{coordinateHandler.r}"/>
+                    <p:slider styleClass="slider" minValue="2" maxValue="5" step="0.25" for="hiddenR"
+                              onSlideEnd="setR(document.getElementById('formId:hiddenR').value);">
+                    </p:slider>
+                </div>
+
+
+                <!-- Кнопки -->
+                <div class="tools">
+                    <button class="random-btn" type="button" name="random form" onclick="random()"/>
+                    <button class="clear-btn" type="button" name="clear form" onclick="clearForm()"/>
+
+                    <h:commandButton styleClass="delete-btn" type="button" onclick="clearPoints()">
+                        <f:ajax execute="@form" render=":history" listener="#{controller.delete()}"/>
+                    </h:commandButton>
+
+                    <h:commandButton styleClass="result" action="#{controller.save()}"
+                                      onclick="return handleSubmit()" type="submit">
+                        <f:ajax execute="@form" render=":history"
+                                onevent="handleAjaxEvent" />
+                    </h:commandButton>
+                </div>
+
+            </h:form>
+
+
+            <!-- График -->
+                <div class="myImg">
+                    <!--добавить функцию для отправки-->
+                    <svg class="mySvg"  width="400" height="400" style="border-radius: 15px;">
+                        <image href="resources/img/graph.svg" width="400" height="400"/>
+                    </svg>
+                </div>
+
+            <h:form styleClass="get-home">
+                <h:commandLink action="#{navigate.goToHome}" styleClass="home"/>
+            </h:form>
+
+        </h:panelGroup>
+        <!-- Таблица данных -->
+        <h:panelGroup id="history" styleClass="block-history">
+            <div class="gui-element" id="data-block">
+                <h:dataTable styleClass="history" id="historyTable" value="#{controller.points}" var="point"
+                             rendered="#{not empty controller.points}">
+                    <h:column>
+                        <f:facet name="header">X</f:facet>
+                        #{point.x}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Y</f:facet>
+                        #{point.y}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">R</f:facet>
+                        #{point.r}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Время выполнения</f:facet>
+                        #{point.time} nanoseconds
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Дата</f:facet>
+                        #{point.date}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Результат</f:facet>
+                        #{point.condition}
+                    </h:column>
+                </h:dataTable>
+
+                <!-- Сообщение, если нет данных -->
+                <h:outputText styleClass="main" value="Нет данных для отображения. Потыкайте кнопочки"
+                              rendered="#{empty controller.points}" />
+            </div>
+        </h:panelGroup>
+        <h:messages/>
+    </f:view>
+
+    <!-- Скрипты -->
+    <script src="resources/js/components/ErrorHandler.js"></script>
+    <script src="resources/js/util/btnFunctions.js"></script>
+    <script src="resources/js/util/checker.js"></script>
+    <script src="resources/js/app.js"></script>
+    <script src="resources/js/util/svgAction.js"></script>
+    <script>
+        function handleAjaxEvent(data) {
+            if (data.status === 'success') {
+                drawPoints(readTableData());
+            } else if (data.status === 'error') {
+                console.error('AJAX request failed:', data);
+            }
+        }
+    </script>
+</h:body>
+
+</html>
