@@ -13,7 +13,7 @@ services:
       - "lil-star:192.168.31.233"
 
   oracle:
-    image: oracle/database:19.3.0-ee
+    image: newrelic/test-oracle-db
     restart: always
     environment:
       - ORACLE_PWD=pswrd

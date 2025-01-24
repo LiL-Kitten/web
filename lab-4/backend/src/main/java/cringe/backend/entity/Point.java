@@ -1,18 +1,16 @@
 package cringe.backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+//надо сущности делать бинами как мне кажется, хотя может я ошибаюсь
 @Entity
 public class Point {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private float x;
@@ -22,14 +20,16 @@ public class Point {
     private String date;
     private long time;
 
-    public Point(float x, float y, float r) {
+    @ManyToOne
+    private User user;
+
+    public Point(float x, float y, float r, boolean condition) {
         this.x = x;
         this.y = y;
         this.r = r;
     }
 
-    public Point() {
-    }
+    public Point() {}
 
     public float getX() {
         return x;
@@ -91,5 +91,13 @@ public class Point {
 
     public Long getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
