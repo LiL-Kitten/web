@@ -1,13 +1,13 @@
-package cringe.backend.entity;
+package cringe.back.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-//надо сущности делать бинами как мне кажется, хотя может я ошибаюсь
 @Entity
-public class Point {
+public class Point implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,7 @@ public class Point {
         this.x = x;
         this.y = y;
         this.r = r;
+        this.condition = condition;
     }
 
     public Point() {}

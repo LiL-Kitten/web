@@ -8,16 +8,16 @@ services:
     environment:
       - JAVA_OPTS=-Djboss.bind.address=0.0.0.0
     volumes:
-      - ./target/lab-2-1.war:/opt/jboss/wildfly/standalone/deployments/app.war
+      - ./target/back-1.0-SNAPSHOT.war:/opt/jboss/wildfly/standalone/deployments/app.war
     extra_hosts:
       - "lil-star:192.168.31.233"
 
-  oracle:
-    image: newrelic/test-oracle-db
+  postgres:
+    image: postgres:latest
     restart: always
+    shm_size: 128mb
     environment:
-      - ORACLE_PWD=pswrd
-      - ORACLE_ALLOW_REMOTE=true
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pswrd
     ports:
-      - "1521:1521"
-      - "5500:5500"
+      - "5432:5432"
