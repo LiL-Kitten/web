@@ -1,17 +1,15 @@
 package cringe.back.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
-public class Point implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Table(name = "POINT_TABLE")
+public class Point extends AbstractEntity implements Serializable {
 
     private float x;
     private float y;
@@ -84,14 +82,6 @@ public class Point implements Serializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         this.date = now.format(formatter);
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public User getUser() {

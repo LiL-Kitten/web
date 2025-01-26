@@ -1,14 +1,14 @@
 package cringe.back.service.impls;
 
 import cringe.back.dao.UserDAO;
-import cringe.back.entity.User;
-import cringe.back.service.Service;
+import cringe.back.dto.UserDTO;
 import cringe.back.service.ServiceName;
+import cringe.back.service.ServiceResponse;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 
 @Stateless
-public class RegistrationService extends Service<User> {
+public class RegistrationService extends Service<UserDTO> {
 
     @EJB
     UserDAO userDAO;
@@ -18,8 +18,14 @@ public class RegistrationService extends Service<User> {
     }
 
     @Override
-    public String execute(User user) {
-        userDAO.save(user);
-        return "User registered successfully: " + user.getUsername() + "\nuser id:" + user.getId();
+    public ServiceResponse<UserDTO> execute(UserDTO userDTO) {
+        if (userDAO.exists(userDTO)) {
+            return new ServiceResponse<>(false, "Вы уже зарегистрированы попробуйте " +
+                    "вспомнить пароль и войти");
+        }
+
+        userDAO.save(userDTO);
+        return new ServiceResponse<>(true, "Пользователь успешно зарегистрирован \n UserName:"
+                + userDTO.getUsername() + "\nUserId:" + userDAO.getId(userDTO));
     }
 }

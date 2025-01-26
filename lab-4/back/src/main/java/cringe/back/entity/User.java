@@ -7,11 +7,15 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "USER_TABLE")
-public class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@NamedQuery(
+        name = "User.findByUsername",
+        query = "SELECT u FROM User u WHERE u.username = :username"
+)
+@NamedQuery(
+        name = "User.authenticate",
+        query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password"
+)
+public class User extends AbstractEntity implements Serializable {
     private String username;
     private long password;
 
@@ -21,14 +25,6 @@ public class User implements Serializable {
     }
 
     public User() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;

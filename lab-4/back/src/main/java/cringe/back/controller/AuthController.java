@@ -1,10 +1,11 @@
 package cringe.back.controller;
 
-import cringe.back.entity.User;
+import cringe.back.dto.UserDTO;
 import cringe.back.exceptions.InvalidPasswordException;
 import cringe.back.exceptions.UserNotFoundException;
-import cringe.back.service.ServiceManager;
+import cringe.back.service.AuthServiceFactory;
 import cringe.back.service.ServiceName;
+import cringe.back.service.ServiceResponse;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -18,26 +19,26 @@ import jakarta.ws.rs.core.Response;
 public class AuthController {
 
     @EJB
-    private ServiceManager serviceManager;
+    private AuthServiceFactory authServiceFactory;
 
     @POST
     @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response register(User user) {
-        String message = serviceManager.execute(ServiceName.REGISTRATION, user);
+    public Response register(UserDTO user) {
+        ServiceResponse<?> response = authServiceFactory.createService(ServiceName.REGISTRATION).execute(user);
 
-        return Response.ok(message).build();
+        return Response.ok(response).build();
     }
 
     @POST
     @Path("authorize")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response authorize(User user) {
+    public Response authorize(UserDTO user) {
         try {
-            String message = serviceManager.execute(ServiceName.AUTHENTICATION, user);
-            return Response.ok(message).build();
+            authServiceFactory.createService(ServiceName.AUTHENTICATION).execute(user);
+            return Response.ok().build();
         } catch (InvalidPasswordException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (UserNotFoundException e) {

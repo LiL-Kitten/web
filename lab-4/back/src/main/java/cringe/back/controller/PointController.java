@@ -1,11 +1,12 @@
 package cringe.back.controller;
 
-import cringe.back.entity.Point;
-import cringe.back.entity.User;
+import cringe.back.dto.PointDTO;
+import cringe.back.dto.UserDTO;
 import cringe.back.exceptions.InvalidPasswordException;
 import cringe.back.exceptions.UserNotFoundException;
-import cringe.back.service.ServiceManager;
 import cringe.back.service.ServiceName;
+import cringe.back.service.ServiceResponse;
+import cringe.back.service.UserServiceFactory;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -15,17 +16,16 @@ import jakarta.ws.rs.core.Response;
 public class PointController {
 
     @EJB
-    private ServiceManager serviceManager;
-
+    UserServiceFactory userServiceFactory;
 
     @POST
     @Path("/get")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserPoints(User user) {
+    public Response getUserPoints(UserDTO user) {
         try {
-            serviceManager.execute(ServiceName.AUTHENTICATION, user);
-            String points = serviceManager.execute(ServiceName.GET_POINTS, user);
-            return Response.ok(points).build();
+            ServiceResponse<?> response = userServiceFactory.createService(ServiceName.GET_POINTS).execute(user);
+
+            return Response.ok(response).build();
         } catch (InvalidPasswordException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (UserNotFoundException e) {
@@ -40,11 +40,11 @@ public class PointController {
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addUserPoint(Point point, User user) {
+    public Response addUserPoint(PointDTO point, UserDTO user) {
         try {
-            serviceManager.execute(ServiceName.AUTHENTICATION, user);
-            serviceManager.execute(ServiceName.ADD_POINT, point);
-            return Response.ok("done").build();
+
+
+            return Response.ok(point.getY() + user.getUsername()).build();
         } catch (InvalidPasswordException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (UserNotFoundException e) {
@@ -58,11 +58,11 @@ public class PointController {
     @DELETE
     @Path("/delete")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteUserPoints(User user) {
+    public Response deleteUserPoints(UserDTO user) {
         try {
-            serviceManager.execute(ServiceName.AUTHENTICATION, user);
-            serviceManager.execute(ServiceName.DELETE_POINTS, user);
-            return Response.ok("done").build();
+            ServiceResponse<?> response = userServiceFactory.createService(ServiceName.DELETE_POINTS).execute(user);
+
+            return Response.ok(response).build();
         } catch (InvalidPasswordException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (UserNotFoundException e) {

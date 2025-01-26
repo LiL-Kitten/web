@@ -1,17 +1,16 @@
 package cringe.back.dao;
 
-import cringe.back.entity.Point;
+import cringe.back.dto.PointDTO;
+import cringe.back.dto.UserDTO;
 import jakarta.ejb.Remote;
 
 import java.util.List;
 
 @Remote
 public interface PointDAO {
-    boolean checkArea(float x, float y, float r);
-
-    void save(Point point);
+    void save(PointDTO point);
 
     void deleteAll(Long userId);
 
-    List<Point> findAll(Long userId);
+    List<PointDTO> findAll(Long userId);
 }

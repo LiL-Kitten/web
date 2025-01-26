@@ -1,58 +1,60 @@
 package cringe.back.dao;
 
+import cringe.back.dto.UserDTO;
 import cringe.back.entity.User;
 import jakarta.ejb.Stateless;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
 @Stateless
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl implements UserDAO, Convert<User, UserDTO> {
 
-    @Inject
-    private EntityManagerProvider entityManagerProvider;
+    @PersistenceContext(unitName = "default")
+    private EntityManager entityManager;
+
+    private static final String PASSWORD = "password";
+    private static final String USERNAME = "username";
 
     @Override
-    public void save(User user) {
-        EntityManager entityManager = entityManagerProvider.getEmf().createEntityManager();
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(user);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
-            }
-            throw e;
-        } finally {
-            entityManager.close();
-        }
+    public void save(UserDTO userDTO) {
+        entityManager.persist(convertToEntity(userDTO));
     }
 
     @Override
-    public boolean exists(String username) {
-        EntityManager entityManager = entityManagerProvider.getEmf().createEntityManager();
-        try {
-            TypedQuery<User> query = entityManager.createQuery(
-                    "SELECT u FROM User u WHERE u.username = :username", User.class);
-            query.setParameter("username", username);
-            return query.getResultStream().findFirst().isPresent();
-        } finally {
-            entityManager.close();
-        }
+    public boolean exists(UserDTO userDTO) {
+        TypedQuery<User> query = entityManager.createNamedQuery("User.findByUsername", User.class);
+        query.setParameter(USERNAME, userDTO.getUsername());
+        return query.getResultStream().findFirst().isPresent();
     }
 
     @Override
-    public boolean check(String username, long password) {
-        EntityManager entityManager = entityManagerProvider.getEmf().createEntityManager();
-        try {
-            TypedQuery<User> query = entityManager.createQuery(
-                    "SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class);
-            query.setParameter("username", username);
-            query.setParameter("password", password);
-            return query.getResultStream().findFirst().isPresent();
-        } finally {
-            entityManager.close();
-        }
+    public boolean authenticate(UserDTO userDTO) {
+        TypedQuery<User> query = entityManager.createNamedQuery("User.authenticate", User.class);
+        query.setParameter(USERNAME, userDTO.getUsername());
+        query.setParameter(PASSWORD, userDTO.getPassword());
+        return query.getResultStream().findFirst().isPresent();
+    }
+
+    @Override
+    public Long getId(UserDTO userDTO) {
+        TypedQuery<User> query = entityManager.createNamedQuery("User.authenticate", User.class);
+        query.setParameter(USERNAME, userDTO.getUsername());
+        query.setParameter(PASSWORD, userDTO.getPassword());
+
+        User user = query.getResultStream().findFirst().orElse(null);
+        return (user != null) ? user.getId() : null;
+    }
+
+    @Override
+    public User convertToEntity(UserDTO userDTO) {
+        User user = new User(userDTO.getUsername(), userDTO.getPassword());
+        user.setId(getId(userDTO));
+        return user;
+    }
+
+    @Override
+    public UserDTO convertToDTO(User user) {
+        return new UserDTO(user.getUsername(), user.getPassword());
     }
 }
