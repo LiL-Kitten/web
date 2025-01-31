@@ -4,7 +4,6 @@ import cringe.back.dto.UserDTO;
 import cringe.back.exceptions.InvalidPasswordException;
 import cringe.back.exceptions.UserNotFoundException;
 import cringe.back.service.AuthServiceFactory;
-import cringe.back.service.ServiceName;
 import cringe.back.service.ServiceResponse;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.Consumes;
@@ -14,39 +13,43 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-
 @Path("authorization")
 public class AuthController {
 
     @EJB
-    private AuthServiceFactory authServiceFactory;
+    private AuthServiceFactory serviceFactory;
 
     @POST
-    @Path("register")
+    @Path("reg")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(UserDTO user) {
-        ServiceResponse<?> response = authServiceFactory.createService(ServiceName.REGISTRATION).execute(user);
-
-        return Response.ok(response).build();
+        try {
+            ServiceResponse<String> response = serviceFactory.registration(user);
+            return Response.ok(response).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ServiceResponse<>(false, e.getMessage(), null))
+                    .build();
+        }
     }
 
     @POST
-    @Path("authorize")
+    @Path("auth")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response authorize(UserDTO user) {
         try {
-            authServiceFactory.createService(ServiceName.AUTHENTICATION).execute(user);
-            return Response.ok().build();
-        } catch (InvalidPasswordException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            ServiceResponse<String> response = serviceFactory.authenticate(user);
+            return Response.ok(response).build();
+        } catch (InvalidPasswordException | UserNotFoundException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ServiceResponse<>(false, e.getMessage(), null))
+                    .build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("An unexpected error occurred").build();
+                    .entity(new ServiceResponse<>(false, "Internal server error", null))
+                    .build();
         }
     }
 }
-

@@ -1,30 +1,38 @@
 package cringe.back.service;
 
-import cringe.back.dto.UserDTO;
-import cringe.back.service.impls.*;
+import cringe.back.dao.PointDAO;
+import cringe.back.dao.UserDAO;
+import cringe.back.dto.PointDTO;
 import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
 
-public class UserServiceFactory implements ServiceFactory {
+import java.util.List;
+
+@Stateless
+public class UserServiceFactory {
     @EJB
-    private AddPointService addPointService;
+    private UserDAO userDAO;
 
     @EJB
-    private DelPointsService delPointsService;
+    private PointDAO pointDAO;
 
-    @EJB
-    private GetPointsService getPointsService;
-
-    @Override
-    public Service<UserDTO> createService(ServiceName name) {
-        return switch (name) {
-            case DELETE_POINTS -> delPointsService;
-            case GET_POINTS -> getPointsService;
-            default -> throw new IllegalArgumentException("Unknown service " + name);
-        };
+    public ServiceResponse<List<PointDTO>> getPoints(Long id) {
+        List<PointDTO> list = pointDAO.findAll(id);
+        if (list.isEmpty()) {
+            return new ServiceResponse<>(true, "У вас нет каких либо точек сделайте первый запрос!");
+        }
+        return new ServiceResponse<>(true, "Success", list);
     }
 
-    public AddPointService getAddPointService() {
-        return addPointService;
+    public ServiceResponse<String> delPoints(Long id) {
+        pointDAO.deleteAll(id);
+
+        return new ServiceResponse<>(true, "All points deleted");
     }
 
+    public ServiceResponse<String> addPoints(Long userId, PointDTO pointDTO) {
+        pointDAO.save(userDAO.findById(userId), pointDTO);
+
+        return new ServiceResponse<>(true, "Point added successfully");
+    }
 }

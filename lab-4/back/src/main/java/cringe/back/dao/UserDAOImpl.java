@@ -4,53 +4,116 @@ import cringe.back.dto.UserDTO;
 import cringe.back.entity.User;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+
+import java.util.Optional;
 
 @Stateless
 public class UserDAOImpl implements UserDAO, Convert<User, UserDTO> {
-
-    @PersistenceContext(unitName = "default")
-    private EntityManager entityManager;
 
     private static final String PASSWORD = "password";
     private static final String USERNAME = "username";
 
     @Override
     public void save(UserDTO userDTO) {
-        entityManager.persist(convertToEntity(userDTO));
+        EntityManager em = PersistenceManager.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(convertToEntity(userDTO));
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Error saving user", e);
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public boolean exists(UserDTO userDTO) {
-        TypedQuery<User> query = entityManager.createNamedQuery("User.findByUsername", User.class);
-        query.setParameter(USERNAME, userDTO.getUsername());
-        return query.getResultStream().findFirst().isPresent();
+        EntityManager em = PersistenceManager.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            TypedQuery<User> query = em.createNamedQuery("User.findByUsername", User.class);
+            query.setParameter(USERNAME, userDTO.getUsername());
+            boolean exists = query.getResultStream().findFirst().isPresent();
+            em.getTransaction().commit();
+            return exists;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Error checking user existence", e);
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public boolean authenticate(UserDTO userDTO) {
-        TypedQuery<User> query = entityManager.createNamedQuery("User.authenticate", User.class);
-        query.setParameter(USERNAME, userDTO.getUsername());
-        query.setParameter(PASSWORD, userDTO.getPassword());
-        return query.getResultStream().findFirst().isPresent();
+        EntityManager em = PersistenceManager.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            TypedQuery<User> query = em.createNamedQuery("User.authenticate", User.class);
+            query.setParameter(USERNAME, userDTO.getUsername());
+            query.setParameter(PASSWORD, userDTO.getPassword());
+            boolean authenticated = query.getResultStream().findFirst().isPresent();
+             em.getTransaction().commit();
+            return authenticated;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Authentication error", e);
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public Long getId(UserDTO userDTO) {
-        TypedQuery<User> query = entityManager.createNamedQuery("User.authenticate", User.class);
-        query.setParameter(USERNAME, userDTO.getUsername());
-        query.setParameter(PASSWORD, userDTO.getPassword());
+        EntityManager em = PersistenceManager.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            TypedQuery<User> query = em.createNamedQuery("User.authenticate", User.class);
+            query.setParameter(USERNAME, userDTO.getUsername());
+            query.setParameter(PASSWORD, userDTO.getPassword());
+            Optional<User> user = query.getResultStream().findFirst();
+            em.getTransaction().commit();
+            return user.map(User::getId).orElse(null);
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Error getting user ID", e);
+        } finally {
+            em.close();
+        }
+    }
 
-        User user = query.getResultStream().findFirst().orElse(null);
-        return (user != null) ? user.getId() : null;
+    @Override
+    public User findById(Long id) {
+        EntityManager em = PersistenceManager.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            User user = em.find(User.class, id);
+            em.getTransaction().commit();
+            return user;
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Error finding user by ID", e);
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public User convertToEntity(UserDTO userDTO) {
-        User user = new User(userDTO.getUsername(), userDTO.getPassword());
-        user.setId(getId(userDTO));
-        return user;
+        return new User(userDTO.getUsername(), userDTO.getPassword());
     }
 
     @Override

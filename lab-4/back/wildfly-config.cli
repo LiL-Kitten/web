@@ -1,0 +1,12 @@
+module add --name=org.postgresql --resources=/opt/jboss/wildfly/modules/system/layers/base/org/postgresql/main/postgresql-42.7.4.jar --dependencies=javax.api,javax.transaction.api
+
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
+xa-data-source add \
+  --name=PostgresXADS \
+  --jndi-name=java:/PostgresDS \
+  --driver-name=postgresql \
+  --xa-datasource-properties={"url"=>"jdbc:postgresql://postgres:5432/user"} \
+  --user-name=user \
+  --password=pswrd \
+  --enabled=true

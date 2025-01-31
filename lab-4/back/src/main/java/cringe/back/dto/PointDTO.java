@@ -1,17 +1,12 @@
 package cringe.back.dto;
 
-public class PointDTO {
+import java.io.Serializable;
+
+public class PointDTO implements Serializable {
     private float x;
     private float y;
     private float r;
     private boolean condition;
-
-
-    public PointDTO(float x, float y, float r) {
-        this.x = x;
-        this.y = y;
-        this.r = r;
-    }
 
     public PointDTO(float x, float y, float r, boolean condition) {
         this.x = x;
@@ -19,6 +14,8 @@ public class PointDTO {
         this.r = r;
         this.condition = condition;
     }
+
+    public PointDTO() {}
 
     public boolean isCondition() {
         return condition;

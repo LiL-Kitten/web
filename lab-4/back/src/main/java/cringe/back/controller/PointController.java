@@ -1,75 +1,78 @@
 package cringe.back.controller;
 
 import cringe.back.dto.PointDTO;
-import cringe.back.dto.UserDTO;
-import cringe.back.exceptions.InvalidPasswordException;
 import cringe.back.exceptions.UserNotFoundException;
-import cringe.back.service.ServiceName;
 import cringe.back.service.ServiceResponse;
 import cringe.back.service.UserServiceFactory;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.*;
 
 @Path("point")
 public class PointController {
 
-    @EJB
-    UserServiceFactory userServiceFactory;
+    @Context
+    private SecurityContext securityContext;
 
-    @POST
+    @EJB
+    private UserServiceFactory userServiceFactory;
+
+    @GET
     @Path("/get")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserPoints(UserDTO user) {
+    public Response getUserPoints() {
         try {
-            ServiceResponse<?> response = userServiceFactory.createService(ServiceName.GET_POINTS).execute(user);
-
+            Long userId = getUserIdFromContext();
+            ServiceResponse<?> response = userServiceFactory.getPoints(userId);
             return Response.ok(response).build();
-        } catch (InvalidPasswordException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(e.getMessage()).build();
+            return handleExceptions(e);
         }
     }
 
-    @PUT
+    @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addUserPoint(PointDTO point, UserDTO user) {
+    public Response addUserPoint(PointDTO point) {
         try {
-
-
-            return Response.ok(point.getY() + user.getUsername()).build();
-        } catch (InvalidPasswordException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            Long userId = getUserIdFromContext();
+            ServiceResponse<?> response = userServiceFactory.addPoints(userId, point);
+            return Response.ok(response).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("An unexpected error occurred").build();
+            return handleExceptions(e);
         }
     }
 
     @DELETE
     @Path("/delete")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteUserPoints(UserDTO user) {
+    public Response deleteUserPoints() {
         try {
-            ServiceResponse<?> response = userServiceFactory.createService(ServiceName.DELETE_POINTS).execute(user);
-
+            Long userId = getUserIdFromContext();
+            ServiceResponse<?> response = userServiceFactory.delPoints(userId);
             return Response.ok(response).build();
-        } catch (InvalidPasswordException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        } catch (UserNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("An unexpected error occurred").build();
+            return handleExceptions(e);
         }
+    }
+
+    private Long getUserIdFromContext() {
+        if (securityContext.getUserPrincipal() == null) {
+            throw new SecurityException("User not authenticated");
+        }
+        return Long.parseLong(securityContext.getUserPrincipal().getName());
+    }
+
+    private Response handleExceptions(Exception e) {
+        if (e instanceof UserNotFoundException) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
+        if (e instanceof SecurityException) {
+            return Response.status(Response.Status.UNAUTHORIZED)
+                    .entity("{\"error\":\"" + e.getMessage() + "\"}").build();
+        }
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity("{\"error\":\"" + e.getMessage() + "\"}").build();
     }
 }

@@ -1,6 +1,8 @@
 package cringe.back.dto;
 
-public class UserDTO {
+import java.io.Serializable;
+
+public class UserDTO implements Serializable {
     private String username;
     private long password;
 
@@ -8,6 +10,8 @@ public class UserDTO {
         this.username = username;
         this.password = password;
     }
+
+    public UserDTO() {}
 
     public String getUsername() {
         return username;
