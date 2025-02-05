@@ -1,13 +1,5 @@
 body {
-    font-size: 16pt;
-    color: #ffffff;
-    font-family: monospace;
-    background-image: url(img/pic3.jpg.xhtml);
-    background-size: cover;
-    background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
+
 }
 
 .fio {

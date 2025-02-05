@@ -23,24 +23,24 @@
     background-size: cover;
 }
 
-.random-btn {
-    background-image: url(img/btns/random.ico.xhtml);
+.random {
+    background-image: url(img/buttons/random.ico.xhtml);
 }
 
-.clear-btn {
-    background-image: url(img/btns/clear.svg.xhtml);
+.clear {
+    background-image: url(img/buttons/clear.svg.xhtml);
 }
 
-.delete-btn {
-    background-image: url(img/btns/delete.svg.xhtml);
+.delete {
+    background-image: url(img/buttons/delete.svg.xhtml);
 }
 
 .result {
-    background-image: url(img/btns/send.svg.xhtml);
+    background-image: url(img/buttons/send.svg.xhtml);
 }
 
 .home {
-    background-image: url(img/btns/home.svg.xhtml);
+    background-image: url(img/buttons/home.svg.xhtml);
 }
 
 .get-home {
