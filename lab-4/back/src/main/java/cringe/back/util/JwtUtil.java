@@ -14,6 +14,7 @@ public class JwtUtil {
         Algorithm algorithm = Algorithm.HMAC256(SECRET);
         return JWT.create()
                 .withSubject(String.valueOf(id))
+                .withClaim("id", id)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(algorithm);

@@ -1,9 +1,11 @@
 <template>
   <div>
     <form>
-      <input type="text" v-model="user.username" placeholder="Введите логин" required />
-      <input type="password" v-model="user.password" placeholder="Введите пароль" required />
-      <div>
+      <div class="input-container">
+        <input type="text" v-model="user.username" placeholder="Введите логин" required/>
+        <input type="password" v-model="user.password" placeholder="Введите пароль" required/>
+      </div>
+      <div class="button-container">
         <LogIn :login="loginUser"/>
         <Register :registration="registrationUser"/>
       </div>
@@ -16,7 +18,7 @@ import LogIn from "@/components/buttons/LogIn.vue";
 import Register from "@/components/buttons/Register.vue";
 import {defineComponent} from "vue";
 import {logIn, registration} from "@/api/userService.js";
-import {setToken} from "@/api/apiClient.js";
+import {getId, setToken} from "@/api/apiClient.js";
 import router from "@/router/index.js";
 
 export default defineComponent({
@@ -44,39 +46,56 @@ export default defineComponent({
       const response = await action(this.user);
       const data = response.data
 
-      if(data.success) {
-        setToken(data.token)
-        // await router.push('/main')
+      if (data.success) {
+        setToken(data.data)
+
+        const userId = getId(data.data)
+        await router.push({path: `/main/${this.user.username}/${userId}`})
       }
     }
-  }
+  },
+
+  watch: {}
 })
 </script>
 
 <style scoped>
+
 form {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 400px;
+  margin: 10px;
+}
+
+.input-container {
+
+  align-items: center;
 }
 
 input {
+  margin: 10px;
   padding: 5px;
   border-radius: 15px;
   border: none;
-  width: 30%;
+  width: 90%;
   font-family: monospace;
   font-size: 30px;
   text-align: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 button {
   padding: 8px;
   font-size: 16pt;
   cursor: pointer;
+  margin: 10px;
+  width: auto;
+  height: 5vw;
 }
-</style>
-
-<style scoped>
-
 </style>

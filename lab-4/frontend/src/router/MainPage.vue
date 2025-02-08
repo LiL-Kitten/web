@@ -5,6 +5,8 @@ import Header from "@/components/Header.vue";
 import Main from "@/components/Main.vue";
 import Graph from "@/components/submission /Graph.vue";
 import Table from "@/components/submission /Table.vue";
+import router from "@/router/index.js";
+import {checkAuth, removeToken} from "@/api/apiClient.js";
 
 export default {
   components: {
@@ -22,6 +24,16 @@ export default {
       headerTitle: 'Лабораторная работа №4',
       headerText: `Выполнил: Иевлев Ринат Андреевич Вариант: 539991 `
     }
+  },
+
+  methods: {
+    logout() {
+      console.log('Logging out...');
+      removeToken();
+      checkAuth()
+      console.log('Token removed, redirecting to home...');
+      router.push(`/`);
+    }
   }
 
 }
@@ -31,7 +43,7 @@ export default {
 
 <template>
   <Header :header-title="headerTitle" :header-text="headerText">
-    <LogOut/>
+    <LogOut :logout="logout"/>
   </Header>
   <Main>
     <FutureForm/>

@@ -1,26 +1,24 @@
-<script setup>
-defineProps({
-  title: {
-    type: String,
-    required: true
-  },
-  onClick: {
-    type: Function,
-    required: true
-  },
-  text: {
-    type: String,
-    default: ''
+<script>
+export default {
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    onClick: {
+      type: Function,
+      required: true
+    },
+    text: {
+      type: String,
+      default: ''
+    }
   }
-})
+}
 </script>
 
 <template>
-  <button
-      type="button"
-      @click="onClick"
-      :title="title"
-  >
+  <button type="button" @click="onClick" :title="title">
     {{ text }}
   </button>
 </template>

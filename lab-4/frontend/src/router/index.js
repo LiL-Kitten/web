@@ -1,16 +1,16 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import StartRouter from "@/router/StartRouter.vue";
+import { createRouter, createWebHistory } from 'vue-router';
+import StartPage from "@/router/StartPage.vue";
+import MainPage from "@/router/MainPage.vue";
+import { checkAuth } from "@/api/apiClient.js";
 
 const routes = [
     {
         path: '/',
-        name: 'home',
-        component: StartRouter
+        component: StartPage
     },
     {
-        path: '/about',
-        name: 'about',
-        component: () => import('FinishRouter.vue')
+        path: '/main/:userName/:userId',
+        component: MainPage
     }
 ]
 
@@ -19,4 +19,17 @@ const router = createRouter({
     routes
 })
 
-export default router
+router.beforeEach((to, from, next) => {
+    const auth = checkAuth();
+    console.log(auth);
+
+    if (!auth && to.path !== '/') {
+        next('/')
+        console.log('Redirecting to StartPage because user is not authenticated.')
+    } else {
+        next()
+        console.log('User is authenticated or accessing StartPage.')
+    }
+})
+
+export default router;

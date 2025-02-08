@@ -8,7 +8,6 @@
 </template>
 
 <script>
-
 import {defineComponent} from "vue";
 import MyButton from "@/components/buttons/MyButton.vue";
 

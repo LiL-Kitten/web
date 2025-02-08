@@ -1,13 +1,11 @@
 <template>
-  <MainPage />
+  <div>
+    <router-view :key="$route.path" ref="view"/>
+  </div>
 </template>
 
-<script setup>
-import MainPage from "@/router/MainPage.vue";
-</script>
-
 <style>
-html{
+html {
   font-size: 16pt;
   color: #ffffff;
   font-family: monospace;
@@ -19,7 +17,7 @@ html{
   margin: 0;
 }
 
-body{
+body {
   margin: 0;
 }
 </style>

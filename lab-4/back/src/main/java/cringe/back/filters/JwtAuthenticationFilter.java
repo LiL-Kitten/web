@@ -20,7 +20,7 @@ public class JwtAuthenticationFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) {
         String path = requestContext.getUriInfo().getPath();
 
-        if (path.equals("/authorization/reg")) {
+        if (path.equals("/authorization/reg") || path.equals("/authorization/login")) {
             return;
         }
 

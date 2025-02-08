@@ -2,6 +2,7 @@ package cringe.back.dao;
 
 import cringe.back.dto.UserDTO;
 import cringe.back.entity.User;
+import cringe.back.exceptions.UserNotFoundException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -45,7 +46,7 @@ public class UserDAOImpl implements UserDAO, Convert<User, UserDTO> {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new RuntimeException("Error checking user existence", e);
+            throw new UserNotFoundException("user not found");
         } finally {
             em.close();
         }

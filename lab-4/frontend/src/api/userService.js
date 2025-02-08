@@ -2,7 +2,9 @@ import apiClient, {setToken, removeToken} from "@/api/apiClient.js";
 
 export async function logIn(user) {
     const response = await apiClient.post('authorization/login', user)
-    const token = response.data.token
+    const token = response.data.data
+
+    console.log(response.data);
 
     setToken(token)
 
@@ -10,8 +12,10 @@ export async function logIn(user) {
 }
 
 export async function registration(user) {
-    const response = await apiClient.post('authorization/login', user)
-    const token = response.data.token
+    const response = await apiClient.post('authorization/reg', user)
+    const token = response.data.data
+
+    console.log(response.data);
 
     setToken(token)
 

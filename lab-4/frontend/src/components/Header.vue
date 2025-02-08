@@ -3,7 +3,7 @@
     <div class="header-content">
       <div class="title">
         <p>{{ headerTitle }}</p>
-        <p>{{ headerText}}</p>
+        <p>{{ headerText }}</p>
       </div>
       <slot/>
     </div>
@@ -11,9 +11,7 @@
 </template>
 
 <script>
-
 export default {
-
   props: {
     headerTitle: {
       type: String,
@@ -23,10 +21,6 @@ export default {
       type: String,
       required: true
     }
-  },
-
-  mounted() {
-    this.text.replace(/\n/g, '<br>');
   }
 }
 </script>
@@ -56,6 +50,3 @@ export default {
   padding-bottom: 20px;
 }
 </style>
-
-<script setup>
-</script>
