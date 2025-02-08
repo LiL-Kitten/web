@@ -81,6 +81,10 @@ export default {
   background: black;
 }
 
+.scroll-table-body::-webkit-scrollbar {
+  display: none;
+}
+
 .hit {
   color: green;
 }

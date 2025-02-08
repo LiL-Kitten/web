@@ -2,6 +2,7 @@
   <div>
     <router-view :key="$route.path" ref="view"/>
   </div>
+  <Error/>
 </template>
 
 <style>
@@ -21,3 +22,6 @@ body {
   margin: 0;
 }
 </style>
+<script setup lang="ts">
+import Error from "@/components/Error.vue";
+</script>
