@@ -21,4 +21,9 @@ export default defineComponent({
 #log-out {
   background-image: url(../../assets/img/buttons/logout.svg)
 }
+
+button {
+  width: 8vw;
+  height: 8vw;
+}
 </style>

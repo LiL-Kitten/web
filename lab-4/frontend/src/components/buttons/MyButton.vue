@@ -26,8 +26,8 @@ export default {
 <style scoped>
 button {
   display: inline-block;
-  width: 8vw;
-  height: 8vw;
+  width: 5vw;
+  height: 5vw;
   background-color: white;
   color: black;
   border-radius: 15px;

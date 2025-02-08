@@ -14,10 +14,6 @@
       <input type="text" id="r" v-model="r"/>
     </div>
 
-    <div>{{ x }}</div>
-    <div>{{ y }}</div>
-    <div>{{ r }}</div>
-
     <Tools
         :send="sendPoint"
         :clear="clearForm"
@@ -29,13 +25,12 @@
 
 <script>
 import {defineComponent} from "vue";
-import Tools from "@/components/submission /Tools.vue";
+import Tools from "@/components/submission/Tools.vue";
 import {addPoint, deletePoints} from "@/api/pointService.js";
 
 export default defineComponent({
   data() {
     return {
-      points: [],
       x: '',
       y: '',
       r: ''
@@ -79,14 +74,13 @@ export default defineComponent({
 
         const response = addPoint(point)
 
-        const data = (await response).data.success
+        const data = (await response).data
+
         if (data.success) {
-          this.points.push({
-            valueX: data.point.x,
-            valueY: data.point.y,
-            valueR: data.point.r,
-            condition: data.point.condition
-          })
+          console.log('nice job!')
+          console.log(data)
+
+          this.$emit('points-update')
         } else {
           console.log(data.error)
         }
@@ -130,10 +124,21 @@ input {
   padding: 5px;
   border-radius: 15px;
   border: none;
-  width: 30%;
+  width: 40%;
   font-family: monospace;
   font-size: 30px;
   text-align: center;
 }
 
+div {
+  margin: 2%;
+}
+
+form {
+  height: 40%;
+}
+
+label {
+  font-size: 2vw;
+}
 </style>

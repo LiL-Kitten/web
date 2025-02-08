@@ -5,6 +5,7 @@ export function getPoint() {
 }
 
 export function addPoint(point) {
+    console.log(point)
     return apiClient.post('point/add', point)
 }
 

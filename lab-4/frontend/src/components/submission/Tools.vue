@@ -35,6 +35,8 @@ export default defineComponent({
 <style scoped>
 .tools > * {
   margin-right: 2%;
+  margin-bottom: 2%;
+  flex: 0 1 calc(50% - 2%);
 }
 
 #clear {

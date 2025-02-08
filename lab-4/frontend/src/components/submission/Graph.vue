@@ -7,9 +7,10 @@
 </template>
 
 <style scoped>
+
+
 img {
-  width: 40%;
-  height: auto;
+  height: 100%;
   border-radius: 15px;
 }
 </style>

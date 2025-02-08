@@ -11,7 +11,7 @@ export default defineComponent({
   data() {
     return{
       headerTitle: 'Лабораторная работа №4',
-      headerText: `Выполнил: Иевлев Ринат Андреевич Вариант: 539991 `
+      headerText: 'Выполнил: Иевлев Ринат Андреевич'
     }
   }
 })
