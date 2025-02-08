@@ -23,5 +23,5 @@ body {
 }
 </style>
 <script setup lang="ts">
-import Error from "@/components/Error.vue";
+import Error from "@/components/errors/Error.vue";
 </script>

@@ -46,7 +46,7 @@ public class UserDAOImpl implements UserDAO, Convert<User, UserDTO> {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new UserNotFoundException("user not found");
+            throw new RuntimeException("user not found");
         } finally {
             em.close();
         }

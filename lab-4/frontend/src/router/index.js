@@ -26,6 +26,7 @@ router.beforeEach((to, from, next) => {
     if (!auth && to.path !== '/') {
         next('/')
         console.log('Redirecting to StartPage because user is not authenticated.')
+        throw new Error('Вы не авторизованы')
     } else {
         next()
         console.log('User is authenticated or accessing StartPage.')

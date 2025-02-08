@@ -6,8 +6,8 @@ import Main from "@/components/Main.vue";
 import Graph from "@/components/submission/Graph.vue";
 import Table from "@/components/submission/Table.vue";
 import router from "@/router/index.js";
-import {checkAuth, removeToken} from "@/api/apiClient.js";
 import {getPoint} from "@/api/pointService.js";
+import {logOut} from "@/api/userService.js";
 
 export default {
   components: {
@@ -35,8 +35,7 @@ export default {
   methods: {
     logout() {
       console.log('Logging out...');
-      removeToken();
-      checkAuth();
+      logOut()
       console.log('Token removed, redirecting to home...');
       router.push(`/`);
     },

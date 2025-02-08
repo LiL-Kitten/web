@@ -1,27 +1,32 @@
-import apiClient, {setToken, removeToken} from "@/api/apiClient.js";
+import apiClient, { setToken, removeToken } from "@/api/apiClient.js";
+
+async function handleRequest(endpoint, user) {
+    try {
+        const response = await apiClient.post(endpoint, user);
+        const token = response.data.data;
+
+        console.log(response.data);
+
+        setToken(token);
+
+        return response;
+    } catch (error) {
+        if (error.response) {
+            throw new Error(error.response.data);
+        } else {
+            throw new Error('Ошибка: ' + error.message);
+        }
+    }
+}
 
 export async function logIn(user) {
-    const response = await apiClient.post('authorization/login', user)
-    const token = response.data.data
-
-    console.log(response.data);
-
-    setToken(token)
-
-    return response
+    return handleRequest('authorization/login', user);
 }
 
 export async function registration(user) {
-    const response = await apiClient.post('authorization/reg', user)
-    const token = response.data.data
-
-    console.log(response.data);
-
-    setToken(token)
-
-    return response
+    return handleRequest('authorization/reg', user);
 }
 
 export function logOut() {
-    removeToken()
+    removeToken();
 }

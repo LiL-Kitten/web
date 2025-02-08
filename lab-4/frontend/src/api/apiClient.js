@@ -21,6 +21,7 @@ export function setToken(token) {
 
 export function removeToken() {
     localStorage.clear()
+    setToken(null)
 }
 
 export function checkAuth() {

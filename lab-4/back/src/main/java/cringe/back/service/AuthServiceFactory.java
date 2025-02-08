@@ -3,6 +3,7 @@ package cringe.back.service;
 import cringe.back.dao.UserDAO;
 import cringe.back.dto.UserDTO;
 import cringe.back.exceptions.InvalidPasswordException;
+import cringe.back.exceptions.UserExistException;
 import cringe.back.exceptions.UserNotFoundException;
 import cringe.back.util.JwtUtil;
 import jakarta.ejb.EJB;
@@ -13,21 +14,20 @@ public class AuthServiceFactory {
     @EJB
     private UserDAO userDAO;
     
-    public ServiceResponse<String> authenticate(UserDTO user) {
+    public ServiceResponse<String> authenticate(UserDTO user) throws UserNotFoundException, InvalidPasswordException {
         if(userDAO.exists(user)) {
             if (userDAO.authenticate(user)) {
                 String token = new JwtUtil().generateToken(userDAO.getId(user));
                 return new ServiceResponse<>(true, "Successfully logged in", token);
             }
-            throw new InvalidPasswordException("Invalid password");
+            throw new InvalidPasswordException("неверный пароль((");
         }
-        throw new UserNotFoundException("User not found: " + user.getUsername());
+        throw new UserNotFoundException("пользователь с таким username не найден: " + user.getUsername());
     }
     
-    public ServiceResponse<String> registration(UserDTO user) {
+    public ServiceResponse<String> registration(UserDTO user) throws UserExistException {
         if (userDAO.exists(user)) {
-            return new ServiceResponse<>(false, "Вы уже зарегистрированы попробуйте " +
-                    "вспомнить пароль и войти");
+            throw new UserExistException("Вы уже зарегистрированы попробуйте вспомнить пароль и войти");
         }
 
         userDAO.save(user);
