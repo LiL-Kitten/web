@@ -14,26 +14,23 @@ public class AuthServiceFactory {
     @EJB
     private UserDAO userDAO;
     
-    public ServiceResponse<String> authenticate(UserDTO user) throws UserNotFoundException, InvalidPasswordException {
+    public String authenticate(UserDTO user) throws UserNotFoundException, InvalidPasswordException {
         if(userDAO.exists(user)) {
             if (userDAO.authenticate(user)) {
-                String token = new JwtUtil().generateToken(userDAO.getId(user));
-                return new ServiceResponse<>(true, "Successfully logged in", token);
+                return new JwtUtil().generateToken(userDAO.getId(user));
             }
             throw new InvalidPasswordException("неверный пароль((");
         }
         throw new UserNotFoundException("пользователь с таким username не найден: " + user.getUsername());
     }
     
-    public ServiceResponse<String> registration(UserDTO user) throws UserExistException {
+    public String registration(UserDTO user) throws UserExistException {
         if (userDAO.exists(user)) {
             throw new UserExistException("Вы уже зарегистрированы попробуйте вспомнить пароль и войти");
         }
 
         userDAO.save(user);
-        String token = new JwtUtil().generateToken(userDAO.getId(user));
-        return new ServiceResponse<>(true, "Пользователь успешно зарегистрирован \n UserName:"
-                + user.getUsername() + "\nUserId:" + userDAO.getId(user), token);
+        return new JwtUtil().generateToken(userDAO.getId(user));
     }
     
 }

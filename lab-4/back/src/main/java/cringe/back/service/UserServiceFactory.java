@@ -3,6 +3,7 @@ package cringe.back.service;
 import cringe.back.dao.PointDAO;
 import cringe.back.dao.UserDAO;
 import cringe.back.dto.PointDTO;
+import cringe.back.exceptions.EmptyDBException;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 
@@ -16,23 +17,23 @@ public class UserServiceFactory {
     @EJB
     private PointDAO pointDAO;
 
-    public ServiceResponse<List<PointDTO>> getPoints(Long id) {
+    public List<PointDTO> getPoints(Long id) throws EmptyDBException {
         List<PointDTO> list = pointDAO.findAll(id);
         if (list.isEmpty()) {
-            return new ServiceResponse<>(true, "У вас нет каких либо точек сделайте первый запрос!");
+            throw new EmptyDBException("простите но в бд ничего нет поэтому отправьте свой первый запрос");
         }
-        return new ServiceResponse<>(true, "Success", list);
+        return list;
     }
 
-    public ServiceResponse<String> delPoints(Long id) {
+    public String delPoints(Long id) {
         pointDAO.deleteAll(id);
 
-        return new ServiceResponse<>(true, "All points deleted");
+        return "All points deleted";
     }
 
-    public ServiceResponse<String> addPoints(Long userId, PointDTO pointDTO) {
+    public String addPoints(Long userId, PointDTO pointDTO) {
         pointDAO.save(userDAO.findById(userId), pointDTO);
 
-        return new ServiceResponse<>(true, "Point added successfully");
+        return "Point added successfully";
     }
 }

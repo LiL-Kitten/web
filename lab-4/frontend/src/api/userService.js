@@ -3,13 +3,13 @@ import apiClient, { setToken, removeToken } from "@/api/apiClient.js";
 async function handleRequest(endpoint, user) {
     try {
         const response = await apiClient.post(endpoint, user);
-        const token = response.data.data;
+        const token = response.data;
 
         console.log(response.data);
 
         setToken(token);
 
-        return response;
+        return response.data;
     } catch (error) {
         if (error.response) {
             throw new Error(error.response.data);

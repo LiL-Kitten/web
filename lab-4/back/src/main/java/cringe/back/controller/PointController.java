@@ -2,11 +2,12 @@ package cringe.back.controller;
 
 import cringe.back.dto.PointDTO;
 import cringe.back.exceptions.UserNotFoundException;
-import cringe.back.service.ServiceResponse;
 import cringe.back.service.UserServiceFactory;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
+
+import java.util.List;
 
 @Path("point")
 public class PointController {
@@ -23,8 +24,8 @@ public class PointController {
     public Response getUserPoints() {
         try {
             Long userId = getUserIdFromContext();
-            ServiceResponse<?> response = userServiceFactory.getPoints(userId);
-            return Response.ok(response).build();
+            List<PointDTO> list = userServiceFactory.getPoints(userId);
+            return Response.ok(list).build();
         } catch (Exception e) {
             return handleExceptions(e);
         }
@@ -37,7 +38,7 @@ public class PointController {
     public Response addUserPoint(PointDTO point) {
         try {
             Long userId = getUserIdFromContext();
-            ServiceResponse<?> response = userServiceFactory.addPoints(userId, point);
+            String response = userServiceFactory.addPoints(userId, point);
             return Response.ok(response).build();
         } catch (Exception e) {
             return handleExceptions(e);
@@ -50,7 +51,7 @@ public class PointController {
     public Response deleteUserPoints() {
         try {
             Long userId = getUserIdFromContext();
-            ServiceResponse<?> response = userServiceFactory.delPoints(userId);
+            String response = userServiceFactory.delPoints(userId);
             return Response.ok(response).build();
         } catch (Exception e) {
             return handleExceptions(e);

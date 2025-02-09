@@ -1,6 +1,5 @@
 package cringe.back.filters;
 
-import cringe.back.service.ServiceResponse;
 import cringe.back.util.JwtUtil;
 import jakarta.annotation.Priority;
 import jakarta.ws.rs.Priorities;
@@ -65,7 +64,7 @@ public class JwtAuthenticationFilter implements ContainerRequestFilter {
 
     private void abortWithUnauthorized(ContainerRequestContext context) {
         context.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                .entity(new ServiceResponse<>(false, "Invalid or missing token", null))
+                .entity( "Invalid or missing token")
                 .build());
     }
 }

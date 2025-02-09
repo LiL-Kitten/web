@@ -2,6 +2,7 @@
   <div>
     <svg @click="handleClick" class="mySvg" width="400" height="400">
       <image href="../../assets/img/graph.svg" />
+      <Shape :scale="scale" /> <!-- Добавьте компонент Shape -->
       <circle v-for="(point, index) in transformedPoints" :key="index"
               :cx="point.x" :cy="point.y" r="4"
               :fill="point.isHit ? 'green' : 'red'" />
@@ -10,7 +11,7 @@
 </template>
 
 <script>
-import {addPoint} from "@/api/pointService.js";
+import Shape from "@/components/submission/Shape.vue";
 
 export default {
   props: {
@@ -19,7 +20,11 @@ export default {
       required: true
     },
     valueR: {
-      type: Number,
+      type: [Number, String],
+      required: true
+    },
+    function: {
+      type: Function,
       required: true
     }
   },
@@ -43,6 +48,10 @@ export default {
           isHit
         };
       });
+    },
+    scale() {
+      // Преобразуйте значение R в масштаб
+      return this.valueR / 5; // Например, если R от 0 до 5, масштаб будет от 0 до 1
     }
   },
 
@@ -59,12 +68,23 @@ export default {
       valueX = valueX.toFixed(2);
       valueY = valueY.toFixed(2);
 
-      addPoint({
+      if (this.valueR === null || this.valueR === '' || isNaN(this.valueR)) {
+        throw new Error('Ошибка: значение R не задано или не является числом.');
+      }
+
+      let point = {
         x: valueX,
         y: valueY,
         r: this.valueR
-      })
+      };
+
+      console.log(point);
+      this.function(point);
     }
+  },
+
+  components: {
+    Shape
   }
 };
 </script>

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import StartPage from "@/router/StartPage.vue";
-import MainPage from "@/router/MainPage.vue";
 import { checkAuth } from "@/api/apiClient.js";
+import UserPage from "@/router/UserPage.vue";
 
 const routes = [
     {
@@ -10,7 +10,7 @@ const routes = [
     },
     {
         path: '/main/:userName/:userId',
-        component: MainPage
+        component: UserPage
     }
 ]
 

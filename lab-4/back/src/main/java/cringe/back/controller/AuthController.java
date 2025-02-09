@@ -4,7 +4,6 @@ import cringe.back.dto.UserDTO;
 import cringe.back.exceptions.InvalidPasswordException;
 import cringe.back.exceptions.UserNotFoundException;
 import cringe.back.service.AuthServiceFactory;
-import cringe.back.service.ServiceResponse;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -25,7 +24,7 @@ public class AuthController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(UserDTO user) {
         try {
-            ServiceResponse<String> response = serviceFactory.registration(user);
+            String response = serviceFactory.registration(user);
             return Response.ok(response).build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST)
@@ -40,7 +39,7 @@ public class AuthController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response authorize(UserDTO user) {
         try {
-            ServiceResponse<String> response = serviceFactory.authenticate(user);
+            String response = serviceFactory.authenticate(user);
             return Response.ok(response).build();
         } catch (InvalidPasswordException e) {
             return Response.status(Response.Status.BAD_REQUEST)
