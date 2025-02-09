@@ -22,6 +22,9 @@ export default {
   data() {
     return {
       points: [],
+      x: '',
+      y: '',
+      r: '',
       headerTitle: 'Имя пользователя: ',
       headerText: 'ID пользователя: '
     }
@@ -69,7 +72,7 @@ export default {
   </Header>
   <Main>
       <FutureForm @points-update="getPoints"/>
-      <Graph/>
+      <Graph :points="points"/>
       <Table :points="points"/>
   </Main>
 </template>

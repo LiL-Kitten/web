@@ -12,7 +12,7 @@
     </table>
     <div class="scroll-table-body">
       <table class="points-table">
-        <tbody v-if="points.length > 0">
+        <tbody>
         <tr v-for="(point, index) in points" :key="index">
           <td>{{ point.x }}</td>
           <td>{{ point.y }}</td>
@@ -20,11 +20,6 @@
           <td :class="{ 'hit': point.condition }">
             {{ point.condition ? 'Hit' : 'Miss' }}
           </td>
-        </tr>
-        </tbody>
-        <tbody v-else>
-        <tr>
-          <td colspan="4">Точек нет</td>
         </tr>
         </tbody>
       </table>
