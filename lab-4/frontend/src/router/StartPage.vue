@@ -16,8 +16,8 @@
         />
       </div>
       <div class="button-container">
-        <LogIn :login="handleLogin" :disabled="isFormInvalid"/>
-        <Register :registration="handleRegistration" :disabled="isFormInvalid"/>
+        <LogIn :login="handleLogin"/>
+        <Register :registration="handleRegistration" />
       </div>
     </form>
   </div>
@@ -43,33 +43,19 @@ export default defineComponent({
     }
   },
 
-  computed: {
-    isFormInvalid() {
-      return !this.user.username.trim() || !this.user.password.trim();
-    }
-  },
-
   methods: {
-    async handleUserAction(action) {
-      if (this.isFormInvalid) {
-        throw new Error('Заполните все поля!');
-      }
-      try {
-        await this.sendUserData(action);
-      } catch (error) {
-        throw error; // Пробрасываем ошибку выше для обработки
-      }
-    },
-
     async handleLogin() {
-      return this.handleUserAction(logIn);
+      return this.sendUserData(logIn);
     },
 
     async handleRegistration() {
-      return this.handleUserAction(registration);
+      return this.sendUserData(registration);
     },
 
     async sendUserData(action) {
+      if (this.user.username.trim() === '' && this.user.password.trim() === '' )
+        throw new Error('заполните все поля ввода')
+
       const response = await action(this.user);
       const userId = getId(response);
       console.log('переходим!');
