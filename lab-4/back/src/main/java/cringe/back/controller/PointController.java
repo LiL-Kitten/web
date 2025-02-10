@@ -1,6 +1,7 @@
 package cringe.back.controller;
 
 import cringe.back.dto.PointDTO;
+import cringe.back.exceptions.EmptyDBException;
 import cringe.back.exceptions.UserNotFoundException;
 import cringe.back.service.UserServiceFactory;
 import jakarta.ejb.EJB;
@@ -26,6 +27,8 @@ public class PointController {
             Long userId = getUserIdFromContext();
             List<PointDTO> list = userServiceFactory.getPoints(userId);
             return Response.ok(list).build();
+        } catch (EmptyDBException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (Exception e) {
             return handleExceptions(e);
         }

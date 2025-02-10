@@ -59,6 +59,7 @@ export default defineComponent({
       this.y = newVal;
     },
     r(newVal) {
+      this.validateR(newVal)
       this.r = newVal;
     }
   },
@@ -103,6 +104,9 @@ export default defineComponent({
     validateR(value) {
       const trimmed = value.trim();
       if (trimmed === '') throw new Error('r не может быть пустым');
+
+      if(trimmed < 1) throw new Error('r не может быть отрицательным и меньше нуля (просто зачем?)')
+
       this.validate(trimmed, {
         min: -3,
         max: 5,
