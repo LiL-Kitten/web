@@ -110,7 +110,7 @@ export default defineComponent({
       const trimmed = value.trim();
       if (trimmed === '') throw new Error('r не может быть пустым');
 
-      if(trimmed < 1) throw new Error('r не может быть отрицательным и меньше нуля (просто зачем?)')
+      if(trimmed < 0) throw new Error('r не может быть отрицательным и меньше нуля (просто зачем?)')
 
       this.validate(trimmed, {
         min: -3,

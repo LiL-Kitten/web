@@ -2,10 +2,10 @@
   <Header :header-text="headerText" :header-title="headerTitle">
     <LogOut v-if="isUserPage" :logout="logout"/>
   </Header>
-  <Main>
+  <Error class="error-message"/>
+  <Main class="main-content">
     <router-view :key="$route.path" ref="view"/>
   </Main>
-  <Error/>
 </template>
 
 <script>
@@ -15,7 +15,7 @@ import Error from "@/components/errors/Error.vue";
 import Header from "@/components/Header.vue";
 import Main from "@/components/Main.vue";
 import LogOut from "@/components/buttons/LogOut.vue";
-import {logOut} from "@/api/userService.js";
+import { logOut } from "@/api/userService.js";
 import router from "@/router/index.js";
 
 export default {
@@ -55,7 +55,7 @@ export default {
   methods: {
     logout() {
       console.log('Logging out...');
-      logOut()
+      logOut();
       console.log('Token removed, redirecting to home...');
       router.push(`/`);
     },
@@ -64,6 +64,11 @@ export default {
 </script>
 
 <style>
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 html {
   font-size: 16pt;
   color: #ffffff;
@@ -77,6 +82,9 @@ html {
 }
 
 body {
-  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
+
 </style>

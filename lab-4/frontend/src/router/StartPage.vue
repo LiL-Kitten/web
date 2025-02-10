@@ -1,13 +1,23 @@
 <template>
   <div>
-    <form>
+    <form @submit.prevent>
       <div class="input-container">
-        <input type="text" v-model="user.username" placeholder="Введите логин" required/>
-        <input type="password" v-model="user.password" placeholder="Введите пароль" required/>
+        <input
+            type="text"
+            v-model.trim="user.username"
+            placeholder="Введите логин"
+            required
+        />
+        <input
+            type="password"
+            v-model.trim="user.password"
+            placeholder="Введите пароль"
+            required
+        />
       </div>
       <div class="button-container">
-        <LogIn :login="loginUser"/>
-        <Register :registration="registrationUser"/>
+        <LogIn :login="handleLogin" :disabled="isFormInvalid"/>
+        <Register :registration="handleRegistration" :disabled="isFormInvalid"/>
       </div>
     </form>
   </div>
@@ -33,29 +43,43 @@ export default defineComponent({
     }
   },
 
+  computed: {
+    isFormInvalid() {
+      return !this.user.username.trim() || !this.user.password.trim();
+    }
+  },
+
   methods: {
-    async loginUser() {
-      await this.sendUserData(logIn)
+    async handleUserAction(action) {
+      if (this.isFormInvalid) {
+        throw new Error('Заполните все поля!');
+      }
+      try {
+        await this.sendUserData(action);
+      } catch (error) {
+        throw error; // Пробрасываем ошибку выше для обработки
+      }
     },
 
-    async registrationUser() {
-      await this.sendUserData(registration)
+    async handleLogin() {
+      return this.handleUserAction(logIn);
+    },
+
+    async handleRegistration() {
+      return this.handleUserAction(registration);
     },
 
     async sendUserData(action) {
       const response = await action(this.user);
-
-      const userId = getId(response)
-      console.log('переходим!')
-      await router.push({path: `/main/${this.user.username}/${userId}`})
-
+      const userId = getId(response);
+      console.log('переходим!');
+      await router.push({path: `/main/${this.user.username}/${userId}`});
     }
   }
 })
 </script>
 
 <style scoped>
-
 form {
   display: flex;
   flex-direction: column;
@@ -64,7 +88,6 @@ form {
 }
 
 .input-container {
-
   align-items: center;
 }
 
