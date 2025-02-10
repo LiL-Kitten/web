@@ -27,7 +27,7 @@
 <script>
 import {defineComponent} from "vue";
 import Tools from "@/components/submission/Tools.vue";
-import {addPoint, deletePoints, getPoint} from "@/api/pointService.js";
+import {addPoint, deletePoints, getPoints} from "@/api/pointService.js";
 import Graph from "@/components/submission/Graph.vue";
 import Table from "@/components/submission/Table.vue";
 
@@ -39,6 +39,10 @@ export default defineComponent({
       y: '',
       r: ''
     }
+  },
+
+  async mounted() {
+    this.points = (await getPoints()).data
   },
 
   components: {
@@ -125,8 +129,7 @@ export default defineComponent({
         console.log('nice job!');
         console.log(response);
 
-        // console.log(await getPoint())
-        this.points = (await getPoint()).data
+        this.points = (await getPoints()).data
       } catch (error) {
         console.error('Error:', error.message);
         throw error;
@@ -141,7 +144,7 @@ export default defineComponent({
         console.log('nice job!');
         console.log(response);
 
-        this.points = (await getPoint()).data
+        this.points = (await getPoints()).data
       } catch (error) {
         console.error('Error:', error.message);
         throw error;

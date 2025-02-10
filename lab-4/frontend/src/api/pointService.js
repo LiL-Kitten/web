@@ -1,6 +1,6 @@
 import apiClient from "@/api/apiClient.js";
 
-export function getPoint() {
+export function getPoints() {
     return apiClient.get('point/get')
 }
 
