@@ -28,9 +28,13 @@ public class PointController {
             List<PointDTO> list = userServiceFactory.getPoints(userId);
             return Response.ok(list).build();
         } catch (EmptyDBException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(e.getMessage())
+                    .build();
         } catch (Exception e) {
-            return handleExceptions(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
         }
     }
 
@@ -44,7 +48,9 @@ public class PointController {
             String response = userServiceFactory.addPoints(userId, point);
             return Response.ok(response).build();
         } catch (Exception e) {
-            return handleExceptions(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
         }
     }
 
@@ -56,8 +62,14 @@ public class PointController {
             Long userId = getUserIdFromContext();
             String response = userServiceFactory.delPoints(userId);
             return Response.ok(response).build();
+        } catch (EmptyDBException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(e.getMessage())
+                    .build();
         } catch (Exception e) {
-            return handleExceptions(e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
         }
     }
 
@@ -66,17 +78,5 @@ public class PointController {
             throw new SecurityException("User not authenticated");
         }
         return Long.parseLong(securityContext.getUserPrincipal().getName());
-    }
-
-    private Response handleExceptions(Exception e) {
-        if (e instanceof UserNotFoundException) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
-        }
-        if (e instanceof SecurityException) {
-            return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("{\"error\":\"" + e.getMessage() + "\"}").build();
-        }
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                .entity("{\"error\":\"" + e.getMessage() + "\"}").build();
     }
 }

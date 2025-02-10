@@ -42,7 +42,12 @@ export default defineComponent({
   },
 
   async mounted() {
-    this.points = (await getPoints()).data
+    let newPoints = (await getPoints())
+
+    console.log(newPoints)
+
+    this.points = newPoints
+
   },
 
   components: {
@@ -161,10 +166,9 @@ export default defineComponent({
       this.r = '';
     },
 
-    deletePointsInTable() {
+    async deletePointsInTable() {
       this.points = []
-      deletePoints();
-      // this.$emit('points-update');
+      await deletePoints();
     },
 
     randomValues() {

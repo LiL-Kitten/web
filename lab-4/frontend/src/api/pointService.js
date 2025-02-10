@@ -1,13 +1,29 @@
 import apiClient from "@/api/apiClient.js";
 
-export function getPoints() {
-    return apiClient.get('point/get')
+export async function getPoints() {
+    try {
+        return await apiClient.get('point/get')
+    } catch (error) {
+        if (error.response) {
+            throw new Error(error.response.data);
+        } else {
+            throw new Error('Ошибка: ' + error.message);
+        }
+    }
 }
 
 export function addPoint(point) {
     return apiClient.post('point/add', point)
 }
 
-export function deletePoints() {
-    return apiClient.delete('point/delete')
+export async function deletePoints() {
+    try {
+        return await apiClient.delete('point/delete');
+    } catch (error) {
+        if (error.response) {
+            throw new Error(error.response.data);
+        } else {
+            throw new Error('Ошибка: ' + error.message);
+        }
+    }
 }

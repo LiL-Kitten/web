@@ -25,7 +25,11 @@ public class UserServiceFactory {
         return list;
     }
 
-    public String delPoints(Long id) {
+    public String delPoints(Long id) throws EmptyDBException {
+        if (pointDAO.findAll(id).isEmpty()) {
+            throw new EmptyDBException("Нет точек для удаления");
+        }
+
         pointDAO.deleteAll(id);
 
         return "All points deleted";
