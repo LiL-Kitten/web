@@ -8,7 +8,7 @@
           type="text"
           :id="value.key"
           v-model="value.content"
-          @input="validate(value.content, value.conditions)"
+          @input="validate(value)"
       />
     </div>
 
@@ -52,7 +52,7 @@ export default defineComponent({
           conditions: {
             min: -3,
             max: 5,
-            errorText: 'Значение должно быть от -3 до 5'
+            errorText: 'Значение x должно быть от -3 до 5'
           }
         },
         {
@@ -61,7 +61,7 @@ export default defineComponent({
           conditions: {
             min: -5,
             max: 5,
-            errorText: 'Значение должно быть от -5 до 5'
+            errorText: 'Значение y должно быть от -5 до 5'
           }
         },
         {
@@ -70,10 +70,10 @@ export default defineComponent({
           conditions: {
             min: 0,
             max: 5,
-            errorText: 'Значение должно быть от 0 до 5'
+            errorText: 'Значение r должно быть от 0 до 5'
           }
         }
-      ]
+      ],
     }
   },
 
@@ -88,17 +88,16 @@ export default defineComponent({
       return parseFloat(value);
     },
 
-    validate(content, conditions) {
-      const num = this.convertToNumber(content);
+    validate(value) {
+      const num = this.convertToNumber(value.content);
       console.log(num)
-      if (isNaN(num)) throw new Error('Значение должно быть числом');
-      if (num < conditions.min || num > conditions.max) throw new Error(conditions.errorText);
+      if (isNaN(num)) throw new Error(`Значение ${value.key} должно быть числом`);
+      if (num < value.conditions.min || num > value.conditions.max) throw new Error(value.conditions.errorText);
     },
 
     async sendPoint() {
-
       this.values.forEach(value => {
-        this.validate(value.content, value.conditions);
+        this.validate(value);
       });
 
       const point = JSON.stringify(
@@ -122,8 +121,7 @@ export default defineComponent({
     },
 
     async sendClick(point) {
-
-        this.validate(point.r, this.values.find(value => value.key === 'r').conditions)
+        this.validate(this.values.find(value => value.key === 'r'))
 
         const response = await addPoint(point);
 

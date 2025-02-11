@@ -56,7 +56,7 @@ export default {
   },
 
   methods: {
-    handleClick(event) {
+    async handleClick(event) {
       const svg = event.currentTarget;
       const svgRect = svg.getBoundingClientRect();
       const svgX = event.clientX - svgRect.left;
@@ -79,7 +79,7 @@ export default {
       };
 
       console.log(point);
-      this.function(point);
+      await this.function(point);
     }
   },
 
