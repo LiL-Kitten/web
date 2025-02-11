@@ -53,8 +53,8 @@ export default defineComponent({
     },
 
     async sendUserData(action) {
-      if (this.user.username.trim() === '' && this.user.password.trim() === '' )
-        throw new Error('заполните все поля ввода')
+      if (this.user.username.trim() === '' || this.user.password.trim() === '' )
+        throw new Error('заполните все поля')
 
       const response = await action(this.user);
       const userId = getId(response);
