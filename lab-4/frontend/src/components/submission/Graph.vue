@@ -2,7 +2,7 @@
   <div>
     <svg @click="handleClick" class="mySvg" width="400" height="400">
       <image href="../../assets/img/graph.svg" />
-      <Shape :scale="scale" /> <!-- Добавьте компонент Shape -->
+      <Shape :scale="scale" />
       <circle v-for="(point, index) in transformedPoints" :key="index"
               :cx="point.x" :cy="point.y" r="4"
               :fill="point.isHit ? 'green' : 'red'" />
@@ -50,8 +50,7 @@ export default {
       });
     },
     scale() {
-      // Преобразуйте значение R в масштаб
-      return this.valueR / 5; // Например, если R от 0 до 5, масштаб будет от 0 до 1
+      return this.valueR / 5;
     }
   },
 
