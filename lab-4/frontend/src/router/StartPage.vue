@@ -45,21 +45,21 @@ export default defineComponent({
 
   methods: {
     async handleLogin() {
-      return this.sendUserData(logIn);
+      return this.sendUserData(logIn)
     },
 
     async handleRegistration() {
-      return this.sendUserData(registration);
+      return this.sendUserData(registration)
     },
 
     async sendUserData(action) {
       if (this.user.username.trim() === '' || this.user.password.trim() === '' )
         throw new Error('заполните все поля')
 
-      const response = await action(this.user);
-      const userId = getId(response);
-      console.log('переходим!');
-      await router.push({path: `/main/${this.user.username}/${userId}`});
+      const response = await action(this.user)
+      const userId = getId(response)
+      console.log('переходим!')
+      await router.push({path: `/main/${this.user.username}/${userId}`})
     }
   }
 })

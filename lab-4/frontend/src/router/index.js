@@ -20,8 +20,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const auth = checkAuth();
-    console.log(auth);
+    const auth = checkAuth()
+    console.log(auth)
 
     if (!auth && to.path !== '/') {
         next('/')
@@ -33,4 +33,4 @@ router.beforeEach((to, from, next) => {
     }
 })
 
-export default router;
+export default router

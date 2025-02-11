@@ -78,7 +78,7 @@ export default defineComponent({
   },
 
   async mounted() {
-    let newPoints = (await getPoints())
+    let newPoints = ((await getPoints()).data)
     console.log(newPoints)
     this.points = newPoints
   },

@@ -16,7 +16,6 @@
   display: flex;
   padding-left: 20px;
   align-items: center;
-  //justify-content: space-between;
 }
 
 .main-container > * {
