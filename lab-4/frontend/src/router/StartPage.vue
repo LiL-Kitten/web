@@ -45,17 +45,18 @@ export default defineComponent({
 
   methods: {
     async handleLogin() {
-      return this.sendUserData(logIn)
+      return await this.sendUserData(logIn)
     },
 
     async handleRegistration() {
-      return this.sendUserData(registration)
+      return await this.sendUserData(registration)
     },
 
     async sendUserData(action) {
       if (this.user.username.trim() === '' || this.user.password.trim() === '' )
         throw new Error('заполните все поля')
 
+      console.log(this.user)
       const response = await action(this.user)
       const userId = getId(response)
       console.log('переходим!')

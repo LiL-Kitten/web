@@ -28,8 +28,8 @@ export function removeToken() {
 }
 
 export function checkAuth() {
-    setToken()
     const token = localStorage.getItem('token');
+    setToken()
     return !!token;
 }
 
