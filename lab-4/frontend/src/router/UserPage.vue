@@ -3,7 +3,7 @@
     <h1>Введите значения</h1>
 
     <div v-for="value in values">
-      <label :for="value.key">{{value.key}}:</label>
+      <label :for="value.key">{{ value.key }}:</label>
       <input
           type="text"
           :id="value.key"
@@ -21,8 +21,9 @@
   </form>
 
   <Graph
-      :value-r="values.find(value => value.key === 'r').content"
-      :points="points" :function="sendClick"
+      :value-r="convertToNumber(values.find(value => value.key === 'r').content)"
+      :points="points"
+      :function="sendClick"
   />
 
   <Table :points="points"/>
@@ -74,6 +75,11 @@ export default defineComponent({
           }
         }
       ],
+      coordinates: {
+        x: null,
+        y: null,
+        r: null
+      }
     }
   },
 
@@ -85,7 +91,15 @@ export default defineComponent({
 
   methods: {
     convertToNumber(value) {
-      return parseFloat(value);
+      const normalizedValue = String(value).replace(',', '.')
+      const trimmedValue = normalizedValue.replace(/\.+$/, '')
+
+      const regex = /^-?\d+(\.\d+)?$/
+      if (regex.test(trimmedValue)) {
+        return parseFloat(trimmedValue).toFixed(2)
+      } else {
+        return NaN
+      }
     },
 
     validate(value) {
@@ -93,42 +107,45 @@ export default defineComponent({
       console.log(num)
       if (isNaN(num)) throw new Error(`Значение ${value.key} должно быть числом`);
       if (num < value.conditions.min || num > value.conditions.max) throw new Error(value.conditions.errorText);
+      return true
     },
 
     async sendPoint() {
-      this.values.forEach(value => {
-        this.validate(value);
-      });
 
-      const point = JSON.stringify(
-          this.values.reduce((acc, value) => {
-            acc[value.key] = parseFloat(value.content.trim());
-            return acc;
-          }, {})
-      );
+      this.values.forEach(value => {
+        this.validate(value)
+
+        const convertedValue = this.convertToNumber(value.content)
+
+        if ( this.coordinates.hasOwnProperty(value.key) ) this.coordinates[value.key] = convertedValue
+      })
+
+      const point = JSON.stringify(this.coordinates)
 
       try {
-        const response = await addPoint(point);
+        const response = await addPoint(point)
 
-        console.log('nice job!');
-        console.log(response);
+        console.log('nice job!')
+        console.log(response)
 
         this.points = (await getPoints()).data
       } catch (error) {
-        console.error('Error:', error.message);
-        throw error;
+        console.error('Error:', error.message)
+        throw error
       }
     },
 
     async sendClick(point) {
-        this.validate(this.values.find(value => value.key === 'r'))
+      this.values.forEach(value => {
+        this.validate(value)
+      })
 
-        const response = await addPoint(point);
+      const response = await addPoint(point)
 
-        console.log('nice job!');
-        console.log(response);
+      console.log('nice job!')
+      console.log(response)
 
-        this.points = (await getPoints()).data
+      this.points = (await getPoints()).data
     },
 
     async deletePointsInTable() {
@@ -149,11 +166,11 @@ export default defineComponent({
             .toFixed(2)
         console.log(randomValue)
         value.content = randomValue
-      });
+      })
     },
 
   }
-});
+})
 </script>
 
 <style scoped>

@@ -11,11 +11,14 @@ const apiClient = axios.create({
 })
 
 export function setToken(token) {
+    console.log('start set token')
     if (token) {
         apiClient.defaults.headers['Authorization'] = `Bearer ${token}`
+        console.log('token set')
         localStorage.setItem('token', token)
     } else {
         delete apiClient.defaults.headers['Authorization']
+        console.log('token don"t set')
     }
 }
 
@@ -26,13 +29,9 @@ export function removeToken() {
 
 export function checkAuth() {
     const token = localStorage.getItem('token');
+    console.log(token)
 
-    if(token) {
-        setToken(token)
-        return true
-    } else {
-        return false
-    }
+    return !!token;
 }
 
 export function getId(token) {
