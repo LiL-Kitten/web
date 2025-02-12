@@ -136,9 +136,7 @@ export default defineComponent({
     },
 
     async sendClick(point) {
-      this.values.forEach(value => {
-        this.validate(value)
-      })
+      this.validate(this.values.find(value => value.key === 'r'))
 
       const response = await addPoint(point)
 
