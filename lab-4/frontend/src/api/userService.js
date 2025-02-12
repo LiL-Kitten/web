@@ -7,7 +7,8 @@ async function handleRequest(endpoint, user) {
 
         console.log(response.data);
 
-        setToken(token);
+        localStorage.setItem(token)
+        setToken();
 
         return response.data;
     } catch (error) {
