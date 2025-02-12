@@ -7,7 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import java.util.Date;
 
 public class JwtUtil {
-    private static final String SECRET = "ваш_секретный_ключ";
+    private static final String SECRET = "секрет!";
     private static final long EXPIRATION_TIME = 600000;
 
     public String generateToken(Long id) {
