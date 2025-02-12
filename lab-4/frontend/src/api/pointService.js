@@ -1,9 +1,11 @@
 import apiClient from "@/api/apiClient.js";
+import router from "@/router/index.js";
 
 export async function getPoints() {
     try {
         return await apiClient.get('point/get')
     } catch (error) {
+        if(error.response.status === 401) router.push('/')
         if (error.response) {
             throw new Error(error.response.data);
         } else {

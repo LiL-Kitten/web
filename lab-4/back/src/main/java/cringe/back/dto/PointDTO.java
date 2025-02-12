@@ -50,9 +50,9 @@ public class PointDTO implements Serializable {
     }
 
     public boolean areaChecker() {
-        boolean inRectangle = (x <= 0 && x >= -r && y >= -r / 2 && y <= 0);
-        boolean inTriangle = (x <= 0 && y >= 0 && y <= 0.5 * (x + r));
-        boolean inCircle = (x >= 0 && y <= 0 && (x * x + y * y <= r / 2 * r / 2));
+        boolean inRectangle = (x >= 0 && x <= r && y >= -r / 2 && y <= 0);
+        boolean inTriangle = (x <= 0 && y <= 0 && y >= -1 * (2 * x + r));
+        boolean inCircle = (x >= 0 && y >= 0 && (x * x + y * y <= r / 2 * r / 2));
 
         return inRectangle || inTriangle || inCircle;
     }

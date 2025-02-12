@@ -2,7 +2,6 @@ package cringe.back.dao;
 
 import cringe.back.dto.UserDTO;
 import cringe.back.entity.User;
-import cringe.back.exceptions.UserNotFoundException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
