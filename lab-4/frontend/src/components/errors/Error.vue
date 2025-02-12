@@ -3,28 +3,35 @@
     <div class="error-message" v-if="error">
       {{ error }}
     </div>
-    <MyButton  class="close-button" title="close-error" :on-click="closeError"/>
+    <MyButton class="close-button" title="close-error" :on-click="closeError"/>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue';
-import { useStore } from 'vuex';
+import {mapState} from 'vuex';
 import MyButton from "@/components/buttons/MyButton.vue";
 
 export default {
   components: {MyButton},
-  setup() {
-    const store = useStore();
-    const error = computed(() => store.state.error);
 
-    const closeError = () => {
-      store.commit('clearError');
-    };
-
-    return { error, closeError };
+  computed: {
+    ...mapState(['error']),
   },
-};
+
+  methods: {
+    closeError() {
+      this.$store.commit('clearError')
+    },
+  },
+
+  watch: {
+    error(newError) {
+      if (newError) {
+        window.scrollTo({top: 0, behavior: 'smooth'})
+      }
+    },
+  },
+}
 </script>
 
 <style>
@@ -42,7 +49,6 @@ export default {
   color: black;
   border-radius: 15px;
   position: relative;
-
   overflow: hidden;
   align-items: center;
 }

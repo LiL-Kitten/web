@@ -41,7 +41,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: end;
-  font-size: 3.3vw;
+  font-size: 35px;
   color: #ffffff;
   margin-left: 2%;
   margin-right: 2%;

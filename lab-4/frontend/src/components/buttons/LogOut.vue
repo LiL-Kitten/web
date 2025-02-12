@@ -23,7 +23,7 @@ export default defineComponent({
 }
 
 button {
-  width: 8vw;
-  height: 8vw;
+  width: 70px;
+  height: 70px;
 }
 </style>

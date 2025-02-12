@@ -15,7 +15,7 @@
   margin: 2%;
   display: flex;
   padding-left: 20px;
-  align-items: center;
+  align-items: flex-start;
   transition: all 0.3s ease;
 }
 
@@ -25,13 +25,19 @@
 
 @media (min-width: 770px) and (max-width: 1152px) {
   .main-container {
-    flex-direction: row;
-    padding: 15px;
-    background-color: rgba(134, 11, 187, 0.8);
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgba(134, 11, 187, 0.9);
   }
 
   .main-container > * {
-    margin: 10px;
+    margin: 15px;
+    flex: 1 1 30%;
+    box-sizing: border-box;
+  }
+
+  .main-container > :nth-child(3) {
+    flex-basis: 100%;
   }
 }
 
@@ -41,6 +47,7 @@
     padding: 10px;
     background-color: rgba(134, 11, 187, 0.7);
     align-items: center;
+    height: 1000px;
   }
 
   .main-container > * {

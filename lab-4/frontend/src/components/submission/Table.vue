@@ -51,6 +51,7 @@ export default {
   flex: 1;
   overflow-y: auto;
   margin-top: 0;
+  height: 400px;
 }
 
 .scroll-table table {

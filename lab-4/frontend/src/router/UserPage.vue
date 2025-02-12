@@ -191,6 +191,6 @@ form {
 }
 
 label {
-  font-size: 2vw;
+  font-size: 30px;
 }
 </style>

@@ -101,6 +101,6 @@ button {
   cursor: pointer;
   margin: 10px;
   width: auto;
-  height: 5vw;
+  height: 70px;
 }
 </style>
