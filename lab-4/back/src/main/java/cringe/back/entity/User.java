@@ -17,9 +17,9 @@ import java.io.Serializable;
 )
 public class User extends AbstractEntity implements Serializable {
     private String username;
-    private long password;
+    private String password;
 
-    public User(String username, long password) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -34,11 +34,11 @@ public class User extends AbstractEntity implements Serializable {
         this.username = username;
     }
 
-    public long getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(long password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }
