@@ -54,7 +54,7 @@ export default {
     },
 
     scale() {
-      if(this.valueR > 5) return
+      if(this.valueR > 5 || this.valueR < 0) return
       return this.valueR / 5
     }
   },
