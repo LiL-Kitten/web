@@ -3,7 +3,7 @@ package cringe.back.controller;
 import cringe.back.dto.UserDTO;
 import cringe.back.exceptions.InvalidPasswordException;
 import cringe.back.exceptions.UserNotFoundException;
-import cringe.back.service.AuthServiceFactory;
+import cringe.back.service.AuthService;
 import cringe.back.util.PasswordHashing;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.Consumes;
@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response;
 public class AuthController {
 
     @EJB
-    private AuthServiceFactory serviceFactory;
+    private AuthService serviceFactory;
 
     private final PasswordHashing passwordHashing = new PasswordHashing();
 

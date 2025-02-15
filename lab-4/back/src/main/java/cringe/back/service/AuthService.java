@@ -10,7 +10,7 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 
 @Stateless
-public class AuthServiceFactory {
+public class AuthService {
     @EJB
     private UserDAO userDAO;
     

@@ -2,7 +2,7 @@ package cringe.back.controller;
 
 import cringe.back.dto.PointDTO;
 import cringe.back.exceptions.EmptyDBException;
-import cringe.back.service.UserServiceFactory;
+import cringe.back.service.UserService;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
@@ -16,7 +16,7 @@ public class PointController {
     private SecurityContext securityContext;
 
     @EJB
-    private UserServiceFactory userServiceFactory;
+    private UserService userServiceFactory;
 
     @GET
     @Path("/get")
