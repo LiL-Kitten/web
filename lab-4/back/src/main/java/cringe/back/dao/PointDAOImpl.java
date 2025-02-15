@@ -15,12 +15,13 @@ import java.util.stream.Collectors;
 @Stateless
 public class PointDAOImpl implements PointDAO, Convert<Point, PointDTO> {
 
+    private static final EntityManager em = PersistenceManager.getEntityManager();
+
     @Override
     public void save(User user, PointDTO pointDTO) {
         Point point = convertToEntity(pointDTO);
         point.setUser(user);
 
-        EntityManager em = PersistenceManager.getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(point);
@@ -37,7 +38,6 @@ public class PointDAOImpl implements PointDAO, Convert<Point, PointDTO> {
 
     @Override
     public void deleteAll(Long userId) {
-        EntityManager em = PersistenceManager.getEntityManager();
         try {
             em.getTransaction().begin();
             em.createQuery("DELETE FROM Point p WHERE p.user.id = :userId")
@@ -56,7 +56,6 @@ public class PointDAOImpl implements PointDAO, Convert<Point, PointDTO> {
 
     @Override
     public List<PointDTO> findAll(Long userId) {
-        EntityManager em = PersistenceManager.getEntityManager();
         try {
             TypedQuery<Point> query = em.createQuery(
                     "SELECT p FROM Point p WHERE p.user.id = :userId", Point.class);

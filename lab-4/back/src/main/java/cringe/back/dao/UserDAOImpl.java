@@ -13,10 +13,11 @@ public class UserDAOImpl implements UserDAO, Convert<User, UserDTO> {
 
     private static final String PASSWORD = "password";
     private static final String USERNAME = "username";
+    private static final EntityManager em = PersistenceManager.getEntityManager();
+
 
     @Override
     public void save(UserDTO userDTO) {
-        EntityManager em = PersistenceManager.getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(convertToEntity(userDTO));
@@ -33,7 +34,6 @@ public class UserDAOImpl implements UserDAO, Convert<User, UserDTO> {
 
     @Override
     public boolean exists(UserDTO userDTO) {
-        EntityManager em = PersistenceManager.getEntityManager();
         try {
             em.getTransaction().begin();
             TypedQuery<User> query = em.createNamedQuery("User.findByUsername", User.class);
@@ -53,7 +53,6 @@ public class UserDAOImpl implements UserDAO, Convert<User, UserDTO> {
 
     @Override
     public boolean authenticate(UserDTO userDTO) {
-        EntityManager em = PersistenceManager.getEntityManager();
         try {
             em.getTransaction().begin();
             TypedQuery<User> query = em.createNamedQuery("User.authenticate", User.class);
@@ -74,7 +73,6 @@ public class UserDAOImpl implements UserDAO, Convert<User, UserDTO> {
 
     @Override
     public Long getId(UserDTO userDTO) {
-        EntityManager em = PersistenceManager.getEntityManager();
         try {
             em.getTransaction().begin();
             TypedQuery<User> query = em.createNamedQuery("User.authenticate", User.class);
@@ -95,7 +93,6 @@ public class UserDAOImpl implements UserDAO, Convert<User, UserDTO> {
 
     @Override
     public User findById(Long id) {
-        EntityManager em = PersistenceManager.getEntityManager();
         try {
             em.getTransaction().begin();
             User user = em.find(User.class, id);
