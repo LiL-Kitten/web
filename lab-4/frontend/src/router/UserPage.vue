@@ -147,8 +147,8 @@ export default defineComponent({
     },
 
     async deletePointsInTable() {
-      this.points = []
       await deletePoints();
+      this.points = []
     },
 
     clearForm() {

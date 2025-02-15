@@ -6,6 +6,7 @@ import cringe.back.exceptions.InvalidPasswordException;
 import cringe.back.exceptions.UserExistException;
 import cringe.back.exceptions.UserNotFoundException;
 import cringe.back.util.JwtUtil;
+import cringe.back.util.PasswordHashing;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 
@@ -13,24 +14,34 @@ import jakarta.ejb.Stateless;
 public class AuthService {
     @EJB
     private UserDAO userDAO;
-    
+
+    private final PasswordHashing passwordHashing = new PasswordHashing();
+
     public String authenticate(UserDTO user) throws UserNotFoundException, InvalidPasswordException {
-        if(userDAO.exists(user)) {
-            if (userDAO.authenticate(user)) {
+        String storedHash = userDAO.getUserPassword(user.getUsername());
+
+        if (storedHash != null) {
+            if (passwordHashing.verify(user.getPassword(), storedHash)) {
+                user.setPassword(passwordHashing.hash(user.getPassword()));
                 return new JwtUtil().generateToken(userDAO.getId(user));
+            } else {
+                throw new InvalidPasswordException("Неверный пароль((");
             }
-            throw new InvalidPasswordException("неверный пароль((");
+        } else {
+            throw new UserNotFoundException("Пользователь с таким username не найден: " + user.getUsername());
         }
-        throw new UserNotFoundException("пользователь с таким username не найден: " + user.getUsername());
     }
-    
+
     public String registration(UserDTO user) throws UserExistException {
         if (userDAO.exists(user)) {
-            throw new UserExistException("Вы уже зарегистрированы попробуйте вспомнить пароль и войти");
+            throw new UserExistException("Вы уже зарегистрированы. Попробуйте вспомнить пароль и войти.");
         }
 
+        user.setPassword(passwordHashing.hash(user.getPassword()));
         userDAO.save(user);
-        return new JwtUtil().generateToken(userDAO.getId(user));
+
+        Long userId = userDAO.getId(user);
+
+        return new JwtUtil().generateToken(userId);
     }
-    
 }

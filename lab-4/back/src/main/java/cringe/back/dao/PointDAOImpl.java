@@ -20,52 +20,33 @@ public class PointDAOImpl implements PointDAO, Convert<Point, PointDTO> {
         Point point = convertToEntity(pointDTO);
         point.setUser(user);
 
-        EntityManager em = PersistenceManager.getEntityManager();
-        try {
+        try (EntityManager em = PersistenceManager.getEntityManager()) {
             em.getTransaction().begin();
             em.persist(point);
             em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Error saving point", e);
-        } finally {
-            em.close();
         }
     }
 
     @Override
     public void deleteAll(Long userId) {
-        EntityManager em = PersistenceManager.getEntityManager();
-        try {
+        try (EntityManager em = PersistenceManager.getEntityManager()) {
             em.getTransaction().begin();
             em.createQuery("DELETE FROM Point p WHERE p.user.id = :userId")
                     .setParameter("userId", userId)
                     .executeUpdate();
             em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new RuntimeException("Error deleting points", e);
-        } finally {
-            em.close();
         }
     }
 
     @Override
     public List<PointDTO> findAll(Long userId) {
-        EntityManager em = PersistenceManager.getEntityManager();
-        try {
+        try (EntityManager em = PersistenceManager.getEntityManager()) {
             TypedQuery<Point> query = em.createQuery(
                     "SELECT p FROM Point p WHERE p.user.id = :userId", Point.class);
             query.setParameter("userId", userId);
             return query.getResultList().stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toList());
-        } finally {
-            em.close();
         }
     }
 
