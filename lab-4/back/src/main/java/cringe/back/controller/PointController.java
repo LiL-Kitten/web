@@ -16,7 +16,7 @@ public class PointController {
     private SecurityContext securityContext;
 
     @EJB
-    private UserService userServiceFactory;
+    private UserService service;
 
     @GET
     @Path("/get")
@@ -24,7 +24,7 @@ public class PointController {
     public Response getUserPoints() {
         try {
             Long userId = getUserIdFromContext();
-            List<PointDTO> list = userServiceFactory.getPoints(userId);
+            List<PointDTO> list = service.getPoints(userId);
             return Response.ok(list).build();
         } catch (EmptyDBException e) {
             return Response.status(Response.Status.NOT_FOUND)
@@ -44,7 +44,7 @@ public class PointController {
     public Response addUserPoint(PointDTO point) {
         try {
             Long userId = getUserIdFromContext();
-            String response = userServiceFactory.addPoints(userId, point);
+            String response = service.addPoints(userId, point);
             return Response.ok(response).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -59,7 +59,7 @@ public class PointController {
     public Response deleteUserPoints() {
         try {
             Long userId = getUserIdFromContext();
-            String response = userServiceFactory.delPoints(userId);
+            String response = service.delPoints(userId);
             return Response.ok(response).build();
         } catch (EmptyDBException e) {
             return Response.status(Response.Status.NOT_FOUND)

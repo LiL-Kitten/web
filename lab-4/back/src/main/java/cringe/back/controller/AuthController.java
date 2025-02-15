@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response;
 public class AuthController {
 
     @EJB
-    private AuthService serviceFactory;
+    private AuthService service;
 
     private final PasswordHashing passwordHashing = new PasswordHashing();
 
@@ -28,7 +28,7 @@ public class AuthController {
     public Response register(UserDTO user) {
         try {
             user.setPassword(passwordHashing.hash(user.getPassword()));
-            String response = serviceFactory.registration(user);
+            String response = service.registration(user);
             return Response.ok(response).build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST)
@@ -44,7 +44,7 @@ public class AuthController {
     public Response authorize(UserDTO user) {
         try {
             user.setPassword(passwordHashing.hash(user.getPassword()));
-            String response = serviceFactory.authenticate(user);
+            String response = service.authenticate(user);
             return Response.ok(response).build();
         } catch (InvalidPasswordException e) {
             return Response.status(Response.Status.BAD_REQUEST)

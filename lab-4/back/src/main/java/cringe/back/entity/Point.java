@@ -21,13 +21,6 @@ public class Point extends AbstractEntity implements Serializable {
     @ManyToOne
     private User user;
 
-    public Point(float x, float y, float r, boolean condition) {
-        this.x = x;
-        this.y = y;
-        this.r = r;
-        this.condition = condition;
-    }
-
     public Point() {}
 
     public float getX() {
