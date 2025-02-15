@@ -44,7 +44,7 @@ public class PointController {
     public Response addUserPoint(PointDTO point) {
         try {
             Long userId = getUserIdFromContext();
-            String response = service.addPoints(userId, point);
+            String response = service.addPoint(userId, point);
             return Response.ok(response).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)

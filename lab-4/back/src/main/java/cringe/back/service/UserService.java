@@ -32,12 +32,12 @@ public class UserService {
 
         pointDAO.deleteAll(id);
 
-        return "All points deleted";
+        return "Все точки удалены";
     }
 
-    public String addPoints(Long userId, PointDTO pointDTO) {
+    public String addPoint(Long userId, PointDTO pointDTO) {
         pointDAO.save(userDAO.findById(userId), pointDTO);
 
-        return "Point added successfully";
+        return "Точка успешно добавлена";
     }
 }

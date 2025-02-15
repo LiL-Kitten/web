@@ -64,7 +64,7 @@ public class JwtAuthenticationFilter implements ContainerRequestFilter {
 
     private void abortWithUnauthorized(ContainerRequestContext context) {
         context.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                .entity( "Invalid or missing token")
+                .entity( "Токен пропущен или невалидный((")
                 .build());
     }
 }
