@@ -4,13 +4,11 @@
   </Header>
   <Error class="error-message"/>
   <Main class="main-content">
-    <router-view :key="$route.path" ref="view"/>
+    <router-view ref="view"/>
   </Main>
 </template>
 
 <script>
-import { ref, watch, computed } from 'vue';
-import { useRoute } from 'vue-router';
 import Error from "@/components/errors/Error.vue";
 import Header from "@/components/Header.vue";
 import Main from "@/components/Main.vue";
@@ -25,31 +23,33 @@ export default {
     Main,
     LogOut
   },
-  setup() {
-    const route = useRoute();
 
-    const headerTitle = ref('');
-    const headerText = ref('');
-
-    const isUserPage = computed(() => {
-      return route.path.startsWith('/main/');
-    });
-
-    watch(route, (newRoute) => {
-      if (isUserPage.value) {
-        headerTitle.value = 'Имя пользователя: ' + newRoute.params.userName;
-        headerText.value = 'ID пользователя: ' + newRoute.params.userId;
-      } else if (newRoute.path === '/') {
-        headerTitle.value = 'Лабораторная работа №4';
-        headerText.value = 'Выполнил: Иевлев Ринат Андреевич';
-      }
-    }, { immediate: true });
-
+  data() {
     return {
-      headerTitle,
-      headerText,
-      isUserPage
+      headerTitle: '',
+      headerText: ''
     };
+  },
+
+  computed: {
+    isUserPage() {
+      return this.$route.path.startsWith('/main/');
+    }
+  },
+
+  watch: {
+    '$route': {
+      immediate: true,
+      handler(newRoute) {
+        if (this.isUserPage) {
+          this.headerTitle = 'Имя пользователя: ' + newRoute.params.userName;
+          this.headerText = 'ID пользователя: ' + newRoute.params.userId;
+        } else if (newRoute.path === '/') {
+          this.headerTitle = 'Лабораторная работа №4';
+          this.headerText = 'Выполнил: Иевлев Ринат Андреевич';
+        }
+      }
+    }
   },
 
   methods: {
@@ -58,7 +58,7 @@ export default {
       logOut();
       console.log('Token removed, redirecting to home...');
       router.push(`/`);
-    },
+    }
   }
 };
 </script>
@@ -86,5 +86,4 @@ body {
   flex-direction: column;
   height: 100%;
 }
-
 </style>
