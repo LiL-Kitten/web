@@ -30,13 +30,12 @@
 </template>
 
 <script>
-import {defineComponent} from "vue";
 import Tools from "@/components/submission/Tools.vue";
 import {addPoint, deletePoints, getPoints} from "@/api/pointService.js";
 import Graph from "@/components/submission/Graph.vue";
 import Table from "@/components/submission/Table.vue";
 
-export default defineComponent({
+export default {
   components: {
     Table,
     Graph,
