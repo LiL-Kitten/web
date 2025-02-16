@@ -28,9 +28,8 @@ export function removeToken() {
 }
 
 export function checkAuth() {
-    const token = localStorage.getItem('token');
-    setToken()
-    return !!token;
+    const token = localStorage.getItem('token')
+    return !!token
 }
 
 export function getId(token) {
