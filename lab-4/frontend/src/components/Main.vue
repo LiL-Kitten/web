@@ -17,9 +17,6 @@
   padding-left: 20px;
   align-items: flex-start;
   transition: all 0.3s ease;
-}
-
-.main-container {
   flex-direction: row;
 }
 
