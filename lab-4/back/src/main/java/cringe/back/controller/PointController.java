@@ -74,7 +74,7 @@ public class PointController {
 
     private Long getUserIdFromContext() {
         if (securityContext.getUserPrincipal() == null) {
-            throw new SecurityException("User not authenticated");
+            throw new SecurityException("Пользователь не зарегистрирован");
         }
         return Long.parseLong(securityContext.getUserPrincipal().getName());
     }
