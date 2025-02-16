@@ -4,7 +4,7 @@
   </Header>
   <Error class="error-message"/>
   <Main class="main-content">
-    <router-view ref="view"/>
+    <router-view/>
   </Main>
 </template>
 

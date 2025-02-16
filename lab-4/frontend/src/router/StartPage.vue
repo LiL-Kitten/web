@@ -4,15 +4,13 @@
       <div class="input-container">
         <input
             type="text"
-            v-model.trim="user.username"
+            v-model="user.username"
             placeholder="Введите логин"
-            required
         />
         <input
             type="password"
-            v-model.trim="user.password"
+            v-model="user.password"
             placeholder="Введите пароль"
-            required
         />
       </div>
       <div class="button-container">

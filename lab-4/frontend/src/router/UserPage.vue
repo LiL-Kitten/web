@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="sendPoint">
+  <form @submit.prevent>
     <h1>Введите значения</h1>
 
     <div v-for="value in values">
